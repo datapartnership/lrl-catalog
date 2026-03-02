@@ -817,6 +817,7 @@ a.btn-primary {
       border-collapse: collapse;
       font-size: 0.9rem;
       margin-top: 0.5rem;
+      table-layout: fixed;
     }
     .collection-table th {
       text-align: left;
@@ -829,12 +830,21 @@ a.btn-primary {
       padding: 0.5rem 0.75rem;
       border-bottom: 2px solid var(--gray-200);
     }
+    .collection-table th:nth-child(1) { width: 18%; }
+    .collection-table th:nth-child(2) { width: auto; }
+    .collection-table th:nth-child(3) { width: 10%; }
+    .collection-table th:nth-child(4) { width: 14%; }
+    .collection-table th:nth-child(5) { width: 9%; text-align: right; }
+    .collection-table th:nth-child(6) { width: 10%; text-align: right; }
     .collection-table td {
       padding: 0.65rem 0.75rem;
       border-bottom: 1px solid var(--gray-100);
       color: var(--gray-600);
-      vertical-align: top;
+      vertical-align: middle;
     }
+    .collection-table td:nth-child(5),
+    .collection-table td:nth-child(6) { text-align: right; }
+    .collection-table td .tag { white-space: nowrap; }
     .collection-table tr:hover td { background: var(--gray-50); }
     .collection-table .col-name { font-weight: 500; color: var(--navy); }
 

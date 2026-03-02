@@ -1,0 +1,33 @@
+id,name,provider,language,type,format,hours,items,description,year_start,year_end,themes
+ri_mawu,Mawu a Anthu,radio_islam,chichewa,radio,audio/wav,245,,Community call-in show covering social issues politics and daily life in Chichewa.,2018,2024,society;politics;culture
+ri_news_chi,Radio Islam Chichewa News,radio_islam,chichewa,radio,audio/wav,180,,Daily Chichewa-language news bulletins covering national and international events.,2019,2024,news;politics
+ri_yao_prog,Yao Language Programs,radio_islam,yao,radio,audio/wav,95,,Cultural and religious programming broadcast in Yao.,2020,2024,culture;religion
+mbc_radio1_news,MBC Radio 1 News Bulletins,mbc,chichewa,radio,audio/wav,520,,National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.,2015,2024,news;politics;governance
+mbc_tumbuka,MBC Tumbuka Service,mbc,tumbuka,radio,audio/wav,310,,Tumbuka-language programming including news drama and agricultural advice.,2016,2024,news;agriculture;culture
+mbc_drama,MBC Radio Drama Archive,mbc,chichewa,radio,audio/mp3,185,,Scripted radio dramas and serialized stories in Chichewa.,2010,2023,culture;entertainment
+twr_health,Moyo Wathu Health Series,twr,chichewa,radio,audio/wav,120,,Health education programming covering HIV/AIDS malaria nutrition and maternal health.,2017,2024,health;education
+twr_agri,Ulimi Wabwino Agricultural Shows,twr,tumbuka,radio,audio/wav,88,,Agricultural extension programming in Tumbuka covering farming techniques and markets.,2019,2024,agriculture;economics
+twr_lomwe,TWR Lomwe Broadcasts,twr,lomwe,radio,audio/wav,45,,Mixed programming in Lomwe including storytelling and community development.,2020,2024,culture;development
+yoneco_youth,Achinyamata Aluso Youth Program,yoneco_fm,chichewa,radio,audio/wav,75,,Youth empowerment and rights-based programming in Chichewa from Zomba.,2020,2024,youth;rights;society
+yoneco_gender,Gender & Rights Podcasts,yoneco_fm,chichewa,radio,audio/mp3,32,,Podcast episodes on gender equality GBV prevention and human rights.,2021,2024,gender;rights;society
+nyanthepa_agri,Nyanthepa Ulimi Shows,nyanthepa,tumbuka,radio,audio/wav,64,,Agricultural programming in Tumbuka for farmers in the Mzimba area.,2019,2024,agriculture
+nyanthepa_gov,Local Governance Discussions,nyanthepa,tumbuka,radio,audio/wav,40,,Community discussions on local governance and development issues in Tumbuka.,2020,2024,governance;development
+times_chi_news,Daily Times Chichewa Articles,times_group,chichewa,news,text/html,,12500,Chichewa-language news articles from The Daily Times covering politics business and society.,2016,2024,news;politics;economics
+times_eng_news,Daily Times English Archive,times_group,english,news,text/html,,45000,English-language articles useful as parallel corpus for translation model training.,2014,2024,news;politics;economics
+times_opinion,Malawi News Opinion Columns,times_group,chichewa,news,text/html,,3200,Opinion and editorial pieces in Chichewa reflecting contemporary discourse.,2018,2024,politics;society
+nation_chi,The Nation Chichewa Section,nation_publications,chichewa,news,text/html,,9800,Chichewa news reporting from The Nation covering national affairs.,2015,2024,news;politics
+nation_features,Weekend Nation Features,nation_publications,chichewa,news,text/html,,2100,Long-form feature stories and investigative journalism in Chichewa and English.,2017,2024,news;society;culture
+nso_ihs5,IHS5 Survey Audio,mnso,chichewa,surveys,audio/wav,1200,,Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.,2019,2020,economics;development;health
+nso_ihs5_tum,IHS5 Survey Audio (Tumbuka),mnso,tumbuka,surveys,audio/wav,340,,Tumbuka-language interviews from IHS5 in the Northern Region.,2019,2020,economics;development;health
+nso_dhs,DHS Interview Recordings,mnso,chichewa,surveys,audio/wav,680,,Demographic and Health Survey interview audio covering health fertility and nutrition topics.,2020,2021,health;demographics
+nso_census,Census Enumerator Recordings,mnso,chichewa,surveys,audio/wav,450,,Field recordings from census enumeration with diverse speaker demographics.,2018,2018,demographics;governance
+mie_textbooks,Primary School Chichewa Textbooks,mie,chichewa,books,text/pdf,,48,Standards 1-8 Chichewa textbooks used in primary education across Malawi.,2015,2023,education
+mie_tumbuka,Tumbuka Reading Materials,mie,tumbuka,books,text/pdf,,22,Supplementary reading materials and early-grade readers in Tumbuka.,2018,2022,education
+mie_yao,Yao Language Teaching Guides,mie,yao,books,text/pdf,,15,Teacher guides and student materials for Yao-medium instruction.,2019,2023,education
+mij_broadcasts,MIJ Student Broadcasts,mij,chichewa,radio,audio/mp3,28,,Student practice radio broadcasts in Chichewa covering news features and interviews.,2020,2024,education;news
+mij_articles,MIJ Student News Writing,mij,chichewa,news,text/html,,1800,Student-written news articles in Chichewa as part of journalism coursework.,2019,2024,education;news
+doi_releases,Government Press Releases,doi,chichewa,news,text/html,,4200,Official government communications and press releases in Chichewa.,2016,2024,governance;politics
+doi_psa,Public Service Announcements,doi,chichewa,radio,audio/mp3,15,,Radio PSAs on health civic education and public safety in Chichewa.,2018,2024,health;education;governance
+montfort_books,Montfort Chichewa Publications,montfort,chichewa,books,text/pdf,,85,Books pamphlets and booklets on faith community development and social issues in Chichewa.,2010,2024,religion;development;society
+montfort_drama,Montfort Audio Dramas,montfort,chichewa,radio,audio/mp3,55,,Audio drama productions on social themes including HIV/AIDS awareness education and family life.,2015,2023,health;culture;society
+montfort_sena,Montfort Sena Publications,montfort,sena,books,text/pdf,,18,Religious and educational materials published in Sena for the Lower Shire region.,2016,2022,religion;education

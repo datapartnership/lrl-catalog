@@ -15,7 +15,7 @@ nyanthepa_gov,Local Governance Discussions,nyanthepa,tumbuka,radio,audio/wav,40,
 times_chi_news,Daily Times Chichewa Articles,times_group,chichewa,news,text/html,,12500,Chichewa-language news articles from The Daily Times covering politics business and society.,2016,2024,news;politics;economics
 times_eng_news,Daily Times English Archive,times_group,english,news,text/html,,45000,English-language articles useful as parallel corpus for translation model training.,2014,2024,news;politics;economics
 times_opinion,Malawi News Opinion Columns,times_group,chichewa,news,text/html,,3200,Opinion and editorial pieces in Chichewa reflecting contemporary discourse.,2018,2024,politics;society
-nation_chi,The Nation Chichewa Section,nation_publications,chichewa,news,text/html,,9800,Chichewa news reporting from The Nation covering national affairs.,2015,2024,news;politics
+nation_chi,The Nationn Chichewa Section,nation_publications,chichewa,news,text/html,,9800,Chichewa news reporting from The Nation covering national affairs.,2015,2024,news;politics
 nation_features,Weekend Nation Features,nation_publications,chichewa,news,text/html,,2100,Long-form feature stories and investigative journalism  in Chichewa and English.,2017,2024,news;society;culture
 nso_ihs5,IHS5 Survey Audio,mnso,chichewa,surveys,audio/wav,1200,,Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.,2019,2020,economics;development;health
 nso_ihs5_tum,IHS5 Survey Audio (Tumbuka),mnso,tumbuka,surveys,audio/wav,340,,Tumbuka-language interviews from IHS5 in the Northern Region.,2019,2020,economics;development;health

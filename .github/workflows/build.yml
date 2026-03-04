@@ -1,6 +1,7 @@
 name: Build and update index.html
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'providers.csv'

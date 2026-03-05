@@ -1077,6 +1077,29 @@ a.btn-primary {
   margin: 1.25rem 0 0.25rem;
 }
 
+.standards-pane h3,
+.metadata-resources-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.01em;
+}
+
+.standards-label {
+  margin: 0 0 16px 0;
+  font-size: 0.88rem;
+  color: #6b7280;
+}
+
+.standards-pane {
+  margin-top: 2rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
 .std-pill {
   display: inline-flex;
   align-items: center;
@@ -1261,11 +1284,10 @@ a.btn-primary {
   background: #f9fafb;
 }
 
-.metadata-resources-header h4 {
+.metadata-resources-header h3 {
   margin: 0;
-  font-size: 0.95rem;
   font-weight: 700;
-  color: #111827;
+  color: #001e60;
   letter-spacing: 0.01em;
 }
 

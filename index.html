@@ -504,7 +504,8 @@
                   <td><code>format</code></td>
                   <td>string</td>
                   <td>Desired format: <code>original</code>, <code>wav</code>, <code>mp3</code>, <code>json</code>,
-                    <code>csv</code></td>
+                    <code>csv</code>
+                  </td>
                 </tr>
                 <tr>
                   <td><code>split</code></td>
@@ -592,13 +593,14 @@
             </div>
           </div>
         </div>
-        <p class="metadata-p">No single existing standard fully met the project's requirements. Therefore, we adopted an
+        <p class="metadata-p">No single existing standard fully met the project’s requirements. Therefore, we adopted an
           application profile approach, combining fields from multiple standards. It draws on nine established standards
-          alongside a custom namespace, the <strong>Development Data Partnership Vocabulary (DDPV).</strong></p>
+          alongside a custom namespace, the <strong>Development Data Partnership Vocabulary (DDPV)</strong>, to capture
+          project-specific attributes while maintaining compatibility with existing vocabularies and tooling.</p>
         <p style="font-size:0.85rem;color:var(--gray-500);margin-bottom:0.4rem;"><strong>Standards incorporated across
             all schemas:</strong></p>
         <div class="standards-row">
-          <span class="std-pill core">Croissant / MLCommons</span>
+          <span class="std-pill core">Croissant</span>
           <span class="std-pill core">Schema.org Dataset Vocabulary</span>
           <span class="std-pill core">Dublin Core Terms</span>
           <span class="std-pill w3c">Data Catalog Vocabulary (DCAT)</span>
@@ -613,79 +615,122 @@
         </div>
       </div>
 
-      <div class="ddpv-callout">
-        <h4>Development Data Partnership Vocabulary (DDPV)</h4>
-        <p>We developed metadata schemas based on the standards above for three primary data types: audio, text, and
-          video. While the majority of the fields are similar, the core differences lie in the technical fields required
-          for each data type. </p>
-      </div>
-
       <div class="api-section" style="margin-top: 2rem;">
-        <h3>Data Type Schemas</h3>
-        <p class="metadata-p">Using this application profile, we developed metadata schemas for three primary data
-          types: audio, text, and video. Each schema documents the terms selected, their source standards, definitions,
-          cardinality requirements, and collection methods.</p>
+        <h3>Metadata Schemas by Data Type</h3>
+        <p class="metadata-p">We developed metadata schemas based on the standards above for three primary data types:
+          audio, text, and
+          video. While the majority of the fields are similar, the core differences lie in the technical fields required
+          for each data type. Additional information on the fields, their definitions, cardinality requirements, and
+          collection methods can be found in the resources section below.</p>
       </div>
-
       <div class="metadata-resources">
         <div class="metadata-resources-header">
           <h4>📦 Schema Resources &amp; Downloads</h4>
         </div>
         <div class="resource-links">
-          <a href="Metadata_Schemas.pdf" class="resource-link-item">
+
+          <a href="./metadata-docs/Metadata_Schemas.pdf" class="resource-link-item accent-teal">
             <span class="resource-icon">📖</span>
             <span class="resource-text">
               <strong>Full Documentation</strong>
-              <span>For full documentation describing the metadata schemas and the process used to develop them, please
-                refer to the complete metadata documentation.</span>
+              <span>Complete documentation describing the metadata schemas and the process used to develop them.</span>
             </span>
+            <span class="resource-badge">PDF</span>
           </a>
-          <a href="https://datapartnership.org/ddpv-metadata-terms/" class="resource-link-item">
+
+          <a href="https://datapartnership.org/ddpv-metadata-terms/" class="resource-link-item accent-orange">
             <span class="resource-icon">🗂️</span>
             <span class="resource-text">
               <strong>DDPV Vocabulary</strong>
               <span>A dedicated webpage describing and maintaining the custom metadata vocabulary.</span>
             </span>
+            <span class="resource-badge">WEB</span>
           </a>
+
+          <a href="./metadata-docs/llm_library_text_schema.json" class="resource-link-item accent-purple">
+            <span class="resource-icon">📄</span>
+            <span class="resource-text">
+              <strong>Text Metadata Schema</strong>
+              <span>JSON schema for text and print/news datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/llm_library_audio_schema.json" class="resource-link-item accent-navy">
+            <span class="resource-icon">🎙️</span>
+            <span class="resource-text">
+              <strong>Audio Metadata Schema</strong>
+              <span>JSON schema for audio and broadcast datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/llm_library_video_schema.json" class="resource-link-item accent-teal">
+            <span class="resource-icon">🎬</span>
+            <span class="resource-text">
+              <strong>Video Metadata Schema</strong>
+              <span>JSON schema for video datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/capital_fm_news.jsonld" class="resource-link-item accent-orange">
+            <span class="resource-icon">🔊</span>
+            <span class="resource-text">
+              <strong>Example Audio Record</strong>
+              <span>A populated example metadata record for an audio dataset.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
         </div>
       </div>
-
     </div>
 
 
-  <!-- ===================== ABOUT TAB ===================== -->
-  <div class="tab-panel" id="panel-about">
-    <div class="api-section" style="margin-bottom:2rem;">
-      <h3>About This Catalog</h3>
-      <p>This catalog provides a centralized registry of low-resource language datasets, intended for researchers and engineers working on natural language processing (NLP), automatic speech recognition (ASR), and large language model (LLM) fine-tuning for low-resource languages.</p>
-      <p>This catalog aims to bridge the language data gap by licesnsing data from broadcasters, publishers, government institutions, and community organizations for non-commercial use.</p>
-    </div>
-    <div class="about-grid">
-      <div class="about-card">
-        <h4>🎯 Purpose</h4>
-        <p>Provide a single point of discovery for available proprietary low-resource language data that is suitable for ML model training, so researchers don't have to hunt across disparate sources.</p>
+    <!-- ===================== ABOUT TAB ===================== -->
+    <div class="tab-panel" id="panel-about">
+      <div class="api-section" style="margin-bottom:2rem;">
+        <h3>About This Catalog</h3>
+        <p>This catalog provides a centralized registry of low-resource language datasets, intended for researchers and
+          engineers working on natural language processing (NLP), automatic speech recognition (ASR), and large language
+          model (LLM) fine-tuning for low-resource languages.</p>
+        <p>This catalog aims to bridge the language data gap by licesnsing data from broadcasters, publishers,
+          government institutions, and community organizations for non-commercial use.</p>
       </div>
-      <div class="about-card">
-        <h4>📋 Data Types</h4>
-        <p>Audio (radio broadcasts, podcasts, recorded surveys), text (news articles, books, educational materials), and structured transcriptions paired with audio for ASR training.</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <h4>🎯 Purpose</h4>
+          <p>Provide a single point of discovery for available proprietary low-resource language data that is suitable
+            for ML model training, so researchers don't have to hunt across disparate sources.</p>
+        </div>
+        <div class="about-card">
+          <h4>📋 Data Types</h4>
+          <p>Audio (radio broadcasts, podcasts, recorded surveys), text (news articles, books, educational materials),
+            and structured transcriptions paired with audio for ASR training.</p>
+        </div>
+        <div class="about-card">
+          <h4>🔑 Access</h4>
+          <p>All metadata is freely browsable. Data downloads require registration and acceptance of the data use
+            agreement -- see licensing restrictions on the "license" tab.</p>
+        </div>
+        <div class="about-card">
+          <h4>🤝 Contributing</h4>
+          <p>We welcome new data contributions. If your organization produces low-resource language content and would
+            like to make it available for research, please <a href="mailto:datapartnership@worldbank.org">contact us</a>
+            to discuss ingestion and licensing.</p>
+        </div>
+        <div class="about-card">
+          <h4>📖 Citation</h4>
+          <p>If you use data from this catalog in your research, please cite the catalog and the individual data
+            providers. Citation formats are available on each collection's detail page.</p>
+        </div>
+        <div class="about-card">
+          <h4>⚖️ Ethics &amp; Privacy</h4>
+          <p>Household survey recordings have been reviewed for PII and anonymized. All data is shared under terms
+            agreed upon with the originating institutions. Researchers must adhere to the data use agreement.</p>
+        </div>
       </div>
-      <div class="about-card">
-        <h4>🔑 Access</h4>
-        <p>All metadata is freely browsable. Data downloads require registration and acceptance of the data use agreement -- see licensing restrictions on the "license" tab.</p>
-      </div>
-      <div class="about-card">
-        <h4>🤝 Contributing</h4>
-        <p>We welcome new data contributions. If your organization produces low-resource language content and would like to make it available for research, please <a href="mailto:datapartnership@worldbank.org">contact us</a> to discuss ingestion and licensing.</p>
-      </div>
-      <div class="about-card">
-        <h4>📖 Citation</h4>
-        <p>If you use data from this catalog in your research, please cite the catalog and the individual data providers. Citation formats are available on each collection's detail page.</p>
-      </div>
-      <div class="about-card">
-        <h4>⚖️ Ethics &amp; Privacy</h4>
-        <p>Household survey recordings have been reviewed for PII and anonymized. All data is shared under terms agreed upon with the originating institutions. Researchers must adhere to the data use agreement.</p>
-      </div>
-    </div>
 
       <!-- Apply Section -->
       <div class="apply-section" id="apply">
@@ -744,635 +789,635 @@
     // ══════════════════════════════════════════════════════════════
 
     const PROVIDERS = [
-  {
-    "id": "mnso",
-    "name": "Malawi National Statistical Office",
-    "type": "Government Institution",
-    "description": "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts."
-  },
-  {
-    "id": "times_group",
-    "name": "The Times Group",
-    "type": "Print & Digital Media",
-    "description": "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language."
-  },
-  {
-    "id": "nation_publications",
-    "name": "The Nation Publications",
-    "type": "Print & Digital Media",
-    "description": "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi."
-  },
-  {
-    "id": "radio_islam",
-    "name": "Radio Islam",
-    "type": "Broadcaster — Radio",
-    "description": "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data."
-  },
-  {
-    "id": "twr",
-    "name": "Transworld Radio",
-    "type": "Broadcaster — Radio",
-    "description": "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows."
-  },
-  {
-    "id": "mbc",
-    "name": "Malawi Broadcasting Corporation",
-    "type": "Broadcaster — Radio & TV (State)",
-    "description": "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2 (now known as Namikango FM). As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming."
-  },
-  {
-    "id": "yoneco_fm",
-    "name": "YONECO FM",
-    "type": "Broadcaster — Community Radio",
-    "description": "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district."
-  },
-  {
-    "id": "nyanthepa",
-    "name": "Nyanthepa Community Radio",
-    "type": "Broadcaster — Community Radio",
-    "description": "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance, providing valuable Tumbuka-language audio data."
-  },
-  {
-    "id": "mij",
-    "name": "Malawi Institute of Journalism",
-    "type": "Educational Institution",
-    "description": "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects."
-  },
-  {
-    "id": "doi",
-    "name": "Malawi Department of Information",
-    "type": "Government Institution",
-    "description": "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution."
-  },
-  {
-    "id": "mie",
-    "name": "Malawi Institute of Education",
-    "type": "Educational Institution",
-    "description": "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education."
-  },
-  {
-    "id": "montfort",
-    "name": "Montfort Media",
-    "type": "Religious & Community Media",
-    "description": "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content."
-  }
-];
+      {
+        "id": "mnso",
+        "name": "Malawi National Statistical Office",
+        "type": "Government Institution",
+        "description": "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts."
+      },
+      {
+        "id": "times_group",
+        "name": "The Times Group",
+        "type": "Print & Digital Media",
+        "description": "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language."
+      },
+      {
+        "id": "nation_publications",
+        "name": "The Nation Publications",
+        "type": "Print & Digital Media",
+        "description": "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi."
+      },
+      {
+        "id": "radio_islam",
+        "name": "Radio Islam",
+        "type": "Broadcaster — Radio",
+        "description": "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data."
+      },
+      {
+        "id": "twr",
+        "name": "Transworld Radio",
+        "type": "Broadcaster — Radio",
+        "description": "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows."
+      },
+      {
+        "id": "mbc",
+        "name": "Malawi Broadcasting Corporation",
+        "type": "Broadcaster — Radio & TV (State)",
+        "description": "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2 (now known as Namikango FM). As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming."
+      },
+      {
+        "id": "yoneco_fm",
+        "name": "YONECO FM",
+        "type": "Broadcaster — Community Radio",
+        "description": "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district."
+      },
+      {
+        "id": "nyanthepa",
+        "name": "Nyanthepa Community Radio",
+        "type": "Broadcaster — Community Radio",
+        "description": "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance, providing valuable Tumbuka-language audio data."
+      },
+      {
+        "id": "mij",
+        "name": "Malawi Institute of Journalism",
+        "type": "Educational Institution",
+        "description": "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects."
+      },
+      {
+        "id": "doi",
+        "name": "Malawi Department of Information",
+        "type": "Government Institution",
+        "description": "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution."
+      },
+      {
+        "id": "mie",
+        "name": "Malawi Institute of Education",
+        "type": "Educational Institution",
+        "description": "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education."
+      },
+      {
+        "id": "montfort",
+        "name": "Montfort Media",
+        "type": "Religious & Community Media",
+        "description": "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content."
+      }
+    ];
 
-const COLLECTIONS = [
-  {
-    "id": "ri_mawu",
-    "name": "Mawu a Anthu",
-    "provider": "radio_islam",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 245,
-    "items": null,
-    "description": "Community call-in show covering social issues politics and daily life in Chichewa.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "society",
-      "politics",
-      "culture"
-    ]
-  },
-  {
-    "id": "ri_news_chi",
-    "name": "Radio Islam Chichewa News",
-    "provider": "radio_islam",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 180,
-    "items": null,
-    "description": "Daily Chichewa-language news bulletins covering national and international events.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics"
-    ]
-  },
-  {
-    "id": "ri_yao_prog",
-    "name": "Yao Language Programs",
-    "provider": "radio_islam",
-    "language": "yao",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 95,
-    "items": null,
-    "description": "Cultural and religious programming broadcast in Yao.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "culture",
-      "religion"
-    ]
-  },
-  {
-    "id": "mbc_radio1_news",
-    "name": "MBC Radio 1 News Bulletins",
-    "provider": "mbc",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 520,
-    "items": null,
-    "description": "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.",
-    "yearStart": 2015,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "governance"
-    ]
-  },
-  {
-    "id": "mbc_tumbuka",
-    "name": "MBC Tumbuka Service",
-    "provider": "mbc",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 310,
-    "items": null,
-    "description": "Tumbuka-language programming including news drama and agricultural advice.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "agriculture",
-      "culture"
-    ]
-  },
-  {
-    "id": "mbc_drama",
-    "name": "MBC Radio Drama Archive",
-    "provider": "mbc",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 185,
-    "items": null,
-    "description": "Scripted radio dramas and serialized stories in Chichewa.",
-    "yearStart": 2010,
-    "yearEnd": 2023,
-    "themes": [
-      "culture",
-      "entertainment"
-    ]
-  },
-  {
-    "id": "twr_health",
-    "name": "Moyo Wathu Health Series",
-    "provider": "twr",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 120,
-    "items": null,
-    "description": "Health education programming covering HIV/AIDS malaria nutrition and maternal health.",
-    "yearStart": 2017,
-    "yearEnd": 2024,
-    "themes": [
-      "health",
-      "education"
-    ]
-  },
-  {
-    "id": "twr_agri",
-    "name": "Ulimi Wabwino Agricultural Shows",
-    "provider": "twr",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 88,
-    "items": null,
-    "description": "Agricultural extension programming in Tumbuka covering farming techniques and markets.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "agriculture",
-      "economics"
-    ]
-  },
-  {
-    "id": "twr_lomwe",
-    "name": "TWR Lomwe Broadcasts",
-    "provider": "twr",
-    "language": "lomwe",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 45,
-    "items": null,
-    "description": "Mixed programming in Lomwe including storytelling and community development.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "culture",
-      "development"
-    ]
-  },
-  {
-    "id": "yoneco_youth",
-    "name": "Achinyamata Aluso Youth Program",
-    "provider": "yoneco_fm",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 75,
-    "items": null,
-    "description": "Youth empowerment and rights-based programming in Chichewa from Zomba.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "youth",
-      "rights",
-      "society"
-    ]
-  },
-  {
-    "id": "yoneco_gender",
-    "name": "Gender & Rights Podcasts",
-    "provider": "yoneco_fm",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 32,
-    "items": null,
-    "description": "Podcast episodes on gender equality GBV prevention and human rights.",
-    "yearStart": 2021,
-    "yearEnd": 2024,
-    "themes": [
-      "gender",
-      "rights",
-      "society"
-    ]
-  },
-  {
-    "id": "nyanthepa_agri",
-    "name": "Nyanthepa Ulimi Shows",
-    "provider": "nyanthepa",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 64,
-    "items": null,
-    "description": "Agricultural programming in Tumbuka for farmers in the Mzimba area.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "agriculture"
-    ]
-  },
-  {
-    "id": "nyanthepa_gov",
-    "name": "Local Governance Discussions",
-    "provider": "nyanthepa",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 40,
-    "items": null,
-    "description": "Community discussions on local governance and development issues in Tumbuka.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "governance",
-      "development"
-    ]
-  },
-  {
-    "id": "times_chi_news",
-    "name": "Daily Times Chichewa Articles",
-    "provider": "times_group",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 12500,
-    "description": "Chichewa-language news articles from The Daily Times covering politics business and society.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "economics"
-    ]
-  },
-  {
-    "id": "times_eng_news",
-    "name": "Daily Times English Archive",
-    "provider": "times_group",
-    "language": "english",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 45000,
-    "description": "English-language articles useful as parallel corpus for translation model training.",
-    "yearStart": 2014,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "economics"
-    ]
-  },
-  {
-    "id": "times_opinion",
-    "name": "Malawi News Opinion Columns",
-    "provider": "times_group",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 3200,
-    "description": "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "politics",
-      "society"
-    ]
-  },
-  {
-    "id": "nation_chi",
-    "name": "The Nationn Chichewa Section",
-    "provider": "nation_publications",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 9800,
-    "description": "Chichewa news reporting from The Nation covering national affairs.",
-    "yearStart": 2015,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics"
-    ]
-  },
-  {
-    "id": "nation_features",
-    "name": "Weekend Nation Features",
-    "provider": "nation_publications",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 2100,
-    "description": "Long-form feature stories and investigative journalism  in Chichewa and English.",
-    "yearStart": 2017,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "society",
-      "culture"
-    ]
-  },
-  {
-    "id": "nso_ihs5",
-    "name": "IHS5 Survey Audio",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 1200,
-    "items": null,
-    "description": "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.",
-    "yearStart": 2019,
-    "yearEnd": 2020,
-    "themes": [
-      "economics",
-      "development",
-      "health"
-    ]
-  },
-  {
-    "id": "nso_ihs5_tum",
-    "name": "IHS5 Survey Audio (Tumbuka)",
-    "provider": "mnso",
-    "language": "tumbuka",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 340,
-    "items": null,
-    "description": "Tumbuka-language interviews from IHS5 in the Northern Region.",
-    "yearStart": 2019,
-    "yearEnd": 2020,
-    "themes": [
-      "economics",
-      "development",
-      "health"
-    ]
-  },
-  {
-    "id": "nso_dhs",
-    "name": "DHS Interview Recordings",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 680,
-    "items": null,
-    "description": "Demographic and Health Survey interview audio covering health fertility and nutrition topics.",
-    "yearStart": 2020,
-    "yearEnd": 2021,
-    "themes": [
-      "health",
-      "demographics"
-    ]
-  },
-  {
-    "id": "nso_census",
-    "name": "Census Enumerator Recordings",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 450,
-    "items": null,
-    "description": "Field recordings from census enumeration with diverse speaker demographics.",
-    "yearStart": 2018,
-    "yearEnd": 2018,
-    "themes": [
-      "demographics",
-      "governance"
-    ]
-  },
-  {
-    "id": "mie_textbooks",
-    "name": "Primary School Chichewa Textbooks",
-    "provider": "mie",
-    "language": "chichewa",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 48,
-    "description": "Standards 1-8 Chichewa textbooks used in primary education across Malawi.",
-    "yearStart": 2015,
-    "yearEnd": 2023,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mie_tumbuka",
-    "name": "Tumbuka Reading Materials",
-    "provider": "mie",
-    "language": "tumbuka",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 22,
-    "description": "Supplementary reading materials and early-grade readers in Tumbuka.",
-    "yearStart": 2018,
-    "yearEnd": 2022,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mie_yao",
-    "name": "Yao Language Teaching Guides",
-    "provider": "mie",
-    "language": "yao",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 15,
-    "description": "Teacher guides and student materials for Yao-medium instruction.",
-    "yearStart": 2019,
-    "yearEnd": 2023,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mij_broadcasts",
-    "name": "MIJ Student Broadcasts",
-    "provider": "mij",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 28,
-    "items": null,
-    "description": "Student practice radio broadcasts in Chichewa covering news features and interviews.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "education",
-      "news"
-    ]
-  },
-  {
-    "id": "mij_articles",
-    "name": "MIJ Student News Writing",
-    "provider": "mij",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 1800,
-    "description": "Student-written news articles in Chichewa as part of journalism coursework.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "education",
-      "news"
-    ]
-  },
-  {
-    "id": "doi_releases",
-    "name": "Government Press Releases",
-    "provider": "doi",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 4200,
-    "description": "Official government communications and press releases in Chichewa.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "governance",
-      "politics"
-    ]
-  },
-  {
-    "id": "doi_psa",
-    "name": "Public Service Announcements",
-    "provider": "doi",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 15,
-    "items": null,
-    "description": "Radio PSAs on health civic education and public safety in Chichewa.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "health",
-      "education",
-      "governance"
-    ]
-  },
-  {
-    "id": "montfort_books",
-    "name": "Montfort Chichewa Publications",
-    "provider": "montfort",
-    "language": "chichewa",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 85,
-    "description": "Books pamphlets and booklets on faith community development and social issues in Chichewa.",
-    "yearStart": 2010,
-    "yearEnd": 2024,
-    "themes": [
-      "religion",
-      "development",
-      "society"
-    ]
-  },
-  {
-    "id": "montfort_drama",
-    "name": "Montfort Audio Dramas",
-    "provider": "montfort",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 55,
-    "items": null,
-    "description": "Audio drama productions on social themes including HIV/AIDS awareness education and family life.",
-    "yearStart": 2015,
-    "yearEnd": 2023,
-    "themes": [
-      "health",
-      "culture",
-      "society"
-    ]
-  },
-  {
-    "id": "montfort_sena",
-    "name": "Montfort Sena Publications",
-    "provider": "montfort",
-    "language": "sena",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 18,
-    "description": "Religious and educational materials published in Sena for the Lower Shire region.",
-    "yearStart": 2016,
-    "yearEnd": 2022,
-    "themes": [
-      "religion",
-      "education"
-    ]
-  }
-];
+    const COLLECTIONS = [
+      {
+        "id": "ri_mawu",
+        "name": "Mawu a Anthu",
+        "provider": "radio_islam",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 245,
+        "items": null,
+        "description": "Community call-in show covering social issues politics and daily life in Chichewa.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "society",
+          "politics",
+          "culture"
+        ]
+      },
+      {
+        "id": "ri_news_chi",
+        "name": "Radio Islam Chichewa News",
+        "provider": "radio_islam",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 180,
+        "items": null,
+        "description": "Daily Chichewa-language news bulletins covering national and international events.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics"
+        ]
+      },
+      {
+        "id": "ri_yao_prog",
+        "name": "Yao Language Programs",
+        "provider": "radio_islam",
+        "language": "yao",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 95,
+        "items": null,
+        "description": "Cultural and religious programming broadcast in Yao.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "culture",
+          "religion"
+        ]
+      },
+      {
+        "id": "mbc_radio1_news",
+        "name": "MBC Radio 1 News Bulletins",
+        "provider": "mbc",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 520,
+        "items": null,
+        "description": "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.",
+        "yearStart": 2015,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "governance"
+        ]
+      },
+      {
+        "id": "mbc_tumbuka",
+        "name": "MBC Tumbuka Service",
+        "provider": "mbc",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 310,
+        "items": null,
+        "description": "Tumbuka-language programming including news drama and agricultural advice.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "agriculture",
+          "culture"
+        ]
+      },
+      {
+        "id": "mbc_drama",
+        "name": "MBC Radio Drama Archive",
+        "provider": "mbc",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 185,
+        "items": null,
+        "description": "Scripted radio dramas and serialized stories in Chichewa.",
+        "yearStart": 2010,
+        "yearEnd": 2023,
+        "themes": [
+          "culture",
+          "entertainment"
+        ]
+      },
+      {
+        "id": "twr_health",
+        "name": "Moyo Wathu Health Series",
+        "provider": "twr",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 120,
+        "items": null,
+        "description": "Health education programming covering HIV/AIDS malaria nutrition and maternal health.",
+        "yearStart": 2017,
+        "yearEnd": 2024,
+        "themes": [
+          "health",
+          "education"
+        ]
+      },
+      {
+        "id": "twr_agri",
+        "name": "Ulimi Wabwino Agricultural Shows",
+        "provider": "twr",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 88,
+        "items": null,
+        "description": "Agricultural extension programming in Tumbuka covering farming techniques and markets.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "agriculture",
+          "economics"
+        ]
+      },
+      {
+        "id": "twr_lomwe",
+        "name": "TWR Lomwe Broadcasts",
+        "provider": "twr",
+        "language": "lomwe",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 45,
+        "items": null,
+        "description": "Mixed programming in Lomwe including storytelling and community development.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "culture",
+          "development"
+        ]
+      },
+      {
+        "id": "yoneco_youth",
+        "name": "Achinyamata Aluso Youth Program",
+        "provider": "yoneco_fm",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 75,
+        "items": null,
+        "description": "Youth empowerment and rights-based programming in Chichewa from Zomba.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "youth",
+          "rights",
+          "society"
+        ]
+      },
+      {
+        "id": "yoneco_gender",
+        "name": "Gender & Rights Podcasts",
+        "provider": "yoneco_fm",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 32,
+        "items": null,
+        "description": "Podcast episodes on gender equality GBV prevention and human rights.",
+        "yearStart": 2021,
+        "yearEnd": 2024,
+        "themes": [
+          "gender",
+          "rights",
+          "society"
+        ]
+      },
+      {
+        "id": "nyanthepa_agri",
+        "name": "Nyanthepa Ulimi Shows",
+        "provider": "nyanthepa",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 64,
+        "items": null,
+        "description": "Agricultural programming in Tumbuka for farmers in the Mzimba area.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "agriculture"
+        ]
+      },
+      {
+        "id": "nyanthepa_gov",
+        "name": "Local Governance Discussions",
+        "provider": "nyanthepa",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 40,
+        "items": null,
+        "description": "Community discussions on local governance and development issues in Tumbuka.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "governance",
+          "development"
+        ]
+      },
+      {
+        "id": "times_chi_news",
+        "name": "Daily Times Chichewa Articles",
+        "provider": "times_group",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 12500,
+        "description": "Chichewa-language news articles from The Daily Times covering politics business and society.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "economics"
+        ]
+      },
+      {
+        "id": "times_eng_news",
+        "name": "Daily Times English Archive",
+        "provider": "times_group",
+        "language": "english",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 45000,
+        "description": "English-language articles useful as parallel corpus for translation model training.",
+        "yearStart": 2014,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "economics"
+        ]
+      },
+      {
+        "id": "times_opinion",
+        "name": "Malawi News Opinion Columns",
+        "provider": "times_group",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 3200,
+        "description": "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "politics",
+          "society"
+        ]
+      },
+      {
+        "id": "nation_chi",
+        "name": "The Nationn Chichewa Section",
+        "provider": "nation_publications",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 9800,
+        "description": "Chichewa news reporting from The Nation covering national affairs.",
+        "yearStart": 2015,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics"
+        ]
+      },
+      {
+        "id": "nation_features",
+        "name": "Weekend Nation Features",
+        "provider": "nation_publications",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 2100,
+        "description": "Long-form feature stories and investigative journalism  in Chichewa and English.",
+        "yearStart": 2017,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "society",
+          "culture"
+        ]
+      },
+      {
+        "id": "nso_ihs5",
+        "name": "IHS5 Survey Audio",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 1200,
+        "items": null,
+        "description": "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.",
+        "yearStart": 2019,
+        "yearEnd": 2020,
+        "themes": [
+          "economics",
+          "development",
+          "health"
+        ]
+      },
+      {
+        "id": "nso_ihs5_tum",
+        "name": "IHS5 Survey Audio (Tumbuka)",
+        "provider": "mnso",
+        "language": "tumbuka",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 340,
+        "items": null,
+        "description": "Tumbuka-language interviews from IHS5 in the Northern Region.",
+        "yearStart": 2019,
+        "yearEnd": 2020,
+        "themes": [
+          "economics",
+          "development",
+          "health"
+        ]
+      },
+      {
+        "id": "nso_dhs",
+        "name": "DHS Interview Recordings",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 680,
+        "items": null,
+        "description": "Demographic and Health Survey interview audio covering health fertility and nutrition topics.",
+        "yearStart": 2020,
+        "yearEnd": 2021,
+        "themes": [
+          "health",
+          "demographics"
+        ]
+      },
+      {
+        "id": "nso_census",
+        "name": "Census Enumerator Recordings",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 450,
+        "items": null,
+        "description": "Field recordings from census enumeration with diverse speaker demographics.",
+        "yearStart": 2018,
+        "yearEnd": 2018,
+        "themes": [
+          "demographics",
+          "governance"
+        ]
+      },
+      {
+        "id": "mie_textbooks",
+        "name": "Primary School Chichewa Textbooks",
+        "provider": "mie",
+        "language": "chichewa",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 48,
+        "description": "Standards 1-8 Chichewa textbooks used in primary education across Malawi.",
+        "yearStart": 2015,
+        "yearEnd": 2023,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mie_tumbuka",
+        "name": "Tumbuka Reading Materials",
+        "provider": "mie",
+        "language": "tumbuka",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 22,
+        "description": "Supplementary reading materials and early-grade readers in Tumbuka.",
+        "yearStart": 2018,
+        "yearEnd": 2022,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mie_yao",
+        "name": "Yao Language Teaching Guides",
+        "provider": "mie",
+        "language": "yao",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 15,
+        "description": "Teacher guides and student materials for Yao-medium instruction.",
+        "yearStart": 2019,
+        "yearEnd": 2023,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mij_broadcasts",
+        "name": "MIJ Student Broadcasts",
+        "provider": "mij",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 28,
+        "items": null,
+        "description": "Student practice radio broadcasts in Chichewa covering news features and interviews.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "education",
+          "news"
+        ]
+      },
+      {
+        "id": "mij_articles",
+        "name": "MIJ Student News Writing",
+        "provider": "mij",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 1800,
+        "description": "Student-written news articles in Chichewa as part of journalism coursework.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "education",
+          "news"
+        ]
+      },
+      {
+        "id": "doi_releases",
+        "name": "Government Press Releases",
+        "provider": "doi",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 4200,
+        "description": "Official government communications and press releases in Chichewa.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "governance",
+          "politics"
+        ]
+      },
+      {
+        "id": "doi_psa",
+        "name": "Public Service Announcements",
+        "provider": "doi",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 15,
+        "items": null,
+        "description": "Radio PSAs on health civic education and public safety in Chichewa.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "health",
+          "education",
+          "governance"
+        ]
+      },
+      {
+        "id": "montfort_books",
+        "name": "Montfort Chichewa Publications",
+        "provider": "montfort",
+        "language": "chichewa",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 85,
+        "description": "Books pamphlets and booklets on faith community development and social issues in Chichewa.",
+        "yearStart": 2010,
+        "yearEnd": 2024,
+        "themes": [
+          "religion",
+          "development",
+          "society"
+        ]
+      },
+      {
+        "id": "montfort_drama",
+        "name": "Montfort Audio Dramas",
+        "provider": "montfort",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 55,
+        "items": null,
+        "description": "Audio drama productions on social themes including HIV/AIDS awareness education and family life.",
+        "yearStart": 2015,
+        "yearEnd": 2023,
+        "themes": [
+          "health",
+          "culture",
+          "society"
+        ]
+      },
+      {
+        "id": "montfort_sena",
+        "name": "Montfort Sena Publications",
+        "provider": "montfort",
+        "language": "sena",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 18,
+        "description": "Religious and educational materials published in Sena for the Lower Shire region.",
+        "yearStart": 2016,
+        "yearEnd": 2022,
+        "themes": [
+          "religion",
+          "education"
+        ]
+      }
+    ];
 
     // ══════════════════════════════════════════════════════════════
     // RENDER LOGIC

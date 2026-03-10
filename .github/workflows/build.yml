@@ -11,6 +11,7 @@ on:
       - 'index.html'
       - 'main.css'
       - '*.pdf'
+      - 'metadata-docs/**'
 
 permissions:
   contents: write
@@ -41,6 +42,7 @@ jobs:
           mkdir -p _site
           cp index.html main.css _site/
           cp *.pdf _site/ 2>/dev/null || true
+          cp -r metadata-docs _site/
 
           # Force-push the site contents to the build branch
           cd _site

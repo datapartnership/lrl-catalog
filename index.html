@@ -336,24 +336,96 @@
     <!-- ===================== API TAB ===================== -->
     <div class="tab-panel" id="panel-api">
       <div class="api-section">
+        <h3>How Data are Transferred</h3>
+        <p>
+          Rather than offering bulk downloads of entire collections, this catalog delivers content exclusively through
+          the API. This design is a deliberate requirement of the IP licensing agreements with each data provider:
+          datasets are made available only for permitted research and AI-training purposes, and the terms of those
+          agreements must be enforced programmatically at the point of transfer.
+        </p>
+        <p>
+          The API serves files as <strong>discrete, size-bounded chunks</strong> and enforces per-request and
+          per-key rate limits. This means:
+        </p>
+        <ul style="margin:0.5rem 0 0.75rem 1.25rem;line-height:1.75;">
+          <li><strong>No unrestricted bulk export.</strong> Consumers cannot download an entire collection in a single
+            request. The <code
+              style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">limit</code>
+            parameter caps how many file records are returned per call, and when the result set exceeds that cap a
+            random sample is returned rather than the full set.</li>
+          <li><strong>Controlled access via API keys.</strong> Every request must include a valid
+            <code
+              style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">X-Api-Key</code>
+            header. Keys are issued only to approved research teams, making it possible to audit usage, suspend
+            access, and enforce the scope of use agreed with the provider.
+          </li>
+          <li><strong>Compliance with IP licensing terms.</strong> Data providers retain ownership of the underlying
+            content. The chunked, API-mediated delivery model ensures that the platform can uphold usage restrictions
+            (e.g., non-commercial research only, attribution requirements, redistribution prohibitions) that would be
+            impossible to enforce with unrestricted file downloads.</li>
+        </ul>
+
+      </div>
+      <div class="api-section">
+        <h3>IP Protection</h3>
+        <p>To protect the intellectual property rights of content providers, the API enforces two complementary
+          mechanisms that prevent reconstruction of original source material.</p>
+
+        <div class="ip-protection-grid">
+          <div class="ip-card">
+            <div class="ip-card-icon">🔀</div>
+            <div class="ip-card-body">
+              <h4>Chunked &amp; Randomized Delivery</h4>
+              <p>All content is pre-segmented into small, paragraph-sized chunks before storage. When a query is
+                executed, only the relevant chunks are returned — and their order is <strong>randomized on every
+                  request</strong>. This ensures that even repeated queries for the same content yield a different
+                ordering each time, making it computationally impractical to reassemble or reconstruct the original
+                source document from API responses.</p>
+            </div>
+          </div>
+          <div class="ip-card">
+            <div class="ip-card-icon">📊</div>
+            <div class="ip-card-body">
+              <h4>Daily API Call Limits</h4>
+              <p>Each registered user is subject to a <strong>daily rate limit</strong> on API calls. This cap is
+                enforced per API key and resets at midnight UTC. Rate limits bound the total volume of content any
+                single user can retrieve within a 24-hour window, providing an additional safeguard against bulk
+                extraction attempts. If your limit is exceeded, the API returns a <code
+                  style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">429 Too Many Requests</code>
+                response.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-section">
         <h3>API Overview</h3>
-        <p>The Low Resource Language Library API is an ASP.NET 8 Web API that serves <strong>Croissant 1.0 JSON-LD</strong>
+        <p>The Low Resource Language Library API is an ASP.NET 8 Web API that serves <strong>Croissant 1.0
+            JSON-LD</strong>
           responses from a SQLite/PostgreSQL database of dataset metadata. Use it to search and filter file-level
           records by keyword, theme, author, and year. The API is read-only and requires an API key passed via the
-          <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code> header.
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code>
+          header.
         </p>
         <p><strong>Base URL:</strong>
-          <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1</code>          
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1</code>
         </p>
-        <p><strong>Authentication:</strong>    Pass your key on every request via the
-          <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code> header.
+        <p><strong>Authentication:</strong> Pass your key on every request via the
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code>
+          header.
         </p>
         <p><strong>Swagger UI:</strong> Open
-          <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1/swagger</code>
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1/swagger</code>
           in your browser, click <strong>Authorize</strong> (top right), enter your API key, and all test requests
           will include the header automatically.
         </p>
       </div>
+
+
 
       <div class="api-section">
         <h3>Endpoints</h3>
@@ -410,24 +482,30 @@
                 </tr>
               </tbody>
             </table>
-            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;"><strong>Example requests:</strong></p>
+            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;"><strong>Example requests:</strong>
+            </p>
             <div class="code-block">
               <span class="comment"># All files tagged with "malaria", limit 10</span>
               curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"http://localhost:5000/api/datasets/query?keyword=malaria&limit=10"</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?keyword=malaria&limit=10"</span>
 
               <span class="comment"># Health and Education files from 2024</span>
               curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"http://localhost:5000/api/datasets/query?theme=Health&year=2024"</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?theme=Health&year=2024"</span>
 
               <span class="comment"># Combine filters</span>
               curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"http://localhost:5000/api/datasets/query?keyword=election&theme=Political&author=Banda&limit=5"</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?keyword=election&theme=Political&author=Banda&limit=5"</span>
             </div>
-            <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Example response:</strong></p>
+            <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Example
+                response:</strong></p>
             <div class="code-block">
               {
-              &nbsp;&nbsp;<span class="str">"@context"</span>: [ <span class="str">"https://mlcommons.org/working-groups/data/croissant/"</span>, { ... } ],
+              &nbsp;&nbsp;<span class="str">"@context"</span>: [ <span
+                class="str">"https://mlcommons.org/working-groups/data/croissant/"</span>, { ... } ],
               &nbsp;&nbsp;<span class="str">"generatedAt"</span>: <span class="str">"2026-02-27T10:00:00Z"</span>,
               &nbsp;&nbsp;<span class="str">"samplingInfo"</span>: {
               &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"totalMatched"</span>: 120,
@@ -437,16 +515,24 @@
               &nbsp;&nbsp;},
               &nbsp;&nbsp;<span class="str">"@graph"</span>: [
               &nbsp;&nbsp;&nbsp;&nbsp;{
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span class="str">"sc:Dataset"</span>,
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span class="str">"DDP-NATION-2024"</span>,
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span class="str">"Nation Newspaper 2024"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span
+                class="str">"sc:Dataset"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span
+                class="str">"DDP-NATION-2024"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span class="str">"Nation Newspaper
+                2024"</span>,
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"distribution"</span>: [
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span class="str">"cr:FileObject"</span>,
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span class="str">"file-2024-abc123"</span>,
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span class="str">"Nation_On_Sunday_20240315_p001.pdf"</span>,
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scKeywords"</span>: [<span class="str">"malaria"</span>, <span class="str">"hospital"</span>],
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"dcatTheme"</span>: [<span class="str">"Health"</span>],
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span
+                class="str">"cr:FileObject"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span
+                class="str">"file-2024-abc123"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span
+                class="str">"Nation_On_Sunday_20240315_p001.pdf"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scKeywords"</span>: [<span
+                class="str">"malaria"</span>, <span class="str">"hospital"</span>],
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"dcatTheme"</span>: [<span
+                class="str">"Health"</span>],
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
@@ -477,7 +563,8 @@
 
       <div class="api-section">
         <h3>Python SDK — DDPLRLL Dataset Reader</h3>
-        <p>Python client for the Low Resource Language Library API. Queries Croissant JSON-LD metadata, downloads the referenced PDF files, and saves a local JSON-LD with rewritten file paths.</p>
+        <p>Python client for the Low Resource Language Library API. Queries Croissant JSON-LD metadata, downloads the
+          referenced PDF files, and saves a local JSON-LD with rewritten file paths.</p>
 
         <h4 style="margin:1.5rem 0 0.5rem;">Installation</h4>
         <div class="code-block">
@@ -486,22 +573,83 @@
         </div>
 
         <h4 style="margin:1.5rem 0 0.5rem;">Configuration</h4>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">All settings can be provided via <strong>CLI flags</strong>, <strong>environment variables</strong> (prefixed <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">DDPLRLL_</code>), or a <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">.env</code> file.</p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">All settings can be provided via
+          <strong>CLI flags</strong>, <strong>environment variables</strong> (prefixed <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">DDPLRLL_</code>),
+          or a <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">.env</code>
+          file.
+        </p>
         <table class="param-table">
           <thead>
-            <tr><th>Env Variable</th><th>CLI Flag</th><th>Default</th><th>Description</th></tr>
+            <tr>
+              <th>Env Variable</th>
+              <th>CLI Flag</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_BASE_URL</code></td><td><code style="font-family:'Roboto Mono',monospace;">--api-url</code></td><td><code style="font-family:'Roboto Mono',monospace;">https://lrllapi.azurewebsites.net</code></td><td>Base URL of the API</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_KEY</code></td><td><code style="font-family:'Roboto Mono',monospace;">--api-key</code></td><td><em>(empty)</em></td><td><code style="font-family:'Roboto Mono',monospace;">X-Api-Key</code> header value</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_KEYWORD</code></td><td><code style="font-family:'Roboto Mono',monospace;">--keyword</code></td><td>—</td><td>Filter by keyword</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_THEME</code></td><td><code style="font-family:'Roboto Mono',monospace;">--theme</code></td><td>—</td><td>Filter by theme</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_AUTHOR</code></td><td><code style="font-family:'Roboto Mono',monospace;">--author</code></td><td>—</td><td>Filter by author</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_YEAR</code></td><td><code style="font-family:'Roboto Mono',monospace;">--year</code></td><td>—</td><td>Filter by year</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_LIMIT</code></td><td><code style="font-family:'Roboto Mono',monospace;">--limit</code></td><td><code style="font-family:'Roboto Mono',monospace;">30</code></td><td>Max file entries (1–100)</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_OUTPUT_DIR</code></td><td><code style="font-family:'Roboto Mono',monospace;">--output</code></td><td><code style="font-family:'Roboto Mono',monospace;">./output</code></td><td>Output directory</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_DOWNLOAD_FILES</code></td><td><code style="font-family:'Roboto Mono',monospace;">--no-download</code></td><td><code style="font-family:'Roboto Mono',monospace;">true</code></td><td>Download PDFs</td></tr>
-            <tr><td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_MAX_CONCURRENT_DOWNLOADS</code></td><td><code style="font-family:'Roboto Mono',monospace;">--concurrency</code></td><td><code style="font-family:'Roboto Mono',monospace;">5</code></td><td>Parallel downloads</td></tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_BASE_URL</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--api-url</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">https://lrllapi.azurewebsites.net</code></td>
+              <td>Base URL of the API</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_KEY</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--api-key</code></td>
+              <td><em>(empty)</em></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">X-Api-Key</code> header value</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_KEYWORD</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--keyword</code></td>
+              <td>—</td>
+              <td>Filter by keyword</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_THEME</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--theme</code></td>
+              <td>—</td>
+              <td>Filter by theme</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_AUTHOR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--author</code></td>
+              <td>—</td>
+              <td>Filter by author</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_YEAR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--year</code></td>
+              <td>—</td>
+              <td>Filter by year</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_LIMIT</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--limit</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">30</code></td>
+              <td>Max file entries (1–100)</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_OUTPUT_DIR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--output</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">./output</code></td>
+              <td>Output directory</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_DOWNLOAD_FILES</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--no-download</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">true</code></td>
+              <td>Download PDFs</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_MAX_CONCURRENT_DOWNLOADS</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--concurrency</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">5</code></td>
+              <td>Parallel downloads</td>
+            </tr>
           </tbody>
         </table>
 
@@ -537,7 +685,8 @@
           client = DdplrllDatasetClient(settings)
 
           <span class="comment"># Full pipeline: query → download PDFs → save JSON-LD</span>
-          jsonld_path = client.run(keyword=<span class="str">"malaria"</span>, year=<span class="str">"2024"</span>, limit=10)
+          jsonld_path = client.run(keyword=<span class="str">"malaria"</span>, year=<span class="str">"2024"</span>,
+          limit=10)
           <span class="kw">print</span>(<span class="str">f"Saved to {jsonld_path}"</span>)
 
           <span class="comment"># Query only (returns raw dict)</span>
@@ -547,20 +696,27 @@
           response = client.query_validated(keyword=<span class="str">"malaria"</span>)
           <span class="kw">for</span> dataset <span class="kw">in</span> response.graph <span class="kw">or</span> []:
           &nbsp;&nbsp;<span class="kw">print</span>(dataset.sc_name)
-          &nbsp;&nbsp;<span class="kw">for</span> f <span class="kw">in</span> dataset.distribution <span class="kw">or</span> []:
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">print</span>(<span class="str">f"  {f.sc_name} → {f.sc_content_url}"</span>)
+          &nbsp;&nbsp;<span class="kw">for</span> f <span class="kw">in</span> dataset.distribution <span
+            class="kw">or</span> []:
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">print</span>(<span class="str">f" {f.sc_name} →
+            {f.sc_content_url}"</span>)
         </div>
 
         <h4 style="margin:1.5rem 0 0.5rem;">Output Structure</h4>
         <div class="code-block">
           output/
-          ├── dataset.jsonld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Croissant JSON-LD with local file paths</span>
+          ├── dataset.jsonld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">#
+            Croissant JSON-LD with local file paths</span>
           └── files/
           &nbsp;&nbsp;&nbsp;&nbsp;├── file-2022-465a93ae.pdf
           &nbsp;&nbsp;&nbsp;&nbsp;├── file-2022-1cafc7a4.pdf
           &nbsp;&nbsp;&nbsp;&nbsp;└── ...
         </div>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0;">After downloading, each <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">scContentUrl</code> in <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code> is rewritten from the remote URL to the absolute local path:</p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0;">After downloading, each <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">scContentUrl</code>
+          in <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code>
+          is rewritten from the remote URL to the absolute local path:</p>
         <div class="code-block">
           <span class="comment">"scContentUrl": "https://lrllapi.azurewebsites.net/api/files/file-2022-465a93ae"</span>
           →
@@ -568,11 +724,17 @@
         </div>
 
         <h4 style="margin:1.5rem 0 0.5rem;">Using with mlcroissant</h4>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">The saved <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code> is a valid <a href="https://mlcommons.org/croissant/" target="_blank" rel="noopener">Croissant 1.0</a> document. Install the <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">mlcroissant</code> package to load it directly:</p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">The saved <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code>
+          is a valid <a href="https://mlcommons.org/croissant/" target="_blank" rel="noopener">Croissant 1.0</a>
+          document. Install the <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">mlcroissant</code>
+          package to load it directly:</p>
         <div class="code-block">
           pip install mlcroissant
         </div>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Load and iterate records:</strong></p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Load and iterate
+            records:</strong></p>
         <div class="code-block">
           <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
 
@@ -582,7 +744,8 @@
           <span class="kw">for</span> record <span class="kw">in</span> records:
           &nbsp;&nbsp;<span class="kw">print</span>(record)
         </div>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Inspect metadata:</strong></p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Inspect metadata:</strong>
+        </p>
         <div class="code-block">
           <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
 
@@ -594,9 +757,11 @@
 
           <span class="comment"># List all record sets</span>
           <span class="kw">for</span> record_set <span class="kw">in</span> ds.metadata.record_sets:
-          &nbsp;&nbsp;<span class="kw">print</span>(record_set.name, <span class="str">"–"</span>, len(record_set.fields), <span class="str">"fields"</span>)
+          &nbsp;&nbsp;<span class="kw">print</span>(record_set.name, <span class="str">"–"</span>,
+          len(record_set.fields), <span class="str">"fields"</span>)
         </div>
-        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>End-to-end: ddplrll-reader → mlcroissant:</strong></p>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>End-to-end: ddplrll-reader →
+            mlcroissant:</strong></p>
         <div class="code-block">
           <span class="kw">from</span> ddplrll_reader <span class="kw">import</span> DdplrllDatasetClient, Settings
           <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
@@ -606,7 +771,8 @@
           &nbsp;&nbsp;api_base_url=<span class="str">"https://lrllapi.azurewebsites.net"</span>,
           &nbsp;&nbsp;api_key=<span class="str">"MY_KEY"</span>,
           ))
-          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>, limit=50)
+          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>,
+          limit=50)
 
           <span class="comment"># 2. Load with mlcroissant</span>
           ds = Dataset(jsonld=jsonld_path)
@@ -620,27 +786,39 @@
           <span class="kw">import</span> pandas <span class="kw">as</span> pd
 
           <span class="comment"># Load the JSON-LD</span>
-          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span> f:
+          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span>
+          f:
           &nbsp;&nbsp;data = json.load(f)
 
           <span class="comment"># Flatten all file objects across every dataset/year into a DataFrame</span>
           rows = []
-          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>, []):
+          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>,
+          []):
           &nbsp;&nbsp;dataset_id = dataset_node.get(<span class="str">"id"</span>)
           &nbsp;&nbsp;year = dataset_node.get(<span class="str">"scTemporalCoverage"</span>)
-          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span class="str">"distribution"</span>, []):
+          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span
+            class="str">"distribution"</span>, []):
           &nbsp;&nbsp;&nbsp;&nbsp;rows.append({
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"dataset_id"</span>: dataset_id,
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"year"</span>: year,
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj.get(<span class="str">"id"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span class="str">"scName"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span class="str">"scAuthor"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span class="str">"scContentUrl"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"size_bytes"</span>: file_obj.get(<span class="str">"scContentSize"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span class="str">"scWordCount"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span class="str">"ddpvTokenCount"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: file_obj.get(<span class="str">"scKeywords"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: file_obj.get(<span class="str">"dcatTheme"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj.get(<span
+            class="str">"id"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span
+            class="str">"scName"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span
+            class="str">"scAuthor"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span
+            class="str">"scContentUrl"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"size_bytes"</span>: file_obj.get(<span
+            class="str">"scContentSize"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span
+            class="str">"scWordCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span
+            class="str">"ddpvTokenCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: file_obj.get(<span
+            class="str">"scKeywords"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: file_obj.get(<span
+            class="str">"dcatTheme"</span>),
           &nbsp;&nbsp;&nbsp;&nbsp;})
 
           df = pd.DataFrame(rows)
@@ -654,23 +832,35 @@
           <span class="kw">import</span> json
           <span class="kw">from</span> datasets <span class="kw">import</span> Dataset
 
-          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span> f:
+          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span>
+          f:
           &nbsp;&nbsp;data = json.load(f)
 
           <span class="comment"># Build a flat list of records</span>
           records = []
-          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>, []):
-          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span class="str">"distribution"</span>, []):
+          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>,
+          []):
+          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span
+            class="str">"distribution"</span>, []):
           &nbsp;&nbsp;&nbsp;&nbsp;records.append({
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj[<span class="str">"id"</span>],
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span class="str">"scName"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span class="str">"scAuthor"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"year"</span>: dataset_node.get(<span class="str">"scTemporalCoverage"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span class="str">"scContentUrl"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span class="str">"scWordCount"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span class="str">"ddpvTokenCount"</span>),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: <span class="str">", "</span>.join(file_obj.get(<span class="str">"scKeywords"</span>, [])),
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: <span class="str">", "</span>.join(file_obj.get(<span class="str">"dcatTheme"</span>, [])),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj[<span
+            class="str">"id"</span>],
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span
+            class="str">"scName"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span
+            class="str">"scAuthor"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"year"</span>: dataset_node.get(<span
+            class="str">"scTemporalCoverage"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span
+            class="str">"scContentUrl"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span
+            class="str">"scWordCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span
+            class="str">"ddpvTokenCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: <span class="str">",
+            "</span>.join(file_obj.get(<span class="str">"scKeywords"</span>, [])),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: <span class="str">",
+            "</span>.join(file_obj.get(<span class="str">"dcatTheme"</span>, [])),
           &nbsp;&nbsp;&nbsp;&nbsp;})
 
           ds = Dataset.from_list(records)
@@ -678,7 +868,8 @@
           <span class="kw">print</span>(ds[0])
 
           <span class="comment"># Filter, shuffle, split</span>
-          ds_health = ds.filter(<span class="kw">lambda</span> r: <span class="str">"Health"</span> <span class="kw">in</span> r[<span class="str">"themes"</span>])
+          ds_health = ds.filter(<span class="kw">lambda</span> r: <span class="str">"Health"</span> <span
+            class="kw">in</span> r[<span class="str">"themes"</span>])
           train_test = ds_health.train_test_split(test_size=0.2)
           <span class="kw">print</span>(train_test)
         </div>
@@ -693,7 +884,8 @@
           &nbsp;&nbsp;api_base_url=<span class="str">"https://lrllapi.azurewebsites.net"</span>,
           &nbsp;&nbsp;api_key=<span class="str">"MY_KEY"</span>,
           ))
-          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>, limit=50)
+          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>,
+          limit=50)
 
           <span class="comment"># 2. Load into pandas</span>
           <span class="kw">import</span> json
@@ -709,38 +901,21 @@
           &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: fo.get(<span class="str">"dcatTheme"</span>),
           &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"path"</span>: fo.get(<span class="str">"scContentUrl"</span>),
           &nbsp;&nbsp;}
-          &nbsp;&nbsp;<span class="kw">for</span> node <span class="kw">in</span> data.get(<span class="str">"graph"</span>, [])
-          &nbsp;&nbsp;<span class="kw">for</span> fo <span class="kw">in</span> node.get(<span class="str">"distribution"</span>, [])
+          &nbsp;&nbsp;<span class="kw">for</span> node <span class="kw">in</span> data.get(<span
+            class="str">"graph"</span>, [])
+          &nbsp;&nbsp;<span class="kw">for</span> fo <span class="kw">in</span> node.get(<span
+            class="str">"distribution"</span>, [])
           ]
           df = pd.DataFrame(rows)
 
           <span class="comment"># 3. Analyse</span>
           <span class="kw">print</span>(df.describe())
-          <span class="kw">print</span>(df.groupby(<span class="str">"author"</span>)[<span class="str">"tokens"</span>].sum().sort_values(ascending=<span class="kw">False</span>))
+          <span class="kw">print</span>(df.groupby(<span class="str">"author"</span>)[<span
+            class="str">"tokens"</span>].sum().sort_values(ascending=<span class="kw">False</span>))
         </div>
       </div>
 
-      <div class="api-section">
-        <h3>IP Protection</h3>
-        <p>To protect the intellectual property rights of content providers, the API enforces two complementary mechanisms that prevent reconstruction of original source material.</p>
 
-        <div class="ip-protection-grid">
-          <div class="ip-card">
-            <div class="ip-card-icon">🔀</div>
-            <div class="ip-card-body">
-              <h4>Chunked &amp; Randomized Delivery</h4>
-              <p>All content is pre-segmented into small, paragraph-sized chunks before storage. When a query is executed, only the relevant chunks are returned — and their order is <strong>randomized on every request</strong>. This ensures that even repeated queries for the same content yield a different ordering each time, making it computationally impractical to reassemble or reconstruct the original source document from API responses.</p>
-            </div>
-          </div>
-          <div class="ip-card">
-            <div class="ip-card-icon">📊</div>
-            <div class="ip-card-body">
-              <h4>Daily API Call Limits</h4>
-              <p>Each registered user is subject to a <strong>daily rate limit</strong> on API calls. This cap is enforced per API key and resets at midnight UTC. Rate limits bound the total volume of content any single user can retrieve within a 24-hour window, providing an additional safeguard against bulk extraction attempts. If your limit is exceeded, the API returns a <code style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">429 Too Many Requests</code> response.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- ===================== METADATA SCHEMAS TAB ===================== -->
@@ -792,19 +967,19 @@
         <p class="standards-label">Standards incorporated across all schemas:</p>
         <div class="standards-pills">
           <div class="standards-row">
-          <span class="std-pill core">Croissant</span>
-          <span class="std-pill core">Schema.org Dataset Vocabulary</span>
-          <span class="std-pill core">Dublin Core Terms</span>
-          <span class="std-pill w3c">Data Catalog Vocabulary (DCAT)</span>
-          <span class="std-pill w3c">Data Quality Vocabulary (DQV)</span>
-          <span class="std-pill w3c">Provenance Ontology (PROV-O)</span>
-          <span class="std-pill w3c">RDF Schema (RDFS)</span>
-          <span class="std-pill domain">EBUCore</span>
-          <span class="std-pill domain">Open Language Archives Community (OLAC)</span>
-          <span class="std-pill domain">Bibliographic Ontology (BIBO)</span>
-          <span class="std-pill domain">Data Documentation Initiative (DDI)</span>
-          <span class="std-pill custom">DDPV</span>
-        </div>
+            <span class="std-pill core">Croissant</span>
+            <span class="std-pill core">Schema.org Dataset Vocabulary</span>
+            <span class="std-pill core">Dublin Core Terms</span>
+            <span class="std-pill w3c">Data Catalog Vocabulary (DCAT)</span>
+            <span class="std-pill w3c">Data Quality Vocabulary (DQV)</span>
+            <span class="std-pill w3c">Provenance Ontology (PROV-O)</span>
+            <span class="std-pill w3c">RDF Schema (RDFS)</span>
+            <span class="std-pill domain">EBUCore</span>
+            <span class="std-pill domain">Open Language Archives Community (OLAC)</span>
+            <span class="std-pill domain">Bibliographic Ontology (BIBO)</span>
+            <span class="std-pill domain">Data Documentation Initiative (DDI)</span>
+            <span class="std-pill custom">DDPV</span>
+          </div>
         </div>
       </div>
       <div class="api-section" style="margin-top: 2rem;">
@@ -981,635 +1156,635 @@
     // ══════════════════════════════════════════════════════════════
 
     const PROVIDERS = [
-  {
-    "id": "mnso",
-    "name": "Malawi National Statistical Office",
-    "type": "Government Institution",
-    "description": "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts."
-  },
-  {
-    "id": "times_group",
-    "name": "The Times Group",
-    "type": "Print & Digital Media",
-    "description": "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language."
-  },
-  {
-    "id": "nation_publications",
-    "name": "The Nation Publications",
-    "type": "Print & Digital Media",
-    "description": "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi."
-  },
-  {
-    "id": "radio_islam",
-    "name": "Radio Islam",
-    "type": "Broadcaster — Radio",
-    "description": "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data."
-  },
-  {
-    "id": "twr",
-    "name": "Transworld Radio",
-    "type": "Broadcaster — Radio",
-    "description": "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows."
-  },
-  {
-    "id": "mbc",
-    "name": "Malawi Broadcasting Corporation",
-    "type": "Broadcaster — Radio & TV (State)",
-    "description": "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2 (now known as Namikango FM). As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming."
-  },
-  {
-    "id": "yoneco_fm",
-    "name": "YONECO FM",
-    "type": "Broadcaster — Community Radio",
-    "description": "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district."
-  },
-  {
-    "id": "nyanthepa",
-    "name": "Nyanthepa Community Radio",
-    "type": "Broadcaster — Community Radio",
-    "description": "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance, providing valuable Tumbuka-language audio data."
-  },
-  {
-    "id": "mij",
-    "name": "Malawi Institute of Journalism",
-    "type": "Educational Institution",
-    "description": "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects."
-  },
-  {
-    "id": "doi",
-    "name": "Malawi Department of Information",
-    "type": "Government Institution",
-    "description": "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution."
-  },
-  {
-    "id": "mie",
-    "name": "Malawi Institute of Education",
-    "type": "Educational Institution",
-    "description": "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education."
-  },
-  {
-    "id": "montfort",
-    "name": "Montfort Media",
-    "type": "Religious & Community Media",
-    "description": "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content."
-  }
-];
+      {
+        "id": "mnso",
+        "name": "Malawi National Statistical Office",
+        "type": "Government Institution",
+        "description": "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts."
+      },
+      {
+        "id": "times_group",
+        "name": "The Times Group",
+        "type": "Print & Digital Media",
+        "description": "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language."
+      },
+      {
+        "id": "nation_publications",
+        "name": "The Nation Publications",
+        "type": "Print & Digital Media",
+        "description": "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi."
+      },
+      {
+        "id": "radio_islam",
+        "name": "Radio Islam",
+        "type": "Broadcaster — Radio",
+        "description": "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data."
+      },
+      {
+        "id": "twr",
+        "name": "Transworld Radio",
+        "type": "Broadcaster — Radio",
+        "description": "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows."
+      },
+      {
+        "id": "mbc",
+        "name": "Malawi Broadcasting Corporation",
+        "type": "Broadcaster — Radio & TV (State)",
+        "description": "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2 (now known as Namikango FM). As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming."
+      },
+      {
+        "id": "yoneco_fm",
+        "name": "YONECO FM",
+        "type": "Broadcaster — Community Radio",
+        "description": "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district."
+      },
+      {
+        "id": "nyanthepa",
+        "name": "Nyanthepa Community Radio",
+        "type": "Broadcaster — Community Radio",
+        "description": "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance, providing valuable Tumbuka-language audio data."
+      },
+      {
+        "id": "mij",
+        "name": "Malawi Institute of Journalism",
+        "type": "Educational Institution",
+        "description": "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects."
+      },
+      {
+        "id": "doi",
+        "name": "Malawi Department of Information",
+        "type": "Government Institution",
+        "description": "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution."
+      },
+      {
+        "id": "mie",
+        "name": "Malawi Institute of Education",
+        "type": "Educational Institution",
+        "description": "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education."
+      },
+      {
+        "id": "montfort",
+        "name": "Montfort Media",
+        "type": "Religious & Community Media",
+        "description": "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content."
+      }
+    ];
 
     const COLLECTIONS = [
-  {
-    "id": "ri_mawu",
-    "name": "Mawu a Anthu",
-    "provider": "radio_islam",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 245,
-    "items": null,
-    "description": "Community call-in show covering social issues politics and daily life in Chichewa.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "society",
-      "politics",
-      "culture"
-    ]
-  },
-  {
-    "id": "ri_news_chi",
-    "name": "Radio Islam Chichewa News",
-    "provider": "radio_islam",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 180,
-    "items": null,
-    "description": "Daily Chichewa-language news bulletins covering national and international events.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics"
-    ]
-  },
-  {
-    "id": "ri_yao_prog",
-    "name": "Yao Language Programs",
-    "provider": "radio_islam",
-    "language": "yao",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 95,
-    "items": null,
-    "description": "Cultural and religious programming broadcast in Yao.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "culture",
-      "religion"
-    ]
-  },
-  {
-    "id": "mbc_radio1_news",
-    "name": "MBC Radio 1 News Bulletins",
-    "provider": "mbc",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 520,
-    "items": null,
-    "description": "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.",
-    "yearStart": 2015,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "governance"
-    ]
-  },
-  {
-    "id": "mbc_tumbuka",
-    "name": "MBC Tumbuka Service",
-    "provider": "mbc",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 310,
-    "items": null,
-    "description": "Tumbuka-language programming including news drama and agricultural advice.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "agriculture",
-      "culture"
-    ]
-  },
-  {
-    "id": "mbc_drama",
-    "name": "MBC Radio Drama Archive",
-    "provider": "mbc",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 185,
-    "items": null,
-    "description": "Scripted radio dramas and serialized stories in Chichewa.",
-    "yearStart": 2010,
-    "yearEnd": 2023,
-    "themes": [
-      "culture",
-      "entertainment"
-    ]
-  },
-  {
-    "id": "twr_health",
-    "name": "Moyo Wathu Health Series",
-    "provider": "twr",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 120,
-    "items": null,
-    "description": "Health education programming covering HIV/AIDS malaria nutrition and maternal health.",
-    "yearStart": 2017,
-    "yearEnd": 2024,
-    "themes": [
-      "health",
-      "education"
-    ]
-  },
-  {
-    "id": "twr_agri",
-    "name": "Ulimi Wabwino Agricultural Shows",
-    "provider": "twr",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 88,
-    "items": null,
-    "description": "Agricultural extension programming in Tumbuka covering farming techniques and markets.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "agriculture",
-      "economics"
-    ]
-  },
-  {
-    "id": "twr_lomwe",
-    "name": "TWR Lomwe Broadcasts",
-    "provider": "twr",
-    "language": "lomwe",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 45,
-    "items": null,
-    "description": "Mixed programming in Lomwe including storytelling and community development.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "culture",
-      "development"
-    ]
-  },
-  {
-    "id": "yoneco_youth",
-    "name": "Achinyamata Aluso Youth Program",
-    "provider": "yoneco_fm",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 75,
-    "items": null,
-    "description": "Youth empowerment and rights-based programming in Chichewa from Zomba.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "youth",
-      "rights",
-      "society"
-    ]
-  },
-  {
-    "id": "yoneco_gender",
-    "name": "Gender & Rights Podcasts",
-    "provider": "yoneco_fm",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 32,
-    "items": null,
-    "description": "Podcast episodes on gender equality GBV prevention and human rights.",
-    "yearStart": 2021,
-    "yearEnd": 2024,
-    "themes": [
-      "gender",
-      "rights",
-      "society"
-    ]
-  },
-  {
-    "id": "nyanthepa_agri",
-    "name": "Nyanthepa Ulimi Shows",
-    "provider": "nyanthepa",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 64,
-    "items": null,
-    "description": "Agricultural programming in Tumbuka for farmers in the Mzimba area.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "agriculture"
-    ]
-  },
-  {
-    "id": "nyanthepa_gov",
-    "name": "Local Governance Discussions",
-    "provider": "nyanthepa",
-    "language": "tumbuka",
-    "type": "radio",
-    "format": "audio/wav",
-    "hours": 40,
-    "items": null,
-    "description": "Community discussions on local governance and development issues in Tumbuka.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "governance",
-      "development"
-    ]
-  },
-  {
-    "id": "times_chi_news",
-    "name": "Daily Times Chichewa Articles",
-    "provider": "times_group",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 12500,
-    "description": "Chichewa-language news articles from The Daily Times covering politics business and society.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "economics"
-    ]
-  },
-  {
-    "id": "times_eng_news",
-    "name": "Daily Times English Archive",
-    "provider": "times_group",
-    "language": "english",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 45000,
-    "description": "English-language articles useful as parallel corpus for translation model training.",
-    "yearStart": 2014,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics",
-      "economics"
-    ]
-  },
-  {
-    "id": "times_opinion",
-    "name": "Malawi News Opinion Columns",
-    "provider": "times_group",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 3200,
-    "description": "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "politics",
-      "society"
-    ]
-  },
-  {
-    "id": "nation_chi",
-    "name": "The Nationn Chichewa Section",
-    "provider": "nation_publications",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 9801,
-    "description": "Chichewa news reporting from The Nation covering national affairs.",
-    "yearStart": 2015,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "politics"
-    ]
-  },
-  {
-    "id": "nation_features",
-    "name": "Weekend Nation Features",
-    "provider": "nation_publications",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 2100,
-    "description": "Long-form feature stories and investigative journalism  in Chichewa and English.",
-    "yearStart": 2017,
-    "yearEnd": 2024,
-    "themes": [
-      "news",
-      "society",
-      "culture"
-    ]
-  },
-  {
-    "id": "nso_ihs5",
-    "name": "IHS5 Survey Audio",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 1200,
-    "items": null,
-    "description": "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.",
-    "yearStart": 2019,
-    "yearEnd": 2020,
-    "themes": [
-      "economics",
-      "development",
-      "health"
-    ]
-  },
-  {
-    "id": "nso_ihs5_tum",
-    "name": "IHS5 Survey Audio (Tumbuka)",
-    "provider": "mnso",
-    "language": "tumbuka",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 340,
-    "items": null,
-    "description": "Tumbuka-language interviews from IHS5 in the Northern Region.",
-    "yearStart": 2019,
-    "yearEnd": 2020,
-    "themes": [
-      "economics",
-      "development",
-      "health"
-    ]
-  },
-  {
-    "id": "nso_dhs",
-    "name": "DHS Interview Recordings",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 680,
-    "items": null,
-    "description": "Demographic and Health Survey interview audio covering health fertility and nutrition topics.",
-    "yearStart": 2020,
-    "yearEnd": 2021,
-    "themes": [
-      "health",
-      "demographics"
-    ]
-  },
-  {
-    "id": "nso_census",
-    "name": "Census Enumerator Recordings",
-    "provider": "mnso",
-    "language": "chichewa",
-    "type": "surveys",
-    "format": "audio/wav",
-    "hours": 450,
-    "items": null,
-    "description": "Field recordings from census enumeration with diverse speaker demographics.",
-    "yearStart": 2018,
-    "yearEnd": 2018,
-    "themes": [
-      "demographics",
-      "governance"
-    ]
-  },
-  {
-    "id": "mie_textbooks",
-    "name": "Primary School Chichewa Textbooks",
-    "provider": "mie",
-    "language": "chichewa",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 48,
-    "description": "Standards 1-8 Chichewa textbooks used in primary education across Malawi.",
-    "yearStart": 2015,
-    "yearEnd": 2023,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mie_tumbuka",
-    "name": "Tumbuka Reading Materials",
-    "provider": "mie",
-    "language": "tumbuka",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 22,
-    "description": "Supplementary reading materials and early-grade readers in Tumbuka.",
-    "yearStart": 2018,
-    "yearEnd": 2022,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mie_yao",
-    "name": "Yao Language Teaching Guides",
-    "provider": "mie",
-    "language": "yao",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 15,
-    "description": "Teacher guides and student materials for Yao-medium instruction.",
-    "yearStart": 2019,
-    "yearEnd": 2023,
-    "themes": [
-      "education"
-    ]
-  },
-  {
-    "id": "mij_broadcasts",
-    "name": "MIJ Student Broadcasts",
-    "provider": "mij",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 28,
-    "items": null,
-    "description": "Student practice radio broadcasts in Chichewa covering news features and interviews.",
-    "yearStart": 2020,
-    "yearEnd": 2024,
-    "themes": [
-      "education",
-      "news"
-    ]
-  },
-  {
-    "id": "mij_articles",
-    "name": "MIJ Student News Writing",
-    "provider": "mij",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 1800,
-    "description": "Student-written news articles in Chichewa as part of journalism coursework.",
-    "yearStart": 2019,
-    "yearEnd": 2024,
-    "themes": [
-      "education",
-      "news"
-    ]
-  },
-  {
-    "id": "doi_releases",
-    "name": "Government Press Releases",
-    "provider": "doi",
-    "language": "chichewa",
-    "type": "news",
-    "format": "text/html",
-    "hours": null,
-    "items": 4200,
-    "description": "Official government communications and press releases in Chichewa.",
-    "yearStart": 2016,
-    "yearEnd": 2024,
-    "themes": [
-      "governance",
-      "politics"
-    ]
-  },
-  {
-    "id": "doi_psa",
-    "name": "Public Service Announcements",
-    "provider": "doi",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 15,
-    "items": null,
-    "description": "Radio PSAs on health civic education and public safety in Chichewa.",
-    "yearStart": 2018,
-    "yearEnd": 2024,
-    "themes": [
-      "health",
-      "education",
-      "governance"
-    ]
-  },
-  {
-    "id": "montfort_books",
-    "name": "Montfort Chichewa Publications",
-    "provider": "montfort",
-    "language": "chichewa",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 85,
-    "description": "Books pamphlets and booklets on faith community development and social issues in Chichewa.",
-    "yearStart": 2010,
-    "yearEnd": 2024,
-    "themes": [
-      "religion",
-      "development",
-      "society"
-    ]
-  },
-  {
-    "id": "montfort_drama",
-    "name": "Montfort Audio Dramas",
-    "provider": "montfort",
-    "language": "chichewa",
-    "type": "radio",
-    "format": "audio/mp3",
-    "hours": 55,
-    "items": null,
-    "description": "Audio drama productions on social themes including HIV/AIDS awareness education and family life.",
-    "yearStart": 2015,
-    "yearEnd": 2023,
-    "themes": [
-      "health",
-      "culture",
-      "society"
-    ]
-  },
-  {
-    "id": "montfort_sena",
-    "name": "Montfort Sena Publications",
-    "provider": "montfort",
-    "language": "sena",
-    "type": "books",
-    "format": "text/pdf",
-    "hours": null,
-    "items": 18,
-    "description": "Religious and educational materials published in Sena for the Lower Shire region.",
-    "yearStart": 2016,
-    "yearEnd": 2022,
-    "themes": [
-      "religion",
-      "education"
-    ]
-  }
-];
+      {
+        "id": "ri_mawu",
+        "name": "Mawu a Anthu",
+        "provider": "radio_islam",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 245,
+        "items": null,
+        "description": "Community call-in show covering social issues politics and daily life in Chichewa.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "society",
+          "politics",
+          "culture"
+        ]
+      },
+      {
+        "id": "ri_news_chi",
+        "name": "Radio Islam Chichewa News",
+        "provider": "radio_islam",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 180,
+        "items": null,
+        "description": "Daily Chichewa-language news bulletins covering national and international events.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics"
+        ]
+      },
+      {
+        "id": "ri_yao_prog",
+        "name": "Yao Language Programs",
+        "provider": "radio_islam",
+        "language": "yao",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 95,
+        "items": null,
+        "description": "Cultural and religious programming broadcast in Yao.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "culture",
+          "religion"
+        ]
+      },
+      {
+        "id": "mbc_radio1_news",
+        "name": "MBC Radio 1 News Bulletins",
+        "provider": "mbc",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 520,
+        "items": null,
+        "description": "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.",
+        "yearStart": 2015,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "governance"
+        ]
+      },
+      {
+        "id": "mbc_tumbuka",
+        "name": "MBC Tumbuka Service",
+        "provider": "mbc",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 310,
+        "items": null,
+        "description": "Tumbuka-language programming including news drama and agricultural advice.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "agriculture",
+          "culture"
+        ]
+      },
+      {
+        "id": "mbc_drama",
+        "name": "MBC Radio Drama Archive",
+        "provider": "mbc",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 185,
+        "items": null,
+        "description": "Scripted radio dramas and serialized stories in Chichewa.",
+        "yearStart": 2010,
+        "yearEnd": 2023,
+        "themes": [
+          "culture",
+          "entertainment"
+        ]
+      },
+      {
+        "id": "twr_health",
+        "name": "Moyo Wathu Health Series",
+        "provider": "twr",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 120,
+        "items": null,
+        "description": "Health education programming covering HIV/AIDS malaria nutrition and maternal health.",
+        "yearStart": 2017,
+        "yearEnd": 2024,
+        "themes": [
+          "health",
+          "education"
+        ]
+      },
+      {
+        "id": "twr_agri",
+        "name": "Ulimi Wabwino Agricultural Shows",
+        "provider": "twr",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 88,
+        "items": null,
+        "description": "Agricultural extension programming in Tumbuka covering farming techniques and markets.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "agriculture",
+          "economics"
+        ]
+      },
+      {
+        "id": "twr_lomwe",
+        "name": "TWR Lomwe Broadcasts",
+        "provider": "twr",
+        "language": "lomwe",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 45,
+        "items": null,
+        "description": "Mixed programming in Lomwe including storytelling and community development.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "culture",
+          "development"
+        ]
+      },
+      {
+        "id": "yoneco_youth",
+        "name": "Achinyamata Aluso Youth Program",
+        "provider": "yoneco_fm",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 75,
+        "items": null,
+        "description": "Youth empowerment and rights-based programming in Chichewa from Zomba.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "youth",
+          "rights",
+          "society"
+        ]
+      },
+      {
+        "id": "yoneco_gender",
+        "name": "Gender & Rights Podcasts",
+        "provider": "yoneco_fm",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 32,
+        "items": null,
+        "description": "Podcast episodes on gender equality GBV prevention and human rights.",
+        "yearStart": 2021,
+        "yearEnd": 2024,
+        "themes": [
+          "gender",
+          "rights",
+          "society"
+        ]
+      },
+      {
+        "id": "nyanthepa_agri",
+        "name": "Nyanthepa Ulimi Shows",
+        "provider": "nyanthepa",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 64,
+        "items": null,
+        "description": "Agricultural programming in Tumbuka for farmers in the Mzimba area.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "agriculture"
+        ]
+      },
+      {
+        "id": "nyanthepa_gov",
+        "name": "Local Governance Discussions",
+        "provider": "nyanthepa",
+        "language": "tumbuka",
+        "type": "radio",
+        "format": "audio/wav",
+        "hours": 40,
+        "items": null,
+        "description": "Community discussions on local governance and development issues in Tumbuka.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "governance",
+          "development"
+        ]
+      },
+      {
+        "id": "times_chi_news",
+        "name": "Daily Times Chichewa Articles",
+        "provider": "times_group",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 12500,
+        "description": "Chichewa-language news articles from The Daily Times covering politics business and society.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "economics"
+        ]
+      },
+      {
+        "id": "times_eng_news",
+        "name": "Daily Times English Archive",
+        "provider": "times_group",
+        "language": "english",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 45000,
+        "description": "English-language articles useful as parallel corpus for translation model training.",
+        "yearStart": 2014,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics",
+          "economics"
+        ]
+      },
+      {
+        "id": "times_opinion",
+        "name": "Malawi News Opinion Columns",
+        "provider": "times_group",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 3200,
+        "description": "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "politics",
+          "society"
+        ]
+      },
+      {
+        "id": "nation_chi",
+        "name": "The Nationn Chichewa Section",
+        "provider": "nation_publications",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 9801,
+        "description": "Chichewa news reporting from The Nation covering national affairs.",
+        "yearStart": 2015,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "politics"
+        ]
+      },
+      {
+        "id": "nation_features",
+        "name": "Weekend Nation Features",
+        "provider": "nation_publications",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 2100,
+        "description": "Long-form feature stories and investigative journalism  in Chichewa and English.",
+        "yearStart": 2017,
+        "yearEnd": 2024,
+        "themes": [
+          "news",
+          "society",
+          "culture"
+        ]
+      },
+      {
+        "id": "nso_ihs5",
+        "name": "IHS5 Survey Audio",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 1200,
+        "items": null,
+        "description": "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.",
+        "yearStart": 2019,
+        "yearEnd": 2020,
+        "themes": [
+          "economics",
+          "development",
+          "health"
+        ]
+      },
+      {
+        "id": "nso_ihs5_tum",
+        "name": "IHS5 Survey Audio (Tumbuka)",
+        "provider": "mnso",
+        "language": "tumbuka",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 340,
+        "items": null,
+        "description": "Tumbuka-language interviews from IHS5 in the Northern Region.",
+        "yearStart": 2019,
+        "yearEnd": 2020,
+        "themes": [
+          "economics",
+          "development",
+          "health"
+        ]
+      },
+      {
+        "id": "nso_dhs",
+        "name": "DHS Interview Recordings",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 680,
+        "items": null,
+        "description": "Demographic and Health Survey interview audio covering health fertility and nutrition topics.",
+        "yearStart": 2020,
+        "yearEnd": 2021,
+        "themes": [
+          "health",
+          "demographics"
+        ]
+      },
+      {
+        "id": "nso_census",
+        "name": "Census Enumerator Recordings",
+        "provider": "mnso",
+        "language": "chichewa",
+        "type": "surveys",
+        "format": "audio/wav",
+        "hours": 450,
+        "items": null,
+        "description": "Field recordings from census enumeration with diverse speaker demographics.",
+        "yearStart": 2018,
+        "yearEnd": 2018,
+        "themes": [
+          "demographics",
+          "governance"
+        ]
+      },
+      {
+        "id": "mie_textbooks",
+        "name": "Primary School Chichewa Textbooks",
+        "provider": "mie",
+        "language": "chichewa",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 48,
+        "description": "Standards 1-8 Chichewa textbooks used in primary education across Malawi.",
+        "yearStart": 2015,
+        "yearEnd": 2023,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mie_tumbuka",
+        "name": "Tumbuka Reading Materials",
+        "provider": "mie",
+        "language": "tumbuka",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 22,
+        "description": "Supplementary reading materials and early-grade readers in Tumbuka.",
+        "yearStart": 2018,
+        "yearEnd": 2022,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mie_yao",
+        "name": "Yao Language Teaching Guides",
+        "provider": "mie",
+        "language": "yao",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 15,
+        "description": "Teacher guides and student materials for Yao-medium instruction.",
+        "yearStart": 2019,
+        "yearEnd": 2023,
+        "themes": [
+          "education"
+        ]
+      },
+      {
+        "id": "mij_broadcasts",
+        "name": "MIJ Student Broadcasts",
+        "provider": "mij",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 28,
+        "items": null,
+        "description": "Student practice radio broadcasts in Chichewa covering news features and interviews.",
+        "yearStart": 2020,
+        "yearEnd": 2024,
+        "themes": [
+          "education",
+          "news"
+        ]
+      },
+      {
+        "id": "mij_articles",
+        "name": "MIJ Student News Writing",
+        "provider": "mij",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 1800,
+        "description": "Student-written news articles in Chichewa as part of journalism coursework.",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "themes": [
+          "education",
+          "news"
+        ]
+      },
+      {
+        "id": "doi_releases",
+        "name": "Government Press Releases",
+        "provider": "doi",
+        "language": "chichewa",
+        "type": "news",
+        "format": "text/html",
+        "hours": null,
+        "items": 4200,
+        "description": "Official government communications and press releases in Chichewa.",
+        "yearStart": 2016,
+        "yearEnd": 2024,
+        "themes": [
+          "governance",
+          "politics"
+        ]
+      },
+      {
+        "id": "doi_psa",
+        "name": "Public Service Announcements",
+        "provider": "doi",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 15,
+        "items": null,
+        "description": "Radio PSAs on health civic education and public safety in Chichewa.",
+        "yearStart": 2018,
+        "yearEnd": 2024,
+        "themes": [
+          "health",
+          "education",
+          "governance"
+        ]
+      },
+      {
+        "id": "montfort_books",
+        "name": "Montfort Chichewa Publications",
+        "provider": "montfort",
+        "language": "chichewa",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 85,
+        "description": "Books pamphlets and booklets on faith community development and social issues in Chichewa.",
+        "yearStart": 2010,
+        "yearEnd": 2024,
+        "themes": [
+          "religion",
+          "development",
+          "society"
+        ]
+      },
+      {
+        "id": "montfort_drama",
+        "name": "Montfort Audio Dramas",
+        "provider": "montfort",
+        "language": "chichewa",
+        "type": "radio",
+        "format": "audio/mp3",
+        "hours": 55,
+        "items": null,
+        "description": "Audio drama productions on social themes including HIV/AIDS awareness education and family life.",
+        "yearStart": 2015,
+        "yearEnd": 2023,
+        "themes": [
+          "health",
+          "culture",
+          "society"
+        ]
+      },
+      {
+        "id": "montfort_sena",
+        "name": "Montfort Sena Publications",
+        "provider": "montfort",
+        "language": "sena",
+        "type": "books",
+        "format": "text/pdf",
+        "hours": null,
+        "items": 18,
+        "description": "Religious and educational materials published in Sena for the Lower Shire region.",
+        "yearStart": 2016,
+        "yearEnd": 2022,
+        "themes": [
+          "religion",
+          "education"
+        ]
+      }
+    ];
 
     // ══════════════════════════════════════════════════════════════
     // RENDER LOGIC

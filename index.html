@@ -8,6 +8,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap"
     rel="stylesheet">
+  <!-- Papa Parse for CSV parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="main.css">
   <!-- STOP: Do not add inline styles. Edit main.css instead. -->
 </head>
@@ -44,19 +46,19 @@
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <div class="num">12</div>
+          <div class="num" id="stat-providers">—</div>
           <div class="label">Data Providers</div>
         </div>
         <div class="hero-stat">
-          <div class="num">32</div>
+          <div class="num" id="stat-collections">—</div>
           <div class="label">Collections</div>
         </div>
         <div class="hero-stat">
-          <div class="num">4</div>
+          <div class="num" id="stat-types">—</div>
           <div class="label">Media Types</div>
         </div>
         <div class="hero-stat">
-          <div class="num">6</div>
+          <div class="num" id="stat-languages">—</div>
           <div class="label">Languages</div>
         </div>
       </div>
@@ -87,22 +89,12 @@
             <label for="filter-language">Language</label>
             <select class="filter-select" id="filter-language" onchange="applyFilters()">
               <option value="">All</option>
-              <option value="chichewa">Chichewa</option>
-              <option value="tumbuka">Tumbuka</option>
-              <option value="yao">Yao</option>
-              <option value="lomwe">Lomwe</option>
-              <option value="sena">Sena</option>
-              <option value="english">English</option>
             </select>
           </div>
           <div class="filter-group">
             <label for="filter-type">Media Type</label>
             <select class="filter-select" id="filter-type" onchange="applyFilters()">
               <option value="">All</option>
-              <option value="radio">Radio &amp; Podcasts</option>
-              <option value="news">News Articles</option>
-              <option value="books">Books</option>
-              <option value="surveys">Household Surveys</option>
             </select>
           </div>
           <div class="filter-group">
@@ -130,14 +122,14 @@
       </div>
 
       <div class="card-grid" id="card-grid">
-        <!-- Cards injected by JS -->
+        <p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">Loading collections…</p>
       </div>
     </div>
 
     <!-- ===================== PROVIDERS TAB ===================== -->
     <div class="tab-panel" id="panel-providers">
       <div id="providers-list">
-        <!-- Provider sections injected by JS -->
+        <p style="text-align:center;color:var(--gray-400);padding:3rem;">Loading providers…</p>
       </div>
     </div>
 
@@ -424,8 +416,6 @@
           will include the header automatically.
         </p>
       </div>
-
-
 
       <div class="api-section">
         <h3>Endpoints</h3>
@@ -915,7 +905,6 @@
         </div>
       </div>
 
-
     </div>
 
     <!-- ===================== METADATA SCHEMAS TAB ===================== -->
@@ -957,11 +946,12 @@
             </div>
           </div>
         </div>
-        <p class="metadata-p">No single existing standard fully met the project’s requirements. Therefore, we adopted an
+        <p class="metadata-p">No single existing standard fully met the project's requirements. Therefore, we adopted an
           application profile approach, combining fields from multiple standards. It draws on nine established standards
           alongside a custom namespace, the <strong>Development Data Partnership Vocabulary (DDPV)</strong>, to capture
           project-specific attributes while maintaining compatibility with existing vocabularies and tools.</p>
       </div>
+
       <div class="standards-pane">
         <h3>Metadata Standards</h3>
         <p class="standards-label">Standards incorporated across all schemas:</p>
@@ -982,21 +972,23 @@
           </div>
         </div>
       </div>
+
       <div class="api-section" style="margin-top: 2rem;">
         <h3>Metadata Schemas by Data Type</h3>
-        <p class="metadata-p">We developed metadata schemas based on the standards above for three primary data types:
-          audio, text, and
-          video. While the majority of the fields are similar, the core differences lie in the technical fields required
-          for each data type. Additional information on the fields, their definitions, cardinality requirements, and
-          collection methods can be found in the resources section below.</p>
+        <p class="metadata-p">We developed metadata schemas for three primary data types: audio, text, and video. While
+          the majority of the fields are similar, the core differences lie in the technical fields required for each
+          data type. Additional information on fields, definitions, cardinality requirements, and collection methods can
+          be found in the resources section below.</p>
       </div>
+
       <div class="metadata-resources">
         <div class="metadata-resources-header">
-          <h3>📦 Schema Resources &amp; Downloads </h3>
+          <h3>📦 Schema Resources &amp; Downloads</h3>
         </div>
         <div class="resource-links">
 
-          <a href="./metadata-docs/Metadata_Schemas.pdf" class="resource-link-item accent-teal">
+          <a href="./metadata-docs/Metadata_Schemas.pdf" class="resource-link-item accent-teal"
+             target="_blank" rel="noopener">
             <span class="resource-icon">📖</span>
             <span class="resource-text">
               <strong>Full Documentation</strong>
@@ -1005,7 +997,8 @@
             <span class="resource-badge">PDF</span>
           </a>
 
-          <a href="https://datapartnership.org/ddpv-metadata-terms/" class="resource-link-item accent-orange">
+          <a href="https://datapartnership.org/ddpv-metadata-terms/" class="resource-link-item accent-orange"
+             target="_blank" rel="noopener">
             <span class="resource-icon">🗂️</span>
             <span class="resource-text">
               <strong>DDPV Vocabulary</strong>
@@ -1014,7 +1007,8 @@
             <span class="resource-badge">WEB</span>
           </a>
 
-          <a href="./metadata-docs/llm_library_text_schema.json" class="resource-link-item accent-purple">
+          <a href="./metadata-docs/llm_library_text_schema.json" class="resource-link-item accent-purple"
+             target="_blank" rel="noopener">
             <span class="resource-icon">📄</span>
             <span class="resource-text">
               <strong>Text Metadata Schema</strong>
@@ -1023,7 +1017,8 @@
             <span class="resource-badge">JSON-LD</span>
           </a>
 
-          <a href="./metadata-docs/llm_library_audio_schema.json" class="resource-link-item accent-navy">
+          <a href="./metadata-docs/llm_library_audio_schema.json" class="resource-link-item accent-navy"
+             target="_blank" rel="noopener">
             <span class="resource-icon">🎙️</span>
             <span class="resource-text">
               <strong>Audio Metadata Schema</strong>
@@ -1032,7 +1027,8 @@
             <span class="resource-badge">JSON-LD</span>
           </a>
 
-          <a href="./metadata-docs/llm_library_video_schema.json" class="resource-link-item accent-teal">
+          <a href="./metadata-docs/llm_library_video_schema.json" class="resource-link-item accent-teal"
+             target="_blank" rel="noopener">
             <span class="resource-icon">🎬</span>
             <span class="resource-text">
               <strong>Video Metadata Schema</strong>
@@ -1041,7 +1037,8 @@
             <span class="resource-badge">JSON-LD</span>
           </a>
 
-          <a href="./metadata-docs/capital_fm_news.jsonld" class="resource-link-item accent-orange">
+          <a href="./metadata-docs/capital_fm_news.jsonld" class="resource-link-item accent-orange"
+             target="_blank" rel="noopener">
             <span class="resource-icon">🔊</span>
             <span class="resource-text">
               <strong>Example Audio Record</strong>
@@ -1053,7 +1050,6 @@
         </div>
       </div>
     </div>
-
 
     <!-- ===================== ABOUT TAB ===================== -->
     <div class="tab-panel" id="panel-about">
@@ -1139,8 +1135,7 @@
       <div>
         <h6>Contact</h6>
         <ul>
-          <li><a href="#"><span class="__cf_email__"
-                data-cfemail="bad3d4dcd5fad7dbd6dbcdd397d6c8d694d5c8dd">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:datapartnership@worldbank.org">datapartnership@worldbank.org</a></li>
           <li><a href="#">GitHub</a></li>
         </ul>
       </div>
@@ -1152,790 +1147,363 @@
 
   <script>
     // ══════════════════════════════════════════════════════════════
-    // DATA — Edit this section to update the catalog
+    // CONFIG — paths to your CSVs (relative to index.html)
+    // Place collections.csv and providers.csv in the same folder
+    // as index.html (or update these paths accordingly).
+    // If the CSVs are missing or fail to load, the hardcoded
+    // fallback data below is used automatically.
     // ══════════════════════════════════════════════════════════════
+    const CSV_PROVIDERS   = 'providers.csv';
+    const CSV_COLLECTIONS = 'collections.csv';
 
-    const PROVIDERS = [
-      {
-        "id": "mnso",
-        "name": "Malawi National Statistical Office",
-        "type": "Government Institution",
-        "description": "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts."
-      },
-      {
-        "id": "times_group",
-        "name": "The Times Group",
-        "type": "Print & Digital Media",
-        "description": "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language."
-      },
-      {
-        "id": "nation_publications",
-        "name": "The Nation Publications",
-        "type": "Print & Digital Media",
-        "description": "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi."
-      },
-      {
-        "id": "radio_islam",
-        "name": "Radio Islam",
-        "type": "Broadcaster — Radio",
-        "description": "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data."
-      },
-      {
-        "id": "twr",
-        "name": "Transworld Radio",
-        "type": "Broadcaster — Radio",
-        "description": "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows."
-      },
-      {
-        "id": "mbc",
-        "name": "Malawi Broadcasting Corporation",
-        "type": "Broadcaster — Radio & TV (State)",
-        "description": "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2 (now known as Namikango FM). As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming."
-      },
-      {
-        "id": "yoneco_fm",
-        "name": "YONECO FM",
-        "type": "Broadcaster — Community Radio",
-        "description": "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district."
-      },
-      {
-        "id": "nyanthepa",
-        "name": "Nyanthepa Community Radio",
-        "type": "Broadcaster — Community Radio",
-        "description": "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance, providing valuable Tumbuka-language audio data."
-      },
-      {
-        "id": "mij",
-        "name": "Malawi Institute of Journalism",
-        "type": "Educational Institution",
-        "description": "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects."
-      },
-      {
-        "id": "doi",
-        "name": "Malawi Department of Information",
-        "type": "Government Institution",
-        "description": "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution."
-      },
-      {
-        "id": "mie",
-        "name": "Malawi Institute of Education",
-        "type": "Educational Institution",
-        "description": "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education."
-      },
-      {
-        "id": "montfort",
-        "name": "Montfort Media",
-        "type": "Religious & Community Media",
-        "description": "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content."
-      }
-    ];
-
-    const COLLECTIONS = [
-      {
-        "id": "ri_mawu",
-        "name": "Mawu a Anthu",
-        "provider": "radio_islam",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 245,
-        "items": null,
-        "description": "Community call-in show covering social issues politics and daily life in Chichewa.",
-        "yearStart": 2018,
-        "yearEnd": 2024,
-        "themes": [
-          "society",
-          "politics",
-          "culture"
-        ]
-      },
-      {
-        "id": "ri_news_chi",
-        "name": "Radio Islam Chichewa News",
-        "provider": "radio_islam",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 180,
-        "items": null,
-        "description": "Daily Chichewa-language news bulletins covering national and international events.",
-        "yearStart": 2019,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "politics"
-        ]
-      },
-      {
-        "id": "ri_yao_prog",
-        "name": "Yao Language Programs",
-        "provider": "radio_islam",
-        "language": "yao",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 95,
-        "items": null,
-        "description": "Cultural and religious programming broadcast in Yao.",
-        "yearStart": 2020,
-        "yearEnd": 2024,
-        "themes": [
-          "culture",
-          "religion"
-        ]
-      },
-      {
-        "id": "mbc_radio1_news",
-        "name": "MBC Radio 1 News Bulletins",
-        "provider": "mbc",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 520,
-        "items": null,
-        "description": "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.",
-        "yearStart": 2015,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "politics",
-          "governance"
-        ]
-      },
-      {
-        "id": "mbc_tumbuka",
-        "name": "MBC Tumbuka Service",
-        "provider": "mbc",
-        "language": "tumbuka",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 310,
-        "items": null,
-        "description": "Tumbuka-language programming including news drama and agricultural advice.",
-        "yearStart": 2016,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "agriculture",
-          "culture"
-        ]
-      },
-      {
-        "id": "mbc_drama",
-        "name": "MBC Radio Drama Archive",
-        "provider": "mbc",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/mp3",
-        "hours": 185,
-        "items": null,
-        "description": "Scripted radio dramas and serialized stories in Chichewa.",
-        "yearStart": 2010,
-        "yearEnd": 2023,
-        "themes": [
-          "culture",
-          "entertainment"
-        ]
-      },
-      {
-        "id": "twr_health",
-        "name": "Moyo Wathu Health Series",
-        "provider": "twr",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 120,
-        "items": null,
-        "description": "Health education programming covering HIV/AIDS malaria nutrition and maternal health.",
-        "yearStart": 2017,
-        "yearEnd": 2024,
-        "themes": [
-          "health",
-          "education"
-        ]
-      },
-      {
-        "id": "twr_agri",
-        "name": "Ulimi Wabwino Agricultural Shows",
-        "provider": "twr",
-        "language": "tumbuka",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 88,
-        "items": null,
-        "description": "Agricultural extension programming in Tumbuka covering farming techniques and markets.",
-        "yearStart": 2019,
-        "yearEnd": 2024,
-        "themes": [
-          "agriculture",
-          "economics"
-        ]
-      },
-      {
-        "id": "twr_lomwe",
-        "name": "TWR Lomwe Broadcasts",
-        "provider": "twr",
-        "language": "lomwe",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 45,
-        "items": null,
-        "description": "Mixed programming in Lomwe including storytelling and community development.",
-        "yearStart": 2020,
-        "yearEnd": 2024,
-        "themes": [
-          "culture",
-          "development"
-        ]
-      },
-      {
-        "id": "yoneco_youth",
-        "name": "Achinyamata Aluso Youth Program",
-        "provider": "yoneco_fm",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 75,
-        "items": null,
-        "description": "Youth empowerment and rights-based programming in Chichewa from Zomba.",
-        "yearStart": 2020,
-        "yearEnd": 2024,
-        "themes": [
-          "youth",
-          "rights",
-          "society"
-        ]
-      },
-      {
-        "id": "yoneco_gender",
-        "name": "Gender & Rights Podcasts",
-        "provider": "yoneco_fm",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/mp3",
-        "hours": 32,
-        "items": null,
-        "description": "Podcast episodes on gender equality GBV prevention and human rights.",
-        "yearStart": 2021,
-        "yearEnd": 2024,
-        "themes": [
-          "gender",
-          "rights",
-          "society"
-        ]
-      },
-      {
-        "id": "nyanthepa_agri",
-        "name": "Nyanthepa Ulimi Shows",
-        "provider": "nyanthepa",
-        "language": "tumbuka",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 64,
-        "items": null,
-        "description": "Agricultural programming in Tumbuka for farmers in the Mzimba area.",
-        "yearStart": 2019,
-        "yearEnd": 2024,
-        "themes": [
-          "agriculture"
-        ]
-      },
-      {
-        "id": "nyanthepa_gov",
-        "name": "Local Governance Discussions",
-        "provider": "nyanthepa",
-        "language": "tumbuka",
-        "type": "radio",
-        "format": "audio/wav",
-        "hours": 40,
-        "items": null,
-        "description": "Community discussions on local governance and development issues in Tumbuka.",
-        "yearStart": 2020,
-        "yearEnd": 2024,
-        "themes": [
-          "governance",
-          "development"
-        ]
-      },
-      {
-        "id": "times_chi_news",
-        "name": "Daily Times Chichewa Articles",
-        "provider": "times_group",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 12500,
-        "description": "Chichewa-language news articles from The Daily Times covering politics business and society.",
-        "yearStart": 2016,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "politics",
-          "economics"
-        ]
-      },
-      {
-        "id": "times_eng_news",
-        "name": "Daily Times English Archive",
-        "provider": "times_group",
-        "language": "english",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 45000,
-        "description": "English-language articles useful as parallel corpus for translation model training.",
-        "yearStart": 2014,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "politics",
-          "economics"
-        ]
-      },
-      {
-        "id": "times_opinion",
-        "name": "Malawi News Opinion Columns",
-        "provider": "times_group",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 3200,
-        "description": "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.",
-        "yearStart": 2018,
-        "yearEnd": 2024,
-        "themes": [
-          "politics",
-          "society"
-        ]
-      },
-      {
-        "id": "nation_chi",
-        "name": "The Nationn Chichewa Section",
-        "provider": "nation_publications",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 9801,
-        "description": "Chichewa news reporting from The Nation covering national affairs.",
-        "yearStart": 2015,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "politics"
-        ]
-      },
-      {
-        "id": "nation_features",
-        "name": "Weekend Nation Features",
-        "provider": "nation_publications",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 2100,
-        "description": "Long-form feature stories and investigative journalism  in Chichewa and English.",
-        "yearStart": 2017,
-        "yearEnd": 2024,
-        "themes": [
-          "news",
-          "society",
-          "culture"
-        ]
-      },
-      {
-        "id": "nso_ihs5",
-        "name": "IHS5 Survey Audio",
-        "provider": "mnso",
-        "language": "chichewa",
-        "type": "surveys",
-        "format": "audio/wav",
-        "hours": 1200,
-        "items": null,
-        "description": "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.",
-        "yearStart": 2019,
-        "yearEnd": 2020,
-        "themes": [
-          "economics",
-          "development",
-          "health"
-        ]
-      },
-      {
-        "id": "nso_ihs5_tum",
-        "name": "IHS5 Survey Audio (Tumbuka)",
-        "provider": "mnso",
-        "language": "tumbuka",
-        "type": "surveys",
-        "format": "audio/wav",
-        "hours": 340,
-        "items": null,
-        "description": "Tumbuka-language interviews from IHS5 in the Northern Region.",
-        "yearStart": 2019,
-        "yearEnd": 2020,
-        "themes": [
-          "economics",
-          "development",
-          "health"
-        ]
-      },
-      {
-        "id": "nso_dhs",
-        "name": "DHS Interview Recordings",
-        "provider": "mnso",
-        "language": "chichewa",
-        "type": "surveys",
-        "format": "audio/wav",
-        "hours": 680,
-        "items": null,
-        "description": "Demographic and Health Survey interview audio covering health fertility and nutrition topics.",
-        "yearStart": 2020,
-        "yearEnd": 2021,
-        "themes": [
-          "health",
-          "demographics"
-        ]
-      },
-      {
-        "id": "nso_census",
-        "name": "Census Enumerator Recordings",
-        "provider": "mnso",
-        "language": "chichewa",
-        "type": "surveys",
-        "format": "audio/wav",
-        "hours": 450,
-        "items": null,
-        "description": "Field recordings from census enumeration with diverse speaker demographics.",
-        "yearStart": 2018,
-        "yearEnd": 2018,
-        "themes": [
-          "demographics",
-          "governance"
-        ]
-      },
-      {
-        "id": "mie_textbooks",
-        "name": "Primary School Chichewa Textbooks",
-        "provider": "mie",
-        "language": "chichewa",
-        "type": "books",
-        "format": "text/pdf",
-        "hours": null,
-        "items": 48,
-        "description": "Standards 1-8 Chichewa textbooks used in primary education across Malawi.",
-        "yearStart": 2015,
-        "yearEnd": 2023,
-        "themes": [
-          "education"
-        ]
-      },
-      {
-        "id": "mie_tumbuka",
-        "name": "Tumbuka Reading Materials",
-        "provider": "mie",
-        "language": "tumbuka",
-        "type": "books",
-        "format": "text/pdf",
-        "hours": null,
-        "items": 22,
-        "description": "Supplementary reading materials and early-grade readers in Tumbuka.",
-        "yearStart": 2018,
-        "yearEnd": 2022,
-        "themes": [
-          "education"
-        ]
-      },
-      {
-        "id": "mie_yao",
-        "name": "Yao Language Teaching Guides",
-        "provider": "mie",
-        "language": "yao",
-        "type": "books",
-        "format": "text/pdf",
-        "hours": null,
-        "items": 15,
-        "description": "Teacher guides and student materials for Yao-medium instruction.",
-        "yearStart": 2019,
-        "yearEnd": 2023,
-        "themes": [
-          "education"
-        ]
-      },
-      {
-        "id": "mij_broadcasts",
-        "name": "MIJ Student Broadcasts",
-        "provider": "mij",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/mp3",
-        "hours": 28,
-        "items": null,
-        "description": "Student practice radio broadcasts in Chichewa covering news features and interviews.",
-        "yearStart": 2020,
-        "yearEnd": 2024,
-        "themes": [
-          "education",
-          "news"
-        ]
-      },
-      {
-        "id": "mij_articles",
-        "name": "MIJ Student News Writing",
-        "provider": "mij",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 1800,
-        "description": "Student-written news articles in Chichewa as part of journalism coursework.",
-        "yearStart": 2019,
-        "yearEnd": 2024,
-        "themes": [
-          "education",
-          "news"
-        ]
-      },
-      {
-        "id": "doi_releases",
-        "name": "Government Press Releases",
-        "provider": "doi",
-        "language": "chichewa",
-        "type": "news",
-        "format": "text/html",
-        "hours": null,
-        "items": 4200,
-        "description": "Official government communications and press releases in Chichewa.",
-        "yearStart": 2016,
-        "yearEnd": 2024,
-        "themes": [
-          "governance",
-          "politics"
-        ]
-      },
-      {
-        "id": "doi_psa",
-        "name": "Public Service Announcements",
-        "provider": "doi",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/mp3",
-        "hours": 15,
-        "items": null,
-        "description": "Radio PSAs on health civic education and public safety in Chichewa.",
-        "yearStart": 2018,
-        "yearEnd": 2024,
-        "themes": [
-          "health",
-          "education",
-          "governance"
-        ]
-      },
-      {
-        "id": "montfort_books",
-        "name": "Montfort Chichewa Publications",
-        "provider": "montfort",
-        "language": "chichewa",
-        "type": "books",
-        "format": "text/pdf",
-        "hours": null,
-        "items": 85,
-        "description": "Books pamphlets and booklets on faith community development and social issues in Chichewa.",
-        "yearStart": 2010,
-        "yearEnd": 2024,
-        "themes": [
-          "religion",
-          "development",
-          "society"
-        ]
-      },
-      {
-        "id": "montfort_drama",
-        "name": "Montfort Audio Dramas",
-        "provider": "montfort",
-        "language": "chichewa",
-        "type": "radio",
-        "format": "audio/mp3",
-        "hours": 55,
-        "items": null,
-        "description": "Audio drama productions on social themes including HIV/AIDS awareness education and family life.",
-        "yearStart": 2015,
-        "yearEnd": 2023,
-        "themes": [
-          "health",
-          "culture",
-          "society"
-        ]
-      },
-      {
-        "id": "montfort_sena",
-        "name": "Montfort Sena Publications",
-        "provider": "montfort",
-        "language": "sena",
-        "type": "books",
-        "format": "text/pdf",
-        "hours": null,
-        "items": 18,
-        "description": "Religious and educational materials published in Sena for the Lower Shire region.",
-        "yearStart": 2016,
-        "yearEnd": 2022,
-        "themes": [
-          "religion",
-          "education"
-        ]
-      }
-    ];
-
-    // ══════════════════════════════════════════════════════════════
-    // RENDER LOGIC
-    // ══════════════════════════════════════════════════════════════
-
-    const TYPE_ICONS = { radio: "📻", news: "📰", books: "📚", surveys: "📋" };
+    const TYPE_ICONS  = { radio: "📻", news: "📰", books: "📚", surveys: "📋" };
     const TYPE_LABELS = { radio: "Radio & Podcasts", news: "News Articles", books: "Books", surveys: "Household Surveys" };
 
-    function getProvider(id) { return PROVIDERS.find(p => p.id === id); }
+    // ══════════════════════════════════════════════════════════════
+    // FALLBACK DATA — used when CSVs are not available
+    // ══════════════════════════════════════════════════════════════
+    const PROVIDERS_FALLBACK = [
+      { id: "mnso", name: "Malawi National Statistical Office", type: "Government Institution", description: "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts." },
+      { id: "times_group", name: "The Times Group", type: "Print & Digital Media", description: "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language." },
+      { id: "nation_publications", name: "The Nation Publications", type: "Print & Digital Media", description: "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi." },
+      { id: "radio_islam", name: "Radio Islam", type: "Broadcaster — Radio", description: "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data." },
+      { id: "twr", name: "Transworld Radio", type: "Broadcaster — Radio", description: "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows." },
+      { id: "mbc", name: "Malawi Broadcasting Corporation", type: "Broadcaster — Radio & TV (State)", description: "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2. As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming." },
+      { id: "yoneco_fm", name: "YONECO FM", type: "Broadcaster — Community Radio", description: "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district." },
+      { id: "nyanthepa", name: "Nyanthepa Community Radio", type: "Broadcaster — Community Radio", description: "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance." },
+      { id: "mij", name: "Malawi Institute of Journalism", type: "Educational Institution", description: "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects." },
+      { id: "doi", name: "Malawi Department of Information", type: "Government Institution", description: "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution." },
+      { id: "mie", name: "Malawi Institute of Education", type: "Educational Institution", description: "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education." },
+      { id: "montfort", name: "Montfort Media", type: "Religious & Community Media", description: "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content." }
+    ];
 
-    // Populate provider filter dropdown
+    const COLLECTIONS_FALLBACK = [
+      { id: "ri_mawu", name: "Mawu a Anthu", provider: "radio_islam", language: "chichewa", type: "radio", format: "audio/wav", hours: 245, items: null, description: "Community call-in show covering social issues politics and daily life in Chichewa.", yearStart: 2018, yearEnd: 2024, themes: ["society","politics","culture"] },
+      { id: "ri_news_chi", name: "Radio Islam Chichewa News", provider: "radio_islam", language: "chichewa", type: "radio", format: "audio/wav", hours: 180, items: null, description: "Daily Chichewa-language news bulletins covering national and international events.", yearStart: 2019, yearEnd: 2024, themes: ["news","politics"] },
+      { id: "ri_yao_prog", name: "Yao Language Programs", provider: "radio_islam", language: "yao", type: "radio", format: "audio/wav", hours: 95, items: null, description: "Cultural and religious programming broadcast in Yao.", yearStart: 2020, yearEnd: 2024, themes: ["culture","religion"] },
+      { id: "mbc_radio1_news", name: "MBC Radio 1 News Bulletins", provider: "mbc", language: "chichewa", type: "radio", format: "audio/wav", hours: 520, items: null, description: "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.", yearStart: 2015, yearEnd: 2024, themes: ["news","politics","governance"] },
+      { id: "mbc_tumbuka", name: "MBC Tumbuka Service", provider: "mbc", language: "tumbuka", type: "radio", format: "audio/wav", hours: 310, items: null, description: "Tumbuka-language programming including news drama and agricultural advice.", yearStart: 2016, yearEnd: 2024, themes: ["news","agriculture","culture"] },
+      { id: "mbc_drama", name: "MBC Radio Drama Archive", provider: "mbc", language: "chichewa", type: "radio", format: "audio/mp3", hours: 185, items: null, description: "Scripted radio dramas and serialized stories in Chichewa.", yearStart: 2010, yearEnd: 2023, themes: ["culture","entertainment"] },
+      { id: "twr_health", name: "Moyo Wathu Health Series", provider: "twr", language: "chichewa", type: "radio", format: "audio/wav", hours: 120, items: null, description: "Health education programming covering HIV/AIDS malaria nutrition and maternal health.", yearStart: 2017, yearEnd: 2024, themes: ["health","education"] },
+      { id: "twr_agri", name: "Ulimi Wabwino Agricultural Shows", provider: "twr", language: "tumbuka", type: "radio", format: "audio/wav", hours: 88, items: null, description: "Agricultural extension programming in Tumbuka covering farming techniques and markets.", yearStart: 2019, yearEnd: 2024, themes: ["agriculture","economics"] },
+      { id: "twr_lomwe", name: "TWR Lomwe Broadcasts", provider: "twr", language: "lomwe", type: "radio", format: "audio/wav", hours: 45, items: null, description: "Mixed programming in Lomwe including storytelling and community development.", yearStart: 2020, yearEnd: 2024, themes: ["culture","development"] },
+      { id: "yoneco_youth", name: "Achinyamata Aluso Youth Program", provider: "yoneco_fm", language: "chichewa", type: "radio", format: "audio/wav", hours: 75, items: null, description: "Youth empowerment and rights-based programming in Chichewa from Zomba.", yearStart: 2020, yearEnd: 2024, themes: ["youth","rights","society"] },
+      { id: "yoneco_gender", name: "Gender & Rights Podcasts", provider: "yoneco_fm", language: "chichewa", type: "radio", format: "audio/mp3", hours: 32, items: null, description: "Podcast episodes on gender equality GBV prevention and human rights.", yearStart: 2021, yearEnd: 2024, themes: ["gender","rights","society"] },
+      { id: "nyanthepa_agri", name: "Nyanthepa Ulimi Shows", provider: "nyanthepa", language: "tumbuka", type: "radio", format: "audio/wav", hours: 64, items: null, description: "Agricultural programming in Tumbuka for farmers in the Mzimba area.", yearStart: 2019, yearEnd: 2024, themes: ["agriculture"] },
+      { id: "nyanthepa_gov", name: "Local Governance Discussions", provider: "nyanthepa", language: "tumbuka", type: "radio", format: "audio/wav", hours: 40, items: null, description: "Community discussions on local governance and development issues in Tumbuka.", yearStart: 2020, yearEnd: 2024, themes: ["governance","development"] },
+      { id: "times_chi_news", name: "Daily Times Chichewa Articles", provider: "times_group", language: "chichewa", type: "news", format: "text/html", hours: null, items: 12500, description: "Chichewa-language news articles from The Daily Times covering politics business and society.", yearStart: 2016, yearEnd: 2024, themes: ["news","politics","economics"] },
+      { id: "times_eng_news", name: "Daily Times English Archive", provider: "times_group", language: "english", type: "news", format: "text/html", hours: null, items: 45000, description: "English-language articles useful as parallel corpus for translation model training.", yearStart: 2014, yearEnd: 2024, themes: ["news","politics","economics"] },
+      { id: "times_opinion", name: "Malawi News Opinion Columns", provider: "times_group", language: "chichewa", type: "news", format: "text/html", hours: null, items: 3200, description: "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.", yearStart: 2018, yearEnd: 2024, themes: ["politics","society"] },
+      { id: "nation_chi", name: "The Nation Chichewa Section", provider: "nation_publications", language: "chichewa", type: "news", format: "text/html", hours: null, items: 9801, description: "Chichewa news reporting from The Nation covering national affairs.", yearStart: 2015, yearEnd: 2024, themes: ["news","politics"] },
+      { id: "nation_features", name: "Weekend Nation Features", provider: "nation_publications", language: "chichewa", type: "news", format: "text/html", hours: null, items: 2100, description: "Long-form feature stories and investigative journalism in Chichewa and English.", yearStart: 2017, yearEnd: 2024, themes: ["news","society","culture"] },
+      { id: "nso_ihs5", name: "IHS5 Survey Audio", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 1200, items: null, description: "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.", yearStart: 2019, yearEnd: 2020, themes: ["economics","development","health"] },
+      { id: "nso_ihs5_tum", name: "IHS5 Survey Audio (Tumbuka)", provider: "mnso", language: "tumbuka", type: "surveys", format: "audio/wav", hours: 340, items: null, description: "Tumbuka-language interviews from IHS5 in the Northern Region.", yearStart: 2019, yearEnd: 2020, themes: ["economics","development","health"] },
+      { id: "nso_dhs", name: "DHS Interview Recordings", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 680, items: null, description: "Demographic and Health Survey interview audio covering health fertility and nutrition topics.", yearStart: 2020, yearEnd: 2021, themes: ["health","demographics"] },
+      { id: "nso_census", name: "Census Enumerator Recordings", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 450, items: null, description: "Field recordings from census enumeration with diverse speaker demographics.", yearStart: 2018, yearEnd: 2018, themes: ["demographics","governance"] },
+      { id: "mie_textbooks", name: "Primary School Chichewa Textbooks", provider: "mie", language: "chichewa", type: "books", format: "text/pdf", hours: null, items: 48, description: "Standards 1-8 Chichewa textbooks used in primary education across Malawi.", yearStart: 2015, yearEnd: 2023, themes: ["education"] },
+      { id: "mie_tumbuka", name: "Tumbuka Reading Materials", provider: "mie", language: "tumbuka", type: "books", format: "text/pdf", hours: null, items: 22, description: "Supplementary reading materials and early-grade readers in Tumbuka.", yearStart: 2018, yearEnd: 2022, themes: ["education"] },
+      { id: "mie_yao", name: "Yao Language Teaching Guides", provider: "mie", language: "yao", type: "books", format: "text/pdf", hours: null, items: 15, description: "Teacher guides and student materials for Yao-medium instruction.", yearStart: 2019, yearEnd: 2023, themes: ["education"] },
+      { id: "mij_broadcasts", name: "MIJ Student Broadcasts", provider: "mij", language: "chichewa", type: "radio", format: "audio/mp3", hours: 28, items: null, description: "Student practice radio broadcasts in Chichewa covering news features and interviews.", yearStart: 2020, yearEnd: 2024, themes: ["education","news"] },
+      { id: "mij_articles", name: "MIJ Student News Writing", provider: "mij", language: "chichewa", type: "news", format: "text/html", hours: null, items: 1800, description: "Student-written news articles in Chichewa as part of journalism coursework.", yearStart: 2019, yearEnd: 2024, themes: ["education","news"] },
+      { id: "doi_releases", name: "Government Press Releases", provider: "doi", language: "chichewa", type: "news", format: "text/html", hours: null, items: 4200, description: "Official government communications and press releases in Chichewa.", yearStart: 2016, yearEnd: 2024, themes: ["governance","politics"] },
+      { id: "doi_psa", name: "Public Service Announcements", provider: "doi", language: "chichewa", type: "radio", format: "audio/mp3", hours: 15, items: null, description: "Radio PSAs on health civic education and public safety in Chichewa.", yearStart: 2018, yearEnd: 2024, themes: ["health","education","governance"] },
+      { id: "montfort_books", name: "Montfort Chichewa Publications", provider: "montfort", language: "chichewa", type: "books", format: "text/pdf", hours: null, items: 85, description: "Books pamphlets and booklets on faith community development and social issues in Chichewa.", yearStart: 2010, yearEnd: 2024, themes: ["religion","development","society"] },
+      { id: "montfort_drama", name: "Montfort Audio Dramas", provider: "montfort", language: "chichewa", type: "radio", format: "audio/mp3", hours: 55, items: null, description: "Audio drama productions on social themes including HIV/AIDS awareness education and family life.", yearStart: 2015, yearEnd: 2023, themes: ["health","culture","society"] },
+      { id: "montfort_sena", name: "Montfort Sena Publications", provider: "montfort", language: "sena", type: "books", format: "text/pdf", hours: null, items: 18, description: "Religious and educational materials published in Sena for the Lower Shire region.", yearStart: 2016, yearEnd: 2022, themes: ["religion","education"] }
+    ];
+
+    // Runtime state — pre-seeded with fallback so page always renders
+    let PROVIDERS   = PROVIDERS_FALLBACK.slice();
+    let COLLECTIONS = COLLECTIONS_FALLBACK.slice();
+
+    // ══════════════════════════════════════════════════════════════
+    // CSV LOADING  (PapaParse)
+    // ══════════════════════════════════════════════════════════════
+    function loadCSV(url) {
+      return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+          download:       true,
+          header:         true,
+          skipEmptyLines: true,
+          complete: r  => resolve(r.data),
+          error:    err => reject(err),
+        });
+      });
+    }
+
+    /**
+     * Normalise a collections CSV row.
+     * Expected columns: id, name, provider, language, type, format,
+     *                   hours, items, description, yearStart, yearEnd, themes
+     * themes can be pipe-separated OR comma-separated, e.g. "health|news" or "health,news"
+     */
+    function normaliseCollection(row) {
+      return {
+        id:          row.id          || '',
+        name:        row.name        || '',
+        provider:    (row.provider  || '').trim(),
+        language:    (row.language   || '').toLowerCase().trim(),
+        type:        (row.type       || '').toLowerCase().trim(),
+        format:      row.format      || '',
+        hours:       row.hours  && row.hours.trim()  !== '' && row.hours  !== 'null'
+                       ? parseFloat(row.hours)  : null,
+        items:       row.items  && row.items.trim()  !== '' && row.items  !== 'null'
+                       ? parseInt(row.items, 10) : null,
+        description: row.description || '',
+        yearStart:   row.year_start ? parseInt(row.year_start, 10) : null,
+        yearEnd:     row.year_end   ? parseInt(row.year_end,   10) : null,
+        themes:      row.themes
+                       ? row.themes.split(/[|,]/).map(t => t.trim().toLowerCase()).filter(Boolean)
+                       : [],
+      };
+    }
+
+    /**
+     * Normalise a providers CSV row.
+     * Expected columns: id, name, type, description
+     */
+    function normaliseProvider(row) {
+      return {
+        id:          (row.id          || '').trim(),
+        name:        (row.name        || '').trim(),
+        type:        (row.type        || '').trim(),
+        description: (row.description || '').trim(),
+      };
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // HERO STATS  (computed dynamically from loaded data)
+    // ══════════════════════════════════════════════════════════════
+    function updateHeroStats() {
+      document.getElementById('stat-providers').textContent   = PROVIDERS.length;
+      document.getElementById('stat-collections').textContent = COLLECTIONS.length;
+      document.getElementById('stat-types').textContent       = new Set(COLLECTIONS.map(c => c.type)).size;
+      document.getElementById('stat-languages').textContent   = new Set(COLLECTIONS.map(c => c.language)).size;
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // FILTER DROPDOWNS  (populated from live data)
+    // ══════════════════════════════════════════════════════════════
     function populateFilters() {
+      function fill(selectId, values, labelFn) {
+        const sel = document.getElementById(selectId);
+        sel.innerHTML = '<option value="">All</option>';
+        [...new Set(values)].sort().forEach(v => {
+          const opt = document.createElement('option');
+          opt.value       = v;
+          opt.textContent = labelFn ? labelFn(v) : v;
+          sel.appendChild(opt);
+        });
+      }
+
+      fill('filter-language', COLLECTIONS.map(c => c.language),
+        v => v.charAt(0).toUpperCase() + v.slice(1));
+
+      fill('filter-type', COLLECTIONS.map(c => c.type),
+        v => TYPE_LABELS[v] || (v.charAt(0).toUpperCase() + v.slice(1)));
+
+      // Providers dropdown: value = name (matches c.provider in collections), label = name
       const provSel = document.getElementById('filter-provider');
+      provSel.innerHTML = '<option value="">All</option>';
       PROVIDERS.forEach(p => {
         const opt = document.createElement('option');
-        opt.value = p.id;
+        opt.value       = p.name;   // match against c.provider which stores the name
         opt.textContent = p.name;
         provSel.appendChild(opt);
       });
 
-      const themeSel = document.getElementById('filter-theme');
-      const allThemes = [...new Set(COLLECTIONS.flatMap(c => c.themes))].sort();
-      allThemes.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t;
-        opt.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-        themeSel.appendChild(opt);
-      });
+      fill('filter-theme', COLLECTIONS.flatMap(c => c.themes),
+        v => v.charAt(0).toUpperCase() + v.slice(1));
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // CARDS
+    // ══════════════════════════════════════════════════════════════
+    function getProvider(id) {
+      return PROVIDERS.find(p => p.id === id || p.name === id);
     }
 
     function renderCards(collections) {
       const grid = document.getElementById('card-grid');
       if (collections.length === 0) {
-        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">No collections match your filters.</p>';
-      } else {
-        grid.innerHTML = collections.map(c => {
-          const prov = getProvider(c.provider);
-          const sizeLabel = c.hours ? `${c.hours} hrs audio` : `${c.items?.toLocaleString()} items`;
-          return `
-        <div class="catalog-card" data-language="${c.language}" data-type="${c.type}" data-provider="${c.provider}">
-          <div class="card-header-bar">
-            <div class="card-icon ${c.type}">${TYPE_ICONS[c.type]}</div>
-            <div class="card-title-block">
-              <h3>${c.name}</h3>
-              <div class="provider-name">${prov?.name || c.provider}</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>${c.description}</p>
-            <div class="card-tags">
-              <span class="tag lang">${c.language}</span>
-              <span class="tag type">${TYPE_LABELS[c.type]}</span>
-              <span class="tag">${c.format}</span>
-              ${c.themes.map(t => `<span class="tag theme">${t}</span>`).join('')}
-            </div>
-          </div>
-          <div class="card-meta">
-            <span><strong>${sizeLabel}</strong></span>
-            <span>${c.yearStart}–${c.yearEnd}</span>
-          </div>
-        </div>`;
-        }).join('');
+        grid.innerHTML =
+          '<p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">No collections match your filters.</p>';
+        document.getElementById('result-count').textContent = '0 collections';
+        return;
       }
-      document.getElementById('result-count').textContent = `${collections.length} collection${collections.length !== 1 ? 's' : ''}`;
+
+      grid.innerHTML = collections.map(c => {
+        const prov      = getProvider(c.provider);
+        const sizeLabel = c.hours ? `${c.hours} hrs audio` : `${(c.items || 0).toLocaleString()} items`;
+        const icon      = TYPE_ICONS[c.type] || '📁';
+        const typeLabel = TYPE_LABELS[c.type] || c.type;
+        return `
+          <div class="catalog-card" data-language="${c.language}" data-type="${c.type}" data-provider="${c.provider}">
+            <div class="card-header-bar">
+              <div class="card-icon ${c.type}">${icon}</div>
+              <div class="card-title-block">
+                <h3>${c.name}</h3>
+                <div class="provider-name">${prov?.name || c.provider}</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>${c.description}</p>
+              <div class="card-tags">
+                <span class="tag lang">${c.language}</span>
+                <span class="tag type">${typeLabel}</span>
+                <span class="tag">${c.format}</span>
+                ${c.themes.map(t => `<span class="tag theme">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="card-meta">
+              <span><strong>${sizeLabel}</strong></span>
+              <span>${c.yearStart}–${c.yearEnd}</span>
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('result-count').textContent =
+        `${collections.length} collection${collections.length !== 1 ? 's' : ''}`;
     }
 
     function applyFilters() {
-      const lang = document.getElementById('filter-language').value;
-      const type = document.getElementById('filter-type').value;
-      const prov = document.getElementById('filter-provider').value;
+      const lang  = document.getElementById('filter-language').value;
+      const type  = document.getElementById('filter-type').value;
+      const prov  = document.getElementById('filter-provider').value;
       const theme = document.getElementById('filter-theme').value;
-      const q = document.getElementById('filter-search').value.toLowerCase();
+      const q     = document.getElementById('filter-search').value.toLowerCase();
 
-      const filtered = COLLECTIONS.filter(c => {
-        if (lang && c.language !== lang) return false;
-        if (type && c.type !== type) return false;
-        if (prov && c.provider !== prov) return false;
-        if (theme && !c.themes.includes(theme)) return false;
-        if (q && !(c.name.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.language.includes(q))) return false;
+      renderCards(COLLECTIONS.filter(c => {
+        if (lang  && c.language !== lang)         return false;
+        if (type  && c.type     !== type)         return false;
+        if (prov  && c.provider !== prov)         return false;
+        if (theme && !c.themes.includes(theme))   return false;
+        if (q && !(
+          c.name.toLowerCase().includes(q)       ||
+          c.description.toLowerCase().includes(q)||
+          c.language.includes(q)
+        )) return false;
         return true;
-      });
-      renderCards(filtered);
+      }));
     }
 
     function resetFilters() {
-      document.getElementById('filter-language').value = '';
-      document.getElementById('filter-type').value = '';
-      document.getElementById('filter-provider').value = '';
-      document.getElementById('filter-theme').value = '';
+      ['filter-language','filter-type','filter-provider','filter-theme'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
       document.getElementById('filter-search').value = '';
       applyFilters();
     }
 
-    // Provider sections
+    // ══════════════════════════════════════════════════════════════
+    // PROVIDERS TAB
+    // ══════════════════════════════════════════════════════════════
     function renderProviders() {
       const container = document.getElementById('providers-list');
+      if (!PROVIDERS.length) {
+        container.innerHTML =
+          '<p style="text-align:center;color:var(--gray-400);padding:3rem;">No providers loaded.</p>';
+        return;
+      }
+
       container.innerHTML = PROVIDERS.map(p => {
-        const provCollections = COLLECTIONS.filter(c => c.provider === p.id);
+        const provCollections = COLLECTIONS.filter(c =>
+          c.id === p.id
+        );
         const tableRows = provCollections.map(c => {
-          const size = c.hours ? `${c.hours} hrs` : `${c.items?.toLocaleString()} items`;
+          const size = c.hours ? `${c.hours} hrs` : `${(c.items || 0).toLocaleString()} items`;
           return `<tr>
-        <td class="col-name">${c.name}</td>
-        <td>${c.description}</td>
-        <td><span class="tag lang">${c.language}</span></td>
-        <td><span class="tag type">${TYPE_LABELS[c.type]}</span></td>
-        <td>${size}</td>
-        <td>${c.yearStart}–${c.yearEnd}</td>
-      </tr>`;
+            <td class="col-name">${c.name}</td>
+            <td>${c.description}</td>
+            <td><span class="tag lang">${c.language}</span></td>
+            <td><span class="tag type">${TYPE_LABELS[c.type] || c.type}</span></td>
+            <td>${size}</td>
+            <td>${c.yearStart}–${c.yearEnd}</td>
+          </tr>`;
         }).join('');
 
         return `
-      <div class="provider-section">
-        <h3>${p.name}</h3>
-        <div class="provider-type">${p.type}</div>
-        <p class="desc">${p.description}</p>
-        ${provCollections.length ? `
-          <table class="collection-table">
-            <thead><tr>
-              <th>Collection</th><th>Description</th><th>Language</th><th>Type</th><th>Size</th><th>Period</th>
-            </tr></thead>
-            <tbody>${tableRows}</tbody>
-          </table>
-        ` : '<p style="color:var(--gray-400);font-size:0.9rem;">No collections registered yet.</p>'}
-      </div>`;
+          <div class="provider-section">
+            <h3>${p.name}</h3>
+            <div class="provider-type">${p.type}</div>
+            <p class="desc">${p.description}</p>
+            ${provCollections.length
+              ? `<table class="collection-table">
+                  <thead><tr>
+                    <th>Collection</th><th>Description</th><th>Language</th>
+                    <th>Type</th><th>Size</th><th>Period</th>
+                  </tr></thead>
+                  <tbody>${tableRows}</tbody>
+                </table>`
+              : '<p style="color:var(--gray-400);font-size:0.9rem;">No collections registered yet.</p>'
+            }
+          </div>`;
       }).join('');
     }
 
-    // Tabs
+    // ══════════════════════════════════════════════════════════════
+    // TABS
+    // ══════════════════════════════════════════════════════════════
+    const TAB_ORDER = ['browse', 'providers', 'license', 'api', 'metadata', 'about'];
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
 
-      document.getElementById('panel-' + tabId).classList.add('active');
+      document.getElementById('panel-' + tabId)?.classList.add('active');
 
-      const tabs = ['browse', 'providers', 'license', 'api', 'about'];
-      const idx = tabs.indexOf(tabId);
-      document.querySelectorAll('.tab-btn')[idx]?.classList.add('active');
-      document.querySelectorAll('.nav-links a')[idx]?.classList.add('active');
+      const idx = TAB_ORDER.indexOf(tabId);
+      if (idx >= 0) {
+        document.querySelectorAll('.tab-btn')[idx]?.classList.add('active');
+        document.querySelectorAll('.nav-links a')[idx]?.classList.add('active');
+      }
     }
 
-    // Endpoint toggle
     function toggleEndpoint(header) {
-      const body = header.nextElementSibling;
-      body.classList.toggle('open');
+      header.nextElementSibling.classList.toggle('open');
     }
 
-    // Init
-    populateFilters();
-    renderCards(COLLECTIONS);
-    renderProviders();
+    // ══════════════════════════════════════════════════════════════
+    // RENDER — called immediately with fallback data, then
+    //          optionally re-called if CSVs load successfully
+    // ══════════════════════════════════════════════════════════════
+    function renderAll() {
+      updateHeroStats();
+      populateFilters();
+      renderCards(COLLECTIONS);
+      renderProviders();
+    }
+
+    // Render immediately with fallback data — page always works
+    renderAll();
+
+    // Then try to upgrade with CSV data if available
+    // (only runs if PapaParse loaded and we're on a server)
+    if (typeof Papa !== 'undefined') {
+      Promise.allSettled([
+        loadCSV(CSV_PROVIDERS),
+        loadCSV(CSV_COLLECTIONS)
+      ]).then(([provResult, colResult]) => {
+        let upgraded = false;
+
+        if (provResult.status === 'fulfilled' && provResult.value && provResult.value.length > 0) {
+          PROVIDERS = provResult.value.map(normaliseProvider);
+          upgraded = true;
+          console.info(`[Catalog] Loaded ${PROVIDERS.length} providers from CSV`);
+        }
+
+        if (colResult.status === 'fulfilled' && colResult.value && colResult.value.length > 0) {
+          COLLECTIONS = colResult.value.map(normaliseCollection);
+          upgraded = true;
+          console.info(`[Catalog] Loaded ${COLLECTIONS.length} collections from CSV`);
+        }
+
+        if (upgraded) {
+          renderAll(); // re-render with whatever CSV data loaded
+        }
+      });
+    }
   </script>
 
 </body>

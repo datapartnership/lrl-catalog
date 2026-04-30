@@ -3,10 +3,10 @@ maria,News Bulletins,Radio Maria,Chichewa,Text,".docx, .pdf",,2,"Daily general n
 maria,Radio Programs,Radio Maria,Chichewa,Audio,".mp3, .wav",,60,"Radio programs broadcast covering content that spans health, agriculture, social development, economic issues, and current affairs.",2012,2025,"Health, Agriculture, Social, Economic, Current Affairs"
 maria,News Bulletins and Reports,Radio Maria,Chichewa,Audio,".mp3, .wav",2,2,"News bulletins and reports covering health, agriculture, education, community, religion, economy, news, politics, culture, and environment.",2012,2025,"Health, Agriculture, Education, Community, Religion, Economy, News, Politics, Culture, Environment"
 mij,News Bulletins,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,1064,"Chichewa news bulletins covering national and international current affairs, including accompanying transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social"
-mij,Headlines Summaries,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,N/A,"Short Chichewa headlines summaries broadcast multiple times daily, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
-mij,Evening News with Interviews,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,N/A,"Flagship Chichewa evening news programme featuring in-depth interviews with newsmakers, public officials, and subject experts. Accompanied by full transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social, Governance"
-mij,Evening Recap,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,N/A,"End-of-day Chichewa recap of the day's top stories, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
-kuwala,Radio Programs,Kuwala FM,Chichewa,Audio,.mp3,,N/A,"Various Chichewa audio programs identified for the AI for Malawi project, covering health, agriculture, education, religion, and news.",2021,2025,"Health, Agriculture, Education, Religion, News"
+mij,Headlines Summaries,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"Short Chichewa headlines summaries broadcast multiple times daily, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
+mij,Evening News with Interviews,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"Flagship Chichewa evening news programme featuring in-depth interviews with newsmakers, public officials, and subject experts. Accompanied by full transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social, Governance"
+mij,Evening Recap,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"End-of-day Chichewa recap of the day's top stories, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
+kuwala,Radio Programs,Kuwala FM,Chichewa,Audio,.mp3,,,"Various Chichewa audio programs identified for the AI for Malawi project, covering health, agriculture, education, religion, and news.",2021,2025,"Health, Agriculture, Education, Religion, News"
 capital_fm,News Bulletins,Capital FM,Chichewa,Text,.docx,,2000,"General Chichewa news bulletins from Capital FM Malawi, a privately owned station broadcasting news, current affairs, and entertainment. Text files (.docx) covering agriculture, ICT, politics, and sports.",2022,2025,"Agriculture, ICT, Politics, Sports"
 capital_fm,Health Talk Program,Capital FM,Chichewa,Audio,.mp3,,,"Weekly health program on Capital FM featuring medical professionals, public health experts, and practitioners addressing listener questions on communicable and non-communicable diseases, nutrition, and wellness.",,2025,Health
 capital_fm,Mingoli,Capital FM,Chichewa,Audio,,,,"Chichewa entertainment and culture program on Capital FM. 'Mingoli' refers to a popular Malawian music and arts promotion concept; program features local music, cultural discussions, and entertainment commentary.",2015,2025,"Entertainment, Culture, Music, Arts"
@@ -23,16 +23,16 @@ mie,Chichewa Teacher's Guide Books,Malawi Institute of Education,Chichewa,Text,.
 mie,Chichewa Syllabi,Malawi Institute of Education,Chichewa,Text,.pdf,,8,"Official Chichewa subject syllabi for primary school Standards 1 through 8, outlining learning objectives, competencies, scope and sequence, and assessment guidance for each grade level",1992,2025,"Education, Language & Literacy, Curriculum Development"
 mie,Supplementary Children Books,Malawi Institute of Education,Chichewa,Text,.pdf,,40,A collection of standalone Chichewa storybooks and thematic readers for primary school learners.,1992,2025,"Education, Language & Literacy, Curriculum Development"
 mie,Health Education Radio Programs,Malawi Institute of Education,Chichewa,Audio,.mp3,,27,"A series of Chichewa-language audio programs covering community and public health topics including disease prevention, maternal and reproductive health, nutrition, health governance, and health education facilitation.",1992,2025,"Health, Communicable Disease, Maternal & Reproductive Health, Nutrition, Community Health, Governance"
-mie,Science & Technology Books,Malawi Institute of Education,Chichewa,Text,.pdf,,11," TechnologySupplementary readers on science, technology, innovation, electricity, digital literacy, and carpentry skills",1991,2025,"Science & Technology, Innovation, Digital Literacy"
-mie,Social Studies & Civic Education Books,Malawi Institute of Education,Chichewa,Text,.pdf,,10,"Supplementary readers on social development, justice, civic life, inclusivity, gender, and community values",1991,2025,"Social Studies, Civic Education, Justice, Inclusivity, Gender"
-mie,Entrepreneurship Books,Malawi Institute of Education,Chichewa,Text,.pdf,,4,"Supplementary readers on entrepreneurship, business, and pathways to success",1991,2025,"Entrepreneurship, Business"
-mie,Climate Change Books,Malawi Institute of Education,Chichewa,Text,.pdf,,4,"Supplementary readers on climate change, environmental sustainability, and human-environment relationships",1991,2025,"Climate Change, Environment, Sustainability"
-mie,"Tourism, Culture & Heritage Books",Malawi Institute of Education,Chichewa,Text,.pdf,,3,"Supplementary readers exploring Malawian tourism destinations, cultural heritage, and African unity",1991,2025,"Tourism, Culture, Heritage, Malawi"
-mie,Agriculture Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Supplementary readers on farming, food security, and rural livelihoods",1991,2025,"Agriculture, Livelihoods"
-mie,Health & Wellbeing Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Supplementary readers on mental health, wellbeing, and personal protection",1991,2025,"Health, Wellbeing, Mental Health"
-mie,Sports Books,Malawi Institute of Education,Chichewa,Text,.pdf,,1,Supplementary reader on sports and physical activity,1991,2025,"Sports, Physical Education"
-mie,Arts Books,Malawi Institute of Education,Chichewa,Text,.pdf,,1,Supplementary reader on creative arts and craftsmanship,1991,2025,"Arts, Crafts"
-mie,Inspiration & Research Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Supplementary readers on personal aspiration, research skills, and self-belief",1991,2025,"Inspiration, Aspirations, Research"
+mie,Science & Technology Books,Malawi Institute of Education,Chichewa,Text,.pdf,,11,"Student supplementary books on science, technology, innovation, electricity, digital literacy, and carpentry skills",1991,2025,"Science & Technology, Innovation, Digital Literacy"
+mie,Social Studies & Civic Education Books,Malawi Institute of Education,Chichewa,Text,.pdf,,10,"Student supplementary books on social development, justice, civic life, inclusivity, gender, and community values",1991,2025,"Social Studies, Civic Education, Justice, Inclusivity, Gender"
+mie,Entrepreneurship Books,Malawi Institute of Education,Chichewa,Text,.pdf,,4,"Student supplementary books on entrepreneurship, business, and pathways to success",1991,2025,"Entrepreneurship, Business"
+mie,Climate Change Books,Malawi Institute of Education,Chichewa,Text,.pdf,,4,"Student supplementary books on climate change, environmental sustainability, and human-environment relationships",1991,2025,"Climate Change, Environment, Sustainability"
+mie,"Tourism, Culture & Heritage Books",Malawi Institute of Education,Chichewa,Text,.pdf,,3,"Student supplementary books on exploring Malawian tourism destinations, cultural heritage, and African unity",1991,2025,"Tourism, Culture, Heritage, Malawi"
+mie,Agriculture Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Student supplementary books on farming, food security, and rural livelihoods",1991,2025,"Agriculture, Livelihoods"
+mie,Health & Wellbeing Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Student supplementary books on mental health, wellbeing, and personal protection",1991,2025,"Health, Wellbeing, Mental Health"
+mie,Sports Books,Malawi Institute of Education,Chichewa,Text,.pdf,,1,Student supplementary books on sports and physical activity,1991,2025,"Sports, Physical Education"
+mie,Arts Books,Malawi Institute of Education,Chichewa,Text,.pdf,,1,Student supplementary books on creative arts and craftsmanship,1991,2025,"Arts, Crafts"
+mie,Inspiration & Research Books,Malawi Institute of Education,Chichewa,Text,.pdf,,2,"Student supplementary books on personal aspiration, research skills, and self-belief",1991,2025,"Inspiration, Aspirations, Research"
 mie,Curriculum Support Documents,Malawi Institute of Education,Chichewa,Text,.pdf,,3,"Supporting curriculum materials including a Chichewa grammar reference book for primary school, a Chichewa syllabus for teacher education, and an anchor, theme, scope and sequence planning document.",1991,2025,"Education, Language & Literacy, Curriculum Development, Teacher Training"
 mie,Educational Video Lessons,Malawi Institute of Education,Chichewa,Video,.mp4,,6,"Short Chichewa-language educational videos produced by MIE for school curriculum delivery, covering climate change, road safety, social development, financial literacy, arts, and personal empowerment.",1991,2025,"Education, Climate Change, Social, Financial Literacy, Arts"
 radio_islam,News Bulletins,Radio Islam,Chichewa,Audio & Text,".mp3, .rtf",,,"Daily Chichewa news updates with accompanying scripts from Radio Islam Malawi, covering general news and Islamic community interest topics.",,,
@@ -43,45 +43,45 @@ nation_publications,Weekend Nation,Nation Publication Limited,Chichewa,Text,.pdf
 nation_publications,Fuko,Nation Publication Limited,Chichewa,Text,.pdf,,346,"A twice-monthly Chichewa-language newspaper published by Nation Publications Limited targeting rural communities across Malawi. Content focuses on agriculture, health, and general development information.",2017,2025,"Agriculture, Sports, Entertainment, Business, Marketing"
 montfort,Mkwaso Newspaper Articles,Montfort Media,Chichewa,Text,.pdf,,49,"National Chichewa newspaper published by Montfort Media with local coverage; 16 pages per issue covering hard news, features, entertainment, and sports. Approximately 49 issues collected.",2008,2025,"Politics, Health, Religion, Development, Agriculture, Economy, Community, Education"
 times_group,Malawi News,The Times Group,Chichewa,Text,".pdf, .doc",,,Weekly Chichewa-language newspaper covering various topics.,2013,2025,"Health, Economy, Religion, Social, Agriculture, Current Affairs"
-times_group,Ana Ife,The Times Group,Chichewa,Video,.mp4,60 min,418,,2017,2026,
-times_group,Apaulendo,The Times Group,Chichewa,Video,.mp4,30 min,226,,2021,2026,
-times_group,Danga Langa,The Times Group,Chichewa,Video,.mp4,30 min,391,,2014,2026,
-times_group,Dziko la Mkaka ndi Uchi,The Times Group,Chichewa,Video,.mp4,25 min,257,,2019,2026,
-times_group,From the Terraces,The Times Group,Chichewa,Video,.mp4,30 min,854,,2018,2026,
-times_group,Zakumudzi,The Times Group,Chichewa,Video,.mp4,25 min,136,,2017,2026,
-times_group,Geni Nkujiya,The Times Group,Chichewa,Video,.mp4,15 min,118,,2017,2026,
-times_group,Glam 265,The Times Group,Chichewa,Video,.mp4,30 min,309,,2022,2026,
-times_group,Zimakhala Bwanji,The Times Group,Chichewa,Video,.mp4,30 min,114,,2017,2026,
-times_group,Home Managers,The Times Group,Chichewa,Video,.mp4,60 min,27,,2025,2026,
-times_group,Hot Current,The Times Group,Chichewa,Video,.mp4,60 min,415,,2017,2026,
-times_group,Infotainment,The Times Group,Chichewa,Video,.mp4,25 min,1495,,2017,2026,
-times_group,Islamic Life,The Times Group,Chichewa,Video,.mp4,30 min,24,,2025,2026,
-times_group,It Can Be You,The Times Group,Chichewa,Video,.mp4,30 min,82,,2023,2026,
-times_group,Kwagwanji,The Times Group,Chichewa,Video,.mp4,45 min,122,,2023,2026,
-times_group,LA 40,The Times Group,Chichewa,Video,.mp4,45 min,22,,2025,2026,
-times_group,Mapemphero,The Times Group,Chichewa,Video,.mp4,55 min,259,,2017,2026,
-times_group,Mdyangu,The Times Group,Chichewa,Video,.mp4,30 min,158,,2020,2026,
-times_group,Mfumukazi,The Times Group,Chichewa,Video,.mp4,30 min,21,,2024,2026,
-times_group,Umoyo wa Amayi,The Times Group,Chichewa,Video,.mp4,25 min,78,,2019,2026,
-times_group,Mind Power,The Times Group,Chichewa,Video,.mp4,30 min,290,,2017,2026,
-times_group,Mitekete,The Times Group,Chichewa,Video,.mp4,25 min,93,,2022,2026,
-times_group,Mtedzamtedza,The Times Group,Chichewa,Video,.mp4,25 min,246,,2021,2026,
-times_group,My Game,The Times Group,Chichewa,Video,.mp4,55 min,205,,2017,2026,
-times_group,On the Tee,The Times Group,Chichewa,Video,.mp4,25 min,114,,2018,2026,
-times_group,Peer Chat,The Times Group,Chichewa,Video,.mp4,55 min,163,,2020,2026,
-times_group,Times Sports Update,The Times Group,Chichewa,Video,.mp4,25 min,269,,2021,2026,
-times_group,Times Investigation,The Times Group,Chichewa,Video,.mp4,30 min,19,,2020,2026,
-times_group,Sports Arena,The Times Group,Chichewa,Video,.mp4,25 min,775,,2017,2026,
-times_group,Spotlight,The Times Group,Chichewa,Video,.mp4,55 min,190,,2016,2026,
-times_group,Survivor,The Times Group,Chichewa,Video,.mp4,25 min,20,,2020,2026,
-times_group,Tchutchutchu,The Times Group,Chichewa,Video,.mp4,30 min,289,,2017,2026,
-times_group,Thanzi,The Times Group,Chichewa,Video,.mp4,30 min,154,,2015,2026,
-times_group,The Constitution,The Times Group,Chichewa,Video,.mp4,30 min,286,,2017,2026,
-times_group,The Plan,The Times Group,Chichewa,Video,.mp4,30 min,106,,2020,2026,
-times_group,Tikudziweni,The Times Group,Chichewa,Video,.mp4,30 min,356,,2017,2026,
-times_group,Times Sports Update (2),The Times Group,Chichewa,Video,.mp4,25 min,261,? Possible duplicate of row 72 — verify with Times Group,2021,2026,
-times_group,Times Exclusive,The Times Group,Chichewa,Video,.mp4,55 min,192,,2019,2026,
-times_group,Tilondoloze,The Times Group,Chichewa,Video,.mp4,30 min,26,,2022,2026,
+times_group,Ana Ife,The Times Group,Chichewa,Video,.mp4,,418,,2017,2026,
+times_group,Apaulendo,The Times Group,Chichewa,Video,.mp4,,226,,2021,2026,
+times_group,Danga Langa,The Times Group,Chichewa,Video,.mp4,,391,,2014,2026,
+times_group,Dziko la Mkaka ndi Uchi,The Times Group,Chichewa,Video,.mp4,,257,,2019,2026,
+times_group,From the Terraces,The Times Group,Chichewa,Video,.mp4,,854,,2018,2026,
+times_group,Zakumudzi,The Times Group,Chichewa,Video,.mp4,,136,,2017,2026,
+times_group,Geni Nkujiya,The Times Group,Chichewa,Video,.mp4,,118,,2017,2026,
+times_group,Glam 265,The Times Group,Chichewa,Video,.mp4,,309,,2022,2026,
+times_group,Zimakhala Bwanji,The Times Group,Chichewa,Video,.mp4,,114,,2017,2026,
+times_group,Home Managers,The Times Group,Chichewa,Video,.mp4,,27,,2025,2026,
+times_group,Hot Current,The Times Group,Chichewa,Video,.mp4,,415,,2017,2026,
+times_group,Infotainment,The Times Group,Chichewa,Video,.mp4,,1495,,2017,2026,
+times_group,Islamic Life,The Times Group,Chichewa,Video,.mp4,,24,,2025,2026,
+times_group,It Can Be You,The Times Group,Chichewa,Video,.mp4,,82,,2023,2026,
+times_group,Kwagwanji,The Times Group,Chichewa,Video,.mp4,,122,,2023,2026,
+times_group,LA 40,The Times Group,Chichewa,Video,.mp4,,22,,2025,2026,
+times_group,Mapemphero,The Times Group,Chichewa,Video,.mp4,,259,,2017,2026,
+times_group,Mdyangu,The Times Group,Chichewa,Video,.mp4,,158,,2020,2026,
+times_group,Mfumukazi,The Times Group,Chichewa,Video,.mp4,,21,,2024,2026,
+times_group,Umoyo wa Amayi,The Times Group,Chichewa,Video,.mp4,,78,,2019,2026,
+times_group,Mind Power,The Times Group,Chichewa,Video,.mp4,,290,,2017,2026,
+times_group,Mitekete,The Times Group,Chichewa,Video,.mp4,,93,,2022,2026,
+times_group,Mtedzamtedza,The Times Group,Chichewa,Video,.mp4,,246,,2021,2026,
+times_group,My Game,The Times Group,Chichewa,Video,.mp4,,205,,2017,2026,
+times_group,On the Tee,The Times Group,Chichewa,Video,.mp4,,114,,2018,2026,
+times_group,Peer Chat,The Times Group,Chichewa,Video,.mp4,,163,,2020,2026,
+times_group,Times Sports Update,The Times Group,Chichewa,Video,.mp4,,269,,2021,2026,
+times_group,Times Investigation,The Times Group,Chichewa,Video,.mp4,,19,,2020,2026,
+times_group,Sports Arena,The Times Group,Chichewa,Video,.mp4,,775,,2017,2026,
+times_group,Spotlight,The Times Group,Chichewa,Video,.mp4,,190,,2016,2026,
+times_group,Survivor,The Times Group,Chichewa,Video,.mp4,,20,,2020,2026,
+times_group,Tchutchutchu,The Times Group,Chichewa,Video,.mp4,,289,,2017,2026,
+times_group,Thanzi,The Times Group,Chichewa,Video,.mp4,,154,,2015,2026,
+times_group,The Constitution,The Times Group,Chichewa,Video,.mp4,,286,,2017,2026,
+times_group,The Plan,The Times Group,Chichewa,Video,.mp4,,106,,2020,2026,
+times_group,Tikudziweni,The Times Group,Chichewa,Video,.mp4,,356,,2017,2026,
+times_group,Times Sports Update (2),The Times Group,Chichewa,Video,.mp4,,261,,2021,2026,
+times_group,Times Exclusive,The Times Group,Chichewa,Video,.mp4,,192,,2019,2026,
+times_group,Tilondoloze,The Times Group,Chichewa,Video,.mp4,,26,,2022,2026,
 times_group,ANA IFE,The Times Group,Chichewa,Video,".mp4, .mov",,,,2015,2025,"Health, Agriculture, Social, Economic, Current Affairs"
 yoneco_fm,Gender Based Violence,YONECO,Chichewa,Audio & Text,".mp3, .docx",,,"Chichewa audio and text content from programs and news bulletins featuring duty bearers, community members, and government officials discussing gender-based violence.",2017,2025,Gender Based Violence
 yoneco_fm,Health,YONECO,Chichewa,Audio & Text,".mp3, .docx",,,"Radio programs and news bulletins featuring health experts and practitioners covering communicable/non-communicable disease, nutrition, HIV, STIs, mental health, and cancer.",2017,2025,"Communicable/Non-communicable Disease, Nutrition, HIV, STIs, Mental Health, Cancer"

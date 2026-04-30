@@ -1238,22 +1238,32 @@
      * themes can be pipe-separated OR comma-separated, e.g. "health|news" or "health,news"
      */
     function normaliseCollection(row) {
+      // Safe integer parser — returns null for blank, N/A, or any non-numeric value
+      function safeInt(val) {
+        if (!val || val.trim() === '' || val.trim().toLowerCase() === 'n/a') return null;
+        const n = parseInt(val, 10);
+        return isNaN(n) ? null : n;
+      }
+      // Safe float parser — same rules
+      function safeFloat(val) {
+        if (!val || val.trim() === '' || val.trim().toLowerCase() === 'n/a') return null;
+        const n = parseFloat(val);
+        return isNaN(n) ? null : n;
+      }
       return {
         id:          row.id          || '',
         name:        row.name        || '',
-        provider:    (row.provider  || '').trim(),
+        provider:    (row.provider   || '').trim(),
         language:    (row.language   || '').toLowerCase().trim(),
         type:        (row.type       || '').toLowerCase().trim(),
         format:      row.format      || '',
-        hours:       row.hours  && row.hours.trim()  !== '' && row.hours  !== 'null'
-                       ? parseFloat(row.hours)  : null,
-        items:       row.items  && row.items.trim()  !== '' && row.items  !== 'null'
-                       ? parseInt(row.items, 10) : null,
+        hours:       safeFloat(row.hours),
+        items:       safeInt(row.items),
         description: row.description || '',
-        yearStart:   row.year_start ? parseInt(row.year_start, 10) : null,
-        yearEnd:     row.year_end   ? parseInt(row.year_end,   10) : null,
+        yearStart:   safeInt(row.year_start),
+        yearEnd:     safeInt(row.year_end),
         themes:      row.themes
-                       ? row.themes.split(/[|,]/).map(t => t.trim().toLowerCase()).filter(Boolean)
+                       ? row.themes.split(/[|,;]/).map(t => t.trim().toLowerCase()).filter(Boolean)
                        : [],
       };
     }

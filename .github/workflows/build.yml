@@ -41,6 +41,7 @@ jobs:
           # Collect only the files needed for the site
           mkdir -p _site
           cp index.html main.css _site/
+          cp providers.csv collections.csv _site/
           cp *.pdf _site/ 2>/dev/null || true
           cp -r metadata-docs _site/
 

@@ -1315,7 +1315,7 @@
         yearStart:   safeInt(row.year_start),
         yearEnd:     safeInt(row.year_end),
         themes:      row.themes
-                       ? row.themes.split(/[|,;]/).map(t => t.trim().toLowerCase()).filter(Boolean)
+                       ? row.themes.split(/[|,;]/).map(t => t.trim()).filter(Boolean)
                        : [],
       };
     }
@@ -1374,8 +1374,20 @@
         provSel.appendChild(opt);
       });
 
-      fill('filter-theme', COLLECTIONS.flatMap(c => c.themes),
-        v => v.charAt(0).toUpperCase() + v.slice(1));
+      // Themes: deduplicate case-insensitively, preserve original casing
+      const themeSel = document.getElementById('filter-theme');
+      themeSel.innerHTML = '<option value="">All</option>';
+      const seenThemes = new Map();
+      COLLECTIONS.flatMap(c => c.themes).forEach(t => {
+        const key = t.toLowerCase();
+        if (!seenThemes.has(key)) seenThemes.set(key, t);
+      });
+      [...seenThemes.values()].sort((a, b) => a.localeCompare(b)).forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        themeSel.appendChild(opt);
+      });
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -1481,7 +1493,7 @@
         if (lang  && c.language !== lang)         return false;
         if (type  && c.type     !== type)         return false;
         if (prov  && c.provider !== prov)         return false;
-        if (theme && !c.themes.includes(theme))   return false;
+        if (theme && !c.themes.map(t => t.toLowerCase()).includes(theme.toLowerCase())) return false;
         if (q && !(
           c.name.toLowerCase().includes(q)       ||
           c.description.toLowerCase().includes(q)||

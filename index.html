@@ -12,6 +12,52 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="main.css">
   <!-- STOP: Do not add inline styles. Edit main.css instead. -->
+  <style>
+    /* Pagination — add to main.css when convenient */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .page-btn {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--gray-200, #d8dce5);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--gray-600, #495057);
+      cursor: pointer;
+      transition: all 0.15s;
+      min-width: 38px;
+    }
+    .page-btn:hover:not(:disabled) {
+      border-color: var(--orange, #F7951D);
+      color: var(--orange, #F7951D);
+    }
+    .page-btn.active {
+      background: var(--orange, #F7951D);
+      border-color: var(--orange, #F7951D);
+      color: #fff;
+      font-weight: 700;
+    }
+    .page-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .page-prev, .page-next {
+      padding: 0.45rem 1rem;
+    }
+    .page-ellipsis {
+      padding: 0.45rem 0.25rem;
+      color: var(--gray-400, #8e8e91);
+      font-size: 0.95rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -124,6 +170,7 @@
       <div class="card-grid" id="card-grid">
         <p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">Loading collections…</p>
       </div>
+      <div class="pagination" id="pagination"></div>
     </div>
 
     <!-- ===================== PROVIDERS TAB ===================== -->
@@ -1338,16 +1385,30 @@
       return PROVIDERS.find(p => p.id === id || p.name === id);
     }
 
-    function renderCards(collections) {
+    const PAGE_SIZE = 30;
+    let currentPage = 1;
+    let filteredCollections = [];
+
+    function renderCards(collections, page) {
       const grid = document.getElementById('card-grid');
+      const pagination = document.getElementById('pagination');
+      filteredCollections = collections;
+      currentPage = page || 1;
+
       if (collections.length === 0) {
         grid.innerHTML =
           '<p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">No collections match your filters.</p>';
         document.getElementById('result-count').textContent = '0 collections';
+        pagination.innerHTML = '';
         return;
       }
 
-      grid.innerHTML = collections.map(c => {
+      const totalPages = Math.ceil(collections.length / PAGE_SIZE);
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageItems = collections.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = pageItems.map(c => {
         const prov      = getProvider(c.provider);
         const sizeLabel = c.hours ? `${c.hours} hrs audio` : `${(c.items || 0).toLocaleString()} items`;
         const icon      = TYPE_ICONS[c.type] || '📁';
@@ -1378,7 +1439,35 @@
       }).join('');
 
       document.getElementById('result-count').textContent =
-        `${collections.length} collection${collections.length !== 1 ? 's' : ''}`;
+        `${start + 1}–${Math.min(start + PAGE_SIZE, collections.length)} of ${collections.length} collection${collections.length !== 1 ? 's' : ''}`;
+
+      // Render pagination controls
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      let pages = '';
+      for (let i = 1; i <= totalPages; i++) {
+        if (
+          i === 1 || i === totalPages ||
+          (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+          pages += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          pages += `<span class="page-ellipsis">…</span>`;
+        }
+      }
+
+      pagination.innerHTML = `
+        <button class="page-btn page-prev" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>
+        ${pages}
+        <button class="page-btn page-next" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>`;
+    }
+
+    function goToPage(page) {
+      renderCards(filteredCollections, page);
+      document.querySelector('.filter-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function applyFilters() {
@@ -1399,7 +1488,7 @@
           c.language.includes(q)
         )) return false;
         return true;
-      }));
+      }), 1); // always reset to page 1 when filters change
     }
 
     function resetFilters() {
@@ -1562,6 +1651,9 @@
         document.querySelectorAll('.tab-btn')[idx]?.classList.add('active');
         document.querySelectorAll('.nav-links a')[idx]?.classList.add('active');
       }
+
+      // Scroll to the tabs bar so content is immediately visible
+      document.querySelector('.tabs-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function toggleEndpoint(header) {

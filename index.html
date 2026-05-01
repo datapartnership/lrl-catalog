@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Low-Resource Language Data Catalog</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <!-- Papa Parse for CSV parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="main.css">
+  <!-- STOP: Do not add inline styles. Edit main.css instead. -->
+  <style>
+    /* Pagination — add to main.css when convenient */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .page-btn {
+      font-family: 'Asap Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--gray-200, #d8dce5);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--gray-600, #495057);
+      cursor: pointer;
+      transition: all 0.15s;
+      min-width: 38px;
+    }
+    .page-btn:hover:not(:disabled) {
+      border-color: var(--orange, #F7951D);
+      color: var(--orange, #F7951D);
+    }
+    .page-btn.active {
+      background: var(--orange, #F7951D);
+      border-color: var(--orange, #F7951D);
+      color: #fff;
+      font-weight: 700;
+    }
+    .page-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .page-prev, .page-next {
+      padding: 0.45rem 1rem;
+    }
+    .page-ellipsis {
+      padding: 0.45rem 0.25rem;
+      color: var(--gray-400, #8e8e91);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── NAVIGATION ─── -->
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a href="https://datapartnership.org" class="logo">Development Data Partnership</a>
+      <ul class="nav-links">
+        <li><a href="#" class="active" onclick="switchTab('browse')">Browse</a></li>
+        <li><a href="#" onclick="switchTab('providers')">Providers</a></li>
+        <li><a href="#" onclick="switchTab('license')">License</a></li>
+        <li><a href="#" onclick="switchTab('api')">API</a></li>
+        <li><a href="#" onclick="switchTab('metadata')">Metadata</a></li>
+        <li><a href="#" onclick="switchTab('about')">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <h1 class="display-4">Low Resource Language Data Catalog</h1>
+        <h2 class="hero-subtitle">Gates Foundation Supported Datasets for AI Model Training</h2>
+        <div class="line"></div>
+        <p class="lead">This program develops a scalable framework for unlocking high-quality proprietary content
+          through ethical licensing agreements. The initiative bridges the data gap that prevents development of
+          high-performing AI models for underrepresented languages and domains by facilitating access to datasets for
+          researchers and organizations working on AI for social good.</p>
+        <a href="#apply" class="hero-cta" onclick="switchTab('about');">Apply for Access</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num" id="stat-providers">—</div>
+          <div class="label">Data Providers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="stat-collections">—</div>
+          <div class="label">Collections</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="stat-types">—</div>
+          <div class="label">Media Types</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="stat-languages">—</div>
+          <div class="label">Languages</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TABS ─── -->
+  <div class="tabs-bar">
+    <div class="tabs-bar-inner">
+      <button class="tab-btn active" onclick="switchTab('browse')">Browse Collections</button>
+      <button class="tab-btn" onclick="switchTab('providers')">Data Providers</button>
+      <button class="tab-btn" onclick="switchTab('license')">License</button>
+      <button class="tab-btn" onclick="switchTab('api')">API Reference</button>
+      <button class="tab-btn" onclick="switchTab('metadata')">Metadata</button>
+      <button class="tab-btn" onclick="switchTab('about')">About</button>
+    </div>
+  </div>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main-content">
+
+    <!-- ===================== BROWSE TAB ===================== -->
+    <div class="tab-panel active" id="panel-browse">
+
+      <div class="filter-bar">
+        <div class="filter-row-selects">
+          <div class="filter-group">
+            <label for="filter-language">Language</label>
+            <select class="filter-select" id="filter-language" onchange="applyFilters()">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-type">Media Type</label>
+            <select class="filter-select" id="filter-type" onchange="applyFilters()">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-provider">Provider</label>
+            <select class="filter-select" id="filter-provider" onchange="applyFilters()">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-theme">Theme</label>
+            <select class="filter-select" id="filter-theme" onchange="applyFilters()">
+              <option value="">All</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-row-search">
+          <div class="filter-search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="filter-input" id="filter-search" placeholder="Search collections…"
+              oninput="applyFilters()">
+          </div>
+          <button class="filter-reset" onclick="resetFilters()">Reset</button>
+          <span class="result-count" id="result-count"></span>
+        </div>
+      </div>
+
+      <div class="card-grid" id="card-grid">
+        <p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">Loading collections…</p>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- ===================== PROVIDERS TAB ===================== -->
+    <div class="tab-panel" id="panel-providers">
+      <div class="providers-layout">
+        <nav class="providers-sidenav" id="providers-sidenav">
+          <!-- Group nav links injected by JS -->
+        </nav>
+        <div class="providers-content" id="providers-list">
+          <p style="text-align:center;color:var(--gray-400);padding:3rem;">Loading providers…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== LICENSE TAB ===================== -->
+    <div class="tab-panel" id="panel-license">
+      <div class="license-container">
+        <div class="license-header">
+          <h3>Development Data Partnership Clickthrough Sublicense Agreement</h3>
+          <p>All datasets in this catalog are governed by the following sublicense agreement. By accessing any dataset,
+            you agree to these terms.</p>
+        </div>
+        <div class="license-body">
+          <div class="license-section">
+            <h4>1. Parties; Clickthrough Acceptance; Authority</h4>
+            <p>This Clickthrough Sublicense Agreement (this "Sublicense") is entered into by and between: the
+              International Bank for Reconstruction and Development ("IBRD") and the International Development
+              Association ("IDA"), collectively, the "World Bank"; and the individual natural person accepting these
+              terms and, where such individual is acting within the scope of employment, appointment, or affiliation,
+              the employing or affiliated institution on whose behalf such individual acts (collectively, "Authorized
+              User" or "You").</p>
+            <p>By selecting "I Agree," submitting, participating in, or acting under an Approved Proposal through the
+              Development Data Partnership Platform (the "Portal"), or accessing any Dataset, You (i) acknowledge that
+              You have read and understood this Sublicense, (ii) agree to be legally bound by its terms, and (iii)
+              consent to the use of electronic records and signatures for purposes of formation and evidencing
+              acceptance.</p>
+            <p>If You do not agree, You shall not access or use any Dataset. You represent and warrant that You have
+              full legal power and authority to enter into this Sublicense and, where applicable, to bind Your
+              institution. Authorized User and the affiliated institution (if any) shall be jointly and severally liable
+              for all obligations and liabilities arising under this Sublicense.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>2. Eligibility; Approved Proposal; Scope of Authorization</h4>
+            <p><strong>2.1 Proposal-Based Access.</strong> Access to any Dataset is conditioned on the World Bank's
+              prior written approval of a Proposal submitted through the Portal (an "Approved Proposal"). The World Bank
+              may approve, deny, condition, suspend, or revoke approval in its sole discretion at any time.</p>
+            <p><strong>2.2 Purpose; Duration; No Expansion by Proposal.</strong> You may access and use the Dataset
+              solely (a) for the purposes expressly described in the Approved Proposal, (b) for Non-Commercial Research
+              Use, and (c) during the project duration approved in the Approved Proposal. An Approved Proposal is
+              incorporated by reference solely to delimit scope and conditions of use and shall not amend this
+              Sublicense or expand any rights granted herein.</p>
+            <p><strong>2.3 Material Changes Require Prior Approval.</strong> Any "Material Change" requires renewed
+              approval through the Portal prior to implementation. "Material Change" includes, without limitation, any
+              change to: purpose; methodology; model architecture; base model; research personnel; compute environment;
+              storage architecture; access controls; duration; anticipated outputs; publication plan; or release plan
+              for Derived Outputs.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>3. Definitions</h4>
+            <p><strong>Authorized User</strong> means a natural person affiliated with an eligible institution,
+              identified by name in an Approved Proposal, who has accepted this Sublicense and has been issued access
+              credentials by the World Bank. Access and authentication must be conducted solely through the
+              institutional, domain-linked email address verified in the Proposal. Authorization is personal, limited,
+              non-transferable, and non-delegable.</p>
+            <p><strong>Dataset</strong> means any organized collection of data made available through the Portal and/or
+              API, including without limitation audio, text, metadata, sampled content, segmented or chunked content,
+              shuffled content, transformed content, or other provisioned content.</p>
+            <p><strong>Data</strong> means any information from or derived from a Dataset made available through the
+              Portal and/or API, including without limitation chunked, shuffled, sampled, altered, transformed,
+              watermarked, security-marked, trace-marked, or otherwise protected content.</p>
+            <p><strong>Model</strong> means any machine learning, artificial intelligence, statistical, computational,
+              or automated system trained, fine-tuned, evaluated, or otherwise derived in whole or in part from the
+              Dataset.</p>
+            <p><strong>Derived Output</strong> means any Model or artifact created using the Dataset, including without
+              limitation model weights, embeddings, evaluation checkpoints, tokenizers, vocabularies, synthetic data,
+              fine-tuning artifacts, evaluation artifacts, or other outputs, provided that such output does not permit
+              reconstruction of more than an insubstantial portion of the Dataset.</p>
+            <p><strong>Non-Commercial Research Use</strong> means research, education, or development activity conducted
+              without the primary intent of commercial advantage or monetary compensation and without commercial
+              deployment, commercialization, productization, or monetization of any output, whether directly or
+              indirectly.</p>
+            <p><strong>Permissive Open-Source License</strong> means an Open Source Initiative (OSI)-approved license
+              that permits commercial and non-commercial use, modification, and redistribution with minimal restrictions
+              (e.g., MIT, Apache 2.0, BSD 2-Clause, BSD 3-Clause).</p>
+          </div>
+
+          <div class="license-section">
+            <h4>4. License Grant; Scope; Restrictions</h4>
+            <p><strong>4.1 Limited License.</strong> Subject to the terms and conditions of this Sublicense, the World
+              Bank grants You a limited, non-exclusive, non-transferable, non-sublicensable, revocable, royalty-free
+              license to access and use the Dataset solely for Non-Commercial Research Use and solely within the scope
+              of the Approved Proposal.</p>
+            <p><strong>4.2 Permitted Uses.</strong> You may: (a) access and process the Dataset for the approved
+              research purpose; (b) create Derived Outputs in compliance with all restrictions; and (c) publish research
+              findings that do not reveal, reconstruct, or enable reconstruction of Dataset content.</p>
+            <p><strong>4.3 Prohibited Uses.</strong> You shall not: redistribute, sublicense, or make the Dataset
+              available to third parties; use the Dataset for commercial purposes; attempt to re-identify, de-anonymize,
+              or reverse-engineer any content; use the Dataset in any retrieval-augmented generation (RAG) system; or
+              store or process the Dataset outside the approved compute environment.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>5. Data Handling; Security; Retention</h4>
+            <p>You shall implement and maintain administrative, technical, and physical safeguards appropriate to the
+              sensitivity of the Dataset. Access must be limited to Authorized Users named in the Approved Proposal. All
+              copies of the Dataset must be securely deleted upon expiration or termination of the Approved Proposal,
+              and You shall certify such deletion in writing within thirty (30) days.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>6. Model Training; Derived Outputs; Release</h4>
+            <p>Any Model trained or fine-tuned using the Dataset must be released under a Permissive Open-Source
+              License. Model weights, training code, and evaluation artifacts must be made publicly available. You shall
+              implement safeguards to prevent memorization, verbatim reproduction, or reconstruction of Dataset content
+              in Model outputs.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>7. Publication; Attribution</h4>
+            <p>You may publish research findings derived from the Dataset, provided that: publications do not reveal raw
+              Dataset content; the World Bank and applicable Data Providers are acknowledged; and the World Bank is
+              notified of publications within thirty (30) days.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>8. Monitoring; Audit; Enforcement</h4>
+            <p>The World Bank reserves the right to monitor usage, conduct audits, and request compliance reports. You
+              shall cooperate fully with any audit or investigation. Non-compliance may result in immediate termination
+              of access, revocation of the Approved Proposal, and referral for further action.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>9. Termination</h4>
+            <p>This Sublicense may be terminated by the World Bank at any time, with or without cause, upon written
+              notice. Upon termination, all rights granted cease immediately and You must destroy all copies of the
+              Dataset and certify such destruction.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>10. Intellectual Property</h4>
+            <p>Derivative Works and Derived Outputs are owned by You, subject to the mandatory open release obligations,
+              reconstruction limitations, and full compliance with this Sublicense. Ownership of the Dataset and all
+              rights therein remain with the World Bank and/or the applicable Dataset providers.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>11. Indemnification</h4>
+            <p>You shall indemnify, defend, and hold harmless the World Bank and its officers, employees, and agents
+              from and against any and all claims, demands, actions, proceedings, liabilities, damages, losses, costs,
+              and expenses arising out of or relating to any breach of this Sublicense, misuse of the Dataset, violation
+              of applicable law, distribution or release of Derived Outputs, any conflict with upstream base-model
+              license terms, and any verbatim or near-verbatim reproduction caused by Model architecture, training
+              choices, or release choices.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>12. Disclaimer</h4>
+            <p class="legal-caps">THE DATASET IS PROVIDED "AS IS" AND "AS AVAILABLE." THE WORLD BANK DISCLAIMS ALL
+              WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+              ACCURACY, COMPLETENESS, TITLE, AND NON-INFRINGEMENT.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>13. Limitation of Liability</h4>
+            <p class="legal-caps">TO THE MAXIMUM EXTENT PERMITTED AND CONSISTENT WITH THE WORLD BANK'S PRIVILEGES AND
+              IMMUNITIES, IN NO EVENT SHALL THE WORLD BANK BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+              CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES. THE WORLD BANK'S AGGREGATE LIABILITY ARISING OUT OF OR
+              RELATING TO THIS SUBLICENSE SHALL NOT EXCEED ONE THOUSAND UNITED STATES DOLLARS (USD $1,000).</p>
+          </div>
+
+          <div class="license-section">
+            <h4>14. Privileges and Immunities</h4>
+            <p>Nothing in this Sublicense shall be construed as a waiver, express or implied, of any privileges and
+              immunities of IBRD or IDA, all of which are expressly reserved.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>15. Dispute Resolution</h4>
+            <p>The Parties shall attempt in good faith to resolve any dispute amicably within ninety (90) days of
+              written notice. Any dispute not resolved within such period shall be finally settled by arbitration under
+              the UNCITRAL Arbitration Rules by three (3) arbitrators. The appointing authority shall be the
+              Secretary-General of the Permanent Court of Arbitration. The language shall be English.</p>
+          </div>
+
+          <div class="license-section">
+            <h4>16. Entire Agreement; Hierarchy; Severability</h4>
+            <p>This Sublicense, together with the Approved Proposal solely for purposes of delimiting authorized scope,
+              constitutes the entire agreement governing Dataset access and use. In the event of any conflict, this
+              Sublicense controls unless dataset-specific Portal terms expressly state otherwise in writing. If any
+              provision is held invalid or unenforceable, the remainder shall remain in full force and effect.</p>
+          </div>
+
+          <div class="license-section license-certification">
+            <h4>Clickthrough Certification</h4>
+            <p>By clicking "I Agree," You certify and warrant that: You are authorized to bind Yourself and Your
+              institution (if applicable); You will use the Dataset solely for Non-Commercial Research Use and strictly
+              within the Approved Proposal; You will not redistribute raw Dataset content; You will not use the Dataset
+              in any RAG system; You will publicly release Models under a Permissive Open-Source License as required;
+              and You understand that access is conditional, revocable, monitored, and subject to enforcement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== API TAB ===================== -->
+    <div class="tab-panel" id="panel-api">
+      <div class="api-section">
+        <h3>How Data are Transferred</h3>
+        <p>
+          Rather than offering bulk downloads of entire collections, this catalog delivers content exclusively through
+          the API. This design is a deliberate requirement of the IP licensing agreements with each data provider:
+          datasets are made available only for permitted research and AI-training purposes, and the terms of those
+          agreements must be enforced programmatically at the point of transfer.
+        </p>
+        <p>
+          The API serves files as <strong>discrete, size-bounded chunks</strong> and enforces per-request and
+          per-key rate limits. This means:
+        </p>
+        <ul style="margin:0.5rem 0 0.75rem 1.25rem;line-height:1.75;">
+          <li><strong>No unrestricted bulk export.</strong> Consumers cannot download an entire collection in a single
+            request. The <code
+              style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">limit</code>
+            parameter caps how many file records are returned per call, and when the result set exceeds that cap a
+            random sample is returned rather than the full set.</li>
+          <li><strong>Controlled access via API keys.</strong> Every request must include a valid
+            <code
+              style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">X-Api-Key</code>
+            header. Keys are issued only to approved research teams, making it possible to audit usage, suspend
+            access, and enforce the scope of use agreed with the provider.
+          </li>
+          <li><strong>Compliance with IP licensing terms.</strong> Data providers retain ownership of the underlying
+            content. The chunked, API-mediated delivery model ensures that the platform can uphold usage restrictions
+            (e.g., non-commercial research only, attribution requirements, redistribution prohibitions) that would be
+            impossible to enforce with unrestricted file downloads.</li>
+        </ul>
+
+      </div>
+      <div class="api-section">
+        <h3>IP Protection</h3>
+        <p>To protect the intellectual property rights of content providers, the API enforces two complementary
+          mechanisms that prevent reconstruction of original source material.</p>
+
+        <div class="ip-protection-grid">
+          <div class="ip-card">
+            <div class="ip-card-icon">🔀</div>
+            <div class="ip-card-body">
+              <h4>Chunked &amp; Randomized Delivery</h4>
+              <p>All content is pre-segmented into small, paragraph-sized chunks before storage. When a query is
+                executed, only the relevant chunks are returned — and their order is <strong>randomized on every
+                  request</strong>. This ensures that even repeated queries for the same content yield a different
+                ordering each time, making it computationally impractical to reassemble or reconstruct the original
+                source document from API responses.</p>
+            </div>
+          </div>
+          <div class="ip-card">
+            <div class="ip-card-icon">📊</div>
+            <div class="ip-card-body">
+              <h4>Daily API Call Limits</h4>
+              <p>Each registered user is subject to a <strong>daily rate limit</strong> on API calls. This cap is
+                enforced per API key and resets at midnight UTC. Rate limits bound the total volume of content any
+                single user can retrieve within a 24-hour window, providing an additional safeguard against bulk
+                extraction attempts. If your limit is exceeded, the API returns a <code
+                  style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">429 Too Many Requests</code>
+                response.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-section">
+        <h3>API Overview</h3>
+        <p>The Low Resource Language Library API is an ASP.NET 8 Web API that serves <strong>Croissant 1.0
+            JSON-LD</strong>
+          responses from a SQLite/PostgreSQL database of dataset metadata. Use it to search and filter file-level
+          records by keyword, theme, author, and year. The API is read-only and requires an API key passed via the
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code>
+          header.
+        </p>
+        <p><strong>Base URL:</strong>
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1</code>
+        </p>
+        <p><strong>Authentication:</strong> Pass your key on every request via the
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">X-Api-Key</code>
+          header.
+        </p>
+        <p><strong>Swagger UI:</strong> Open
+          <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.2rem 0.5rem;border-radius:4px;">https://api.malawi-lrl.org/v1/swagger</code>
+          in your browser, click <strong>Authorize</strong> (top right), enter your API key, and all test requests
+          will include the header automatically.
+        </p>
+      </div>
+
+      <div class="api-section">
+        <h3>Endpoints</h3>
+
+        <!-- GET /api/datasets/query -->
+        <div class="endpoint-block">
+          <div class="endpoint-header" onclick="toggleEndpoint(this)">
+            <span class="http-method get">GET</span>
+            <span class="endpoint-path">/api/datasets/query</span>
+            <span class="endpoint-desc">Search and filter datasets; returns Croissant JSON-LD</span>
+          </div>
+          <div class="endpoint-body">
+            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">All parameters are optional.
+              When the total number of matching files exceeds <code>limit</code>, a random sample is returned.</p>
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>keyword</code></td>
+                  <td>string</td>
+                  <td>—</td>
+                  <td>Partial, case-insensitive keyword match</td>
+                </tr>
+                <tr>
+                  <td><code>theme</code></td>
+                  <td>string</td>
+                  <td>—</td>
+                  <td>Partial, case-insensitive UNBIS theme match</td>
+                </tr>
+                <tr>
+                  <td><code>author</code></td>
+                  <td>string</td>
+                  <td>—</td>
+                  <td>Partial, case-insensitive author name match</td>
+                </tr>
+                <tr>
+                  <td><code>year</code></td>
+                  <td>string</td>
+                  <td>—</td>
+                  <td>Exact year, e.g. <code>2024</code></td>
+                </tr>
+                <tr>
+                  <td><code>limit</code></td>
+                  <td>int</td>
+                  <td>30</td>
+                  <td>Max files in response (1–100). Random sample taken when total &gt; limit.</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;"><strong>Example requests:</strong>
+            </p>
+            <div class="code-block">
+              <span class="comment"># All files tagged with "malaria", limit 10</span>
+              curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?keyword=malaria&limit=10"</span>
+
+              <span class="comment"># Health and Education files from 2024</span>
+              curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?theme=Health&year=2024"</span>
+
+              <span class="comment"># Combine filters</span>
+              curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="str">"http://localhost:5000/api/datasets/query?keyword=election&theme=Political&author=Banda&limit=5"</span>
+            </div>
+            <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Example
+                response:</strong></p>
+            <div class="code-block">
+              {
+              &nbsp;&nbsp;<span class="str">"@context"</span>: [ <span
+                class="str">"https://mlcommons.org/working-groups/data/croissant/"</span>, { ... } ],
+              &nbsp;&nbsp;<span class="str">"generatedAt"</span>: <span class="str">"2026-02-27T10:00:00Z"</span>,
+              &nbsp;&nbsp;<span class="str">"samplingInfo"</span>: {
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"totalMatched"</span>: 120,
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"limit"</span>: 30,
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"returned"</span>: 30,
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"randomSample"</span>: <span class="kw">true</span>
+              &nbsp;&nbsp;},
+              &nbsp;&nbsp;<span class="str">"@graph"</span>: [
+              &nbsp;&nbsp;&nbsp;&nbsp;{
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span
+                class="str">"sc:Dataset"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span
+                class="str">"DDP-NATION-2024"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span class="str">"Nation Newspaper
+                2024"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"distribution"</span>: [
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@type"</span>: <span
+                class="str">"cr:FileObject"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"@id"</span>: <span
+                class="str">"file-2024-abc123"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scName"</span>: <span
+                class="str">"Nation_On_Sunday_20240315_p001.pdf"</span>,
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"scKeywords"</span>: [<span
+                class="str">"malaria"</span>, <span class="str">"hospital"</span>],
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"dcatTheme"</span>: [<span
+                class="str">"Health"</span>],
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+              &nbsp;&nbsp;&nbsp;&nbsp;}
+              &nbsp;&nbsp;]
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/datasets/health -->
+        <div class="endpoint-block">
+          <div class="endpoint-header" onclick="toggleEndpoint(this)">
+            <span class="http-method get">GET</span>
+            <span class="endpoint-path">/api/datasets/health</span>
+            <span class="endpoint-desc">Return API status and total file count</span>
+          </div>
+          <div class="endpoint-body">
+            <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">Returns the API status and the
+              total number of files in the database. Also requires <code>X-Api-Key</code>.</p>
+            <div class="code-block">
+              curl -H <span class="str">"X-Api-Key: dev-key-12345"</span> \
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"http://localhost:5000/api/datasets/health"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-section">
+        <h3>Python SDK — DDPLRLL Dataset Reader</h3>
+        <p>Python client for the Low Resource Language Library API. Queries Croissant JSON-LD metadata, downloads the
+          referenced PDF files, and saves a local JSON-LD with rewritten file paths.</p>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Installation</h4>
+        <div class="code-block">
+          <span class="comment"># From the project root (editable / dev install)</span>
+          pip install -e .
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Configuration</h4>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">All settings can be provided via
+          <strong>CLI flags</strong>, <strong>environment variables</strong> (prefixed <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">DDPLRLL_</code>),
+          or a <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">.env</code>
+          file.
+        </p>
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th>Env Variable</th>
+              <th>CLI Flag</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_BASE_URL</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--api-url</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">https://lrllapi.azurewebsites.net</code></td>
+              <td>Base URL of the API</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_API_KEY</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--api-key</code></td>
+              <td><em>(empty)</em></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">X-Api-Key</code> header value</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_KEYWORD</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--keyword</code></td>
+              <td>—</td>
+              <td>Filter by keyword</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_THEME</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--theme</code></td>
+              <td>—</td>
+              <td>Filter by theme</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_AUTHOR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--author</code></td>
+              <td>—</td>
+              <td>Filter by author</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_YEAR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--year</code></td>
+              <td>—</td>
+              <td>Filter by year</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_LIMIT</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--limit</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">30</code></td>
+              <td>Max file entries (1–100)</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_OUTPUT_DIR</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--output</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">./output</code></td>
+              <td>Output directory</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_DOWNLOAD_FILES</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--no-download</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">true</code></td>
+              <td>Download PDFs</td>
+            </tr>
+            <tr>
+              <td><code style="font-family:'Roboto Mono',monospace;">DDPLRLL_MAX_CONCURRENT_DOWNLOADS</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">--concurrency</code></td>
+              <td><code style="font-family:'Roboto Mono',monospace;">5</code></td>
+              <td>Parallel downloads</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">CLI Usage</h4>
+        <div class="code-block">
+          <span class="comment"># Full pipeline: query + download + save JSON-LD</span>
+          ddplrll-reader run \
+          &nbsp;&nbsp;--api-url https://lrllapi.azurewebsites.net \
+          &nbsp;&nbsp;--api-key MY_KEY \
+          &nbsp;&nbsp;--keyword malaria \
+          &nbsp;&nbsp;--year 2024 \
+          &nbsp;&nbsp;--limit 10 \
+          &nbsp;&nbsp;--output ./my-output
+
+          <span class="comment"># Query only (no file downloads)</span>
+          ddplrll-reader run --api-key MY_KEY --keyword health --no-download
+
+          <span class="comment"># Health check</span>
+          ddplrll-reader health --api-url https://lrllapi.azurewebsites.net
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Python API</h4>
+        <div class="code-block">
+          <span class="kw">from</span> ddplrll_reader <span class="kw">import</span> DdplrllDatasetClient, Settings
+
+          <span class="comment"># Configure</span>
+          settings = Settings(
+          &nbsp;&nbsp;api_base_url=<span class="str">"https://lrllapi.azurewebsites.net"</span>,
+          &nbsp;&nbsp;api_key=<span class="str">"MY_KEY"</span>,
+          &nbsp;&nbsp;output_dir=<span class="str">"./output"</span>,
+          )
+
+          client = DdplrllDatasetClient(settings)
+
+          <span class="comment"># Full pipeline: query → download PDFs → save JSON-LD</span>
+          jsonld_path = client.run(keyword=<span class="str">"malaria"</span>, year=<span class="str">"2024"</span>,
+          limit=10)
+          <span class="kw">print</span>(<span class="str">f"Saved to {jsonld_path}"</span>)
+
+          <span class="comment"># Query only (returns raw dict)</span>
+          data = client.query(keyword=<span class="str">"health"</span>, theme=<span class="str">"Education"</span>)
+
+          <span class="comment"># Query with Pydantic validation</span>
+          response = client.query_validated(keyword=<span class="str">"malaria"</span>)
+          <span class="kw">for</span> dataset <span class="kw">in</span> response.graph <span class="kw">or</span> []:
+          &nbsp;&nbsp;<span class="kw">print</span>(dataset.sc_name)
+          &nbsp;&nbsp;<span class="kw">for</span> f <span class="kw">in</span> dataset.distribution <span
+            class="kw">or</span> []:
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">print</span>(<span class="str">f" {f.sc_name} →
+            {f.sc_content_url}"</span>)
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Output Structure</h4>
+        <div class="code-block">
+          output/
+          ├── dataset.jsonld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">#
+            Croissant JSON-LD with local file paths</span>
+          └── files/
+          &nbsp;&nbsp;&nbsp;&nbsp;├── file-2022-465a93ae.pdf
+          &nbsp;&nbsp;&nbsp;&nbsp;├── file-2022-1cafc7a4.pdf
+          &nbsp;&nbsp;&nbsp;&nbsp;└── ...
+        </div>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0;">After downloading, each <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">scContentUrl</code>
+          in <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code>
+          is rewritten from the remote URL to the absolute local path:</p>
+        <div class="code-block">
+          <span class="comment">"scContentUrl": "https://lrllapi.azurewebsites.net/api/files/file-2022-465a93ae"</span>
+          →
+          <span class="str">"scContentUrl": "/Users/you/output/files/file-2022-465a93ae.pdf"</span>
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Using with mlcroissant</h4>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.75rem;">The saved <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">dataset.jsonld</code>
+          is a valid <a href="https://mlcommons.org/croissant/" target="_blank" rel="noopener">Croissant 1.0</a>
+          document. Install the <code
+            style="font-family:'Roboto Mono',monospace;background:var(--gray-100);padding:0.1rem 0.4rem;border-radius:4px;">mlcroissant</code>
+          package to load it directly:</p>
+        <div class="code-block">
+          pip install mlcroissant
+        </div>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Load and iterate
+            records:</strong></p>
+        <div class="code-block">
+          <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
+
+          ds = Dataset(jsonld=jsonld_path)
+          records = ds.records(<span class="str">"default"</span>)
+
+          <span class="kw">for</span> record <span class="kw">in</span> records:
+          &nbsp;&nbsp;<span class="kw">print</span>(record)
+        </div>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>Inspect metadata:</strong>
+        </p>
+        <div class="code-block">
+          <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
+
+          ds = Dataset(jsonld=<span class="str">"output/dataset.jsonld"</span>)
+
+          <span class="comment"># Top-level metadata</span>
+          <span class="kw">print</span>(ds.metadata.name)
+          <span class="kw">print</span>(ds.metadata.description)
+
+          <span class="comment"># List all record sets</span>
+          <span class="kw">for</span> record_set <span class="kw">in</span> ds.metadata.record_sets:
+          &nbsp;&nbsp;<span class="kw">print</span>(record_set.name, <span class="str">"–"</span>,
+          len(record_set.fields), <span class="str">"fields"</span>)
+        </div>
+        <p style="font-size:0.85rem;color:var(--gray-600);margin:0.75rem 0 0.5rem;"><strong>End-to-end: ddplrll-reader →
+            mlcroissant:</strong></p>
+        <div class="code-block">
+          <span class="kw">from</span> ddplrll_reader <span class="kw">import</span> DdplrllDatasetClient, Settings
+          <span class="kw">from</span> mlcroissant <span class="kw">import</span> Dataset
+
+          <span class="comment"># 1. Query and download</span>
+          client = DdplrllDatasetClient(Settings(
+          &nbsp;&nbsp;api_base_url=<span class="str">"https://lrllapi.azurewebsites.net"</span>,
+          &nbsp;&nbsp;api_key=<span class="str">"MY_KEY"</span>,
+          ))
+          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>,
+          limit=50)
+
+          <span class="comment"># 2. Load with mlcroissant</span>
+          ds = Dataset(jsonld=jsonld_path)
+          <span class="kw">for</span> record <span class="kw">in</span> ds.records(<span class="str">"default"</span>):
+          &nbsp;&nbsp;<span class="kw">print</span>(record)
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Using with pandas</h4>
+        <div class="code-block">
+          <span class="kw">import</span> json
+          <span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+          <span class="comment"># Load the JSON-LD</span>
+          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span>
+          f:
+          &nbsp;&nbsp;data = json.load(f)
+
+          <span class="comment"># Flatten all file objects across every dataset/year into a DataFrame</span>
+          rows = []
+          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>,
+          []):
+          &nbsp;&nbsp;dataset_id = dataset_node.get(<span class="str">"id"</span>)
+          &nbsp;&nbsp;year = dataset_node.get(<span class="str">"scTemporalCoverage"</span>)
+          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span
+            class="str">"distribution"</span>, []):
+          &nbsp;&nbsp;&nbsp;&nbsp;rows.append({
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"dataset_id"</span>: dataset_id,
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"year"</span>: year,
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj.get(<span
+            class="str">"id"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span
+            class="str">"scName"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span
+            class="str">"scAuthor"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span
+            class="str">"scContentUrl"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"size_bytes"</span>: file_obj.get(<span
+            class="str">"scContentSize"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span
+            class="str">"scWordCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span
+            class="str">"ddpvTokenCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: file_obj.get(<span
+            class="str">"scKeywords"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: file_obj.get(<span
+            class="str">"dcatTheme"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;})
+
+          df = pd.DataFrame(rows)
+          <span class="kw">print</span>(df.head())
+          <span class="kw">print</span>(<span class="str">f"\nTotal files: {len(df)}"</span>)
+          <span class="kw">print</span>(<span class="str">f"Total tokens: {df['token_count'].sum():,}"</span>)
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">Using with Hugging Face Datasets</h4>
+        <div class="code-block">
+          <span class="kw">import</span> json
+          <span class="kw">from</span> datasets <span class="kw">import</span> Dataset
+
+          <span class="kw">with</span> open(<span class="str">"output/dataset.jsonld"</span>) <span class="kw">as</span>
+          f:
+          &nbsp;&nbsp;data = json.load(f)
+
+          <span class="comment"># Build a flat list of records</span>
+          records = []
+          <span class="kw">for</span> dataset_node <span class="kw">in</span> data.get(<span class="str">"graph"</span>,
+          []):
+          &nbsp;&nbsp;<span class="kw">for</span> file_obj <span class="kw">in</span> dataset_node.get(<span
+            class="str">"distribution"</span>, []):
+          &nbsp;&nbsp;&nbsp;&nbsp;records.append({
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"file_id"</span>: file_obj[<span
+            class="str">"id"</span>],
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: file_obj.get(<span
+            class="str">"scName"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: file_obj.get(<span
+            class="str">"scAuthor"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"year"</span>: dataset_node.get(<span
+            class="str">"scTemporalCoverage"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"local_path"</span>: file_obj.get(<span
+            class="str">"scContentUrl"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"word_count"</span>: file_obj.get(<span
+            class="str">"scWordCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"token_count"</span>: file_obj.get(<span
+            class="str">"ddpvTokenCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"keywords"</span>: <span class="str">",
+            "</span>.join(file_obj.get(<span class="str">"scKeywords"</span>, [])),
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: <span class="str">",
+            "</span>.join(file_obj.get(<span class="str">"dcatTheme"</span>, [])),
+          &nbsp;&nbsp;&nbsp;&nbsp;})
+
+          ds = Dataset.from_list(records)
+          <span class="kw">print</span>(ds)
+          <span class="kw">print</span>(ds[0])
+
+          <span class="comment"># Filter, shuffle, split</span>
+          ds_health = ds.filter(<span class="kw">lambda</span> r: <span class="str">"Health"</span> <span
+            class="kw">in</span> r[<span class="str">"themes"</span>])
+          train_test = ds_health.train_test_split(test_size=0.2)
+          <span class="kw">print</span>(train_test)
+        </div>
+
+        <h4 style="margin:1.5rem 0 0.5rem;">End-to-end: query → pandas → analysis</h4>
+        <div class="code-block">
+          <span class="kw">from</span> ddplrll_reader <span class="kw">import</span> DdplrllDatasetClient, Settings
+          <span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+          <span class="comment"># 1. Query and download</span>
+          client = DdplrllDatasetClient(Settings(
+          &nbsp;&nbsp;api_base_url=<span class="str">"https://lrllapi.azurewebsites.net"</span>,
+          &nbsp;&nbsp;api_key=<span class="str">"MY_KEY"</span>,
+          ))
+          jsonld_path = client.run(keyword=<span class="str">"health"</span>, year=<span class="str">"2023"</span>,
+          limit=50)
+
+          <span class="comment"># 2. Load into pandas</span>
+          <span class="kw">import</span> json
+          <span class="kw">with</span> open(jsonld_path) <span class="kw">as</span> f:
+          &nbsp;&nbsp;data = json.load(f)
+
+          rows = [
+          &nbsp;&nbsp;{
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: fo.get(<span class="str">"scName"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"author"</span>: fo.get(<span class="str">"scAuthor"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"words"</span>: fo.get(<span class="str">"scWordCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"tokens"</span>: fo.get(<span class="str">"ddpvTokenCount"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"themes"</span>: fo.get(<span class="str">"dcatTheme"</span>),
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"path"</span>: fo.get(<span class="str">"scContentUrl"</span>),
+          &nbsp;&nbsp;}
+          &nbsp;&nbsp;<span class="kw">for</span> node <span class="kw">in</span> data.get(<span
+            class="str">"graph"</span>, [])
+          &nbsp;&nbsp;<span class="kw">for</span> fo <span class="kw">in</span> node.get(<span
+            class="str">"distribution"</span>, [])
+          ]
+          df = pd.DataFrame(rows)
+
+          <span class="comment"># 3. Analyse</span>
+          <span class="kw">print</span>(df.describe())
+          <span class="kw">print</span>(df.groupby(<span class="str">"author"</span>)[<span
+            class="str">"tokens"</span>].sum().sort_values(ascending=<span class="kw">False</span>))
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================== METADATA SCHEMAS TAB ===================== -->
+    <div class="tab-panel" id="panel-metadata">
+
+      <div class="api-section metadata-intro">
+        <h3>Metadata Schemas</h3>
+        <p class="metadata-p">All datasets in this catalog are documented using structured metadata to ensure they are
+          as discoverable and reusable as possible for AI model training and fine-tuning. The metadata collection is
+          guided by four core objectives:</p>
+
+        <div class="objectives-grid">
+          <div class="objective-card">
+            <div class="objective-icon">🔍</div>
+            <div class="objective-body">
+              <strong>Discoverability</strong>
+              <span>Making datasets easy to find and correctly identify</span>
+            </div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">📊</div>
+            <div class="objective-body">
+              <strong>Usability</strong>
+              <span>Providing clear information so users can assess and work with datasets effectively</span>
+            </div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">🔁</div>
+            <div class="objective-body">
+              <strong>Reproducibility</strong>
+              <span>Documenting processes to enable verification and reuse</span>
+            </div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">⚖️</div>
+            <div class="objective-body">
+              <strong>Ethical Practice</strong>
+              <span>Ensuring transparent documentation of provenance, licensing, and ethical safeguards</span>
+            </div>
+          </div>
+        </div>
+        <p class="metadata-p">No single existing standard fully met the project's requirements. Therefore, we adopted an
+          application profile approach, combining fields from multiple standards. It draws on nine established standards
+          alongside a custom namespace, the <strong>Development Data Partnership Vocabulary (DDPV)</strong>, to capture
+          project-specific attributes while maintaining compatibility with existing vocabularies and tools.</p>
+      </div>
+
+      <div class="standards-pane">
+        <h3>Metadata Standards</h3>
+        <p class="standards-label">Standards incorporated across all schemas:</p>
+        <div class="standards-pills">
+          <div class="standards-row">
+            <span class="std-pill core">Croissant</span>
+            <span class="std-pill core">Schema.org Dataset Vocabulary</span>
+            <span class="std-pill core">Dublin Core Terms</span>
+            <span class="std-pill w3c">Data Catalog Vocabulary (DCAT)</span>
+            <span class="std-pill w3c">Data Quality Vocabulary (DQV)</span>
+            <span class="std-pill w3c">Provenance Ontology (PROV-O)</span>
+            <span class="std-pill w3c">RDF Schema (RDFS)</span>
+            <span class="std-pill domain">EBUCore</span>
+            <span class="std-pill domain">Open Language Archives Community (OLAC)</span>
+            <span class="std-pill domain">Bibliographic Ontology (BIBO)</span>
+            <span class="std-pill domain">Data Documentation Initiative (DDI)</span>
+            <span class="std-pill custom">DDPV</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-section" style="margin-top: 2rem;">
+        <h3>Metadata Schemas by Data Type</h3>
+        <p class="metadata-p">We developed metadata schemas for three primary data types: audio, text, and video. While
+          the majority of the fields are similar, the core differences lie in the technical fields required for each
+          data type. Additional information on fields, definitions, cardinality requirements, and collection methods can
+          be found in the resources section below.</p>
+      </div>
+
+      <div class="metadata-resources">
+        <div class="metadata-resources-header">
+          <h3>📦 Schema Resources &amp; Downloads</h3>
+        </div>
+        <div class="resource-links">
+
+          <a href="./metadata-docs/Metadata_Schemas.pdf" class="resource-link-item accent-teal"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">📖</span>
+            <span class="resource-text">
+              <strong>Full Documentation</strong>
+              <span>Complete documentation describing the metadata schemas and the process used to develop them.</span>
+            </span>
+            <span class="resource-badge">PDF</span>
+          </a>
+
+          <a href="https://datapartnership.org/ddpv-metadata-terms/" class="resource-link-item accent-orange"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">🗂️</span>
+            <span class="resource-text">
+              <strong>DDPV Vocabulary</strong>
+              <span>A dedicated webpage describing and maintaining the custom metadata vocabulary.</span>
+            </span>
+            <span class="resource-badge">WEB</span>
+          </a>
+
+          <a href="./metadata-docs/llm_library_text_schema.json" class="resource-link-item accent-purple"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">📄</span>
+            <span class="resource-text">
+              <strong>Text Metadata Schema</strong>
+              <span>JSON schema for text and print/news datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/llm_library_audio_schema.json" class="resource-link-item accent-navy"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">🎙️</span>
+            <span class="resource-text">
+              <strong>Audio Metadata Schema</strong>
+              <span>JSON schema for audio and broadcast datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/llm_library_video_schema.json" class="resource-link-item accent-teal"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">🎬</span>
+            <span class="resource-text">
+              <strong>Video Metadata Schema</strong>
+              <span>JSON schema for video datasets.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+          <a href="./metadata-docs/capital_fm_news.jsonld" class="resource-link-item accent-orange"
+             target="_blank" rel="noopener">
+            <span class="resource-icon">🔊</span>
+            <span class="resource-text">
+              <strong>Example Audio Record</strong>
+              <span>A populated example metadata record for an audio dataset.</span>
+            </span>
+            <span class="resource-badge">JSON-LD</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== ABOUT TAB ===================== -->
+    <div class="tab-panel" id="panel-about">
+      <div class="api-section" style="margin-bottom:2rem;">
+        <h3>About This Catalog</h3>
+        <p>This catalog provides a centralized registry of low-resource language datasets, intended for researchers and
+          engineers working on natural language processing (NLP), automatic speech recognition (ASR), and large language
+          model (LLM) fine-tuning for low-resource languages.</p>
+        <p>This catalog aims to bridge the language data gap by licesnsing data from broadcasters, publishers,
+          government institutions, and community organizations for non-commercial use.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card">
+          <h4>🎯 Purpose</h4>
+          <p>Provide a single point of discovery for available proprietary low-resource language data that is suitable
+            for ML model training, so researchers don't have to hunt across disparate sources.</p>
+        </div>
+        <div class="about-card">
+          <h4>📋 Data Types</h4>
+          <p>Audio (radio broadcasts, podcasts, recorded surveys), text (news articles, books, educational materials),
+            and structured transcriptions paired with audio for ASR training.</p>
+        </div>
+        <div class="about-card">
+          <h4>🔑 Access</h4>
+          <p>All metadata is freely browsable. Data downloads require registration and acceptance of the data use
+            agreement -- see licensing restrictions on the "license" tab.</p>
+        </div>
+        <div class="about-card">
+          <h4>🤝 Contributing</h4>
+          <p>We welcome new data contributions. If your organization produces low-resource language content and would
+            like to make it available for research, please <a href="mailto:datapartnership@worldbank.org">contact us</a>
+            to discuss ingestion and licensing.</p>
+        </div>
+        <div class="about-card">
+          <h4>📖 Citation</h4>
+          <p>If you use data from this catalog in your research, please cite the catalog and the individual data
+            providers. Citation formats are available on each collection's detail page.</p>
+        </div>
+        <div class="about-card">
+          <h4>⚖️ Ethics &amp; Privacy</h4>
+          <p>Household survey recordings have been reviewed for PII and anonymized. All data is shared under terms
+            agreed upon with the originating institutions. Researchers must adhere to the data use agreement.</p>
+        </div>
+      </div>
+
+      <!-- Apply Section -->
+      <div class="apply-section" id="apply">
+        <h3>Apply to Access Datasets</h3>
+        <div class="line" style="margin: 0.75rem auto 1.5rem;"></div>
+        <p>Researchers, academic institutions, and organizations working on AI for social good can apply for access to
+          these datasets. The application process involves submitting a research proposal, demonstrating ethical data
+          handling practices, and committing to open-source publication of derived insights. We prioritize applications
+          that show potential for significant impact on global development challenges and align with the Gates
+          Foundation's mission.</p>
+        <a href="https://forms.office.com/pages/responsepage.aspx?id=wP6iMWsmZ0y1bieW2PWcNq6Bkaust-xEo3D1Bjoo_NpUM1VFODFXVTBaRlFOVTZMRVZDOURaSVVRSi4u&route=shorturl"
+          class="hero-cta" target="_blank" rel="noopener">Submit Application</a>
+        <p class="apply-note"><em>Applications are reviewed on a rolling basis. Typical response time is 2–3 weeks.</em>
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>
+        <h6>Malawi LRL Catalog</h6>
+        <ul>
+          <li><a href="#">Browse Data</a></li>
+          <li><a href="#">API Docs</a></li>
+          <li><a href="#">Register</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Resources</h6>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Data Use Agreement</a></li>
+          <li><a href="#">Contributing Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Contact</h6>
+        <ul>
+          <li><a href="mailto:datapartnership@worldbank.org">datapartnership@worldbank.org</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Malawi Low-Resource Language Data Catalog. Open data for open research.
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════
+    // CONFIG — paths to your CSVs (relative to index.html)
+    // Place collections.csv and providers.csv in the same folder
+    // as index.html (or update these paths accordingly).
+    // If the CSVs are missing or fail to load, the hardcoded
+    // fallback data below is used automatically.
+    // ══════════════════════════════════════════════════════════════
+    const CSV_PROVIDERS   = 'providers.csv';
+    const CSV_COLLECTIONS = 'collections.csv';
+
+    const TYPE_ICONS  = { radio: "📻", news: "📰", books: "📚", surveys: "📋" };
+    const TYPE_LABELS = { radio: "Radio & Podcasts", news: "News Articles", books: "Books", surveys: "Household Surveys" };
+
+    // ══════════════════════════════════════════════════════════════
+    // FALLBACK DATA — used when CSVs are not available
+    // ══════════════════════════════════════════════════════════════
+    const PROVIDERS_FALLBACK = [
+      { id: "mnso", name: "Malawi National Statistical Office", type: "Government Institution", description: "The NSO is responsible for collecting, compiling, analyzing, and disseminating official statistics. Their household surveys — including the Integrated Household Survey (IHS) and Demographic and Health Survey (DHS) — include audio recordings of interviews conducted in local languages across all districts." },
+      { id: "times_group", name: "The Times Group", type: "Print & Digital Media", description: "Malawi's largest private media company, publishing The Daily Times and Malawi News. They produce news articles, opinion pieces, and investigative reporting in both English and Chichewa, offering a rich written corpus of contemporary Malawian language." },
+      { id: "nation_publications", name: "The Nation Publications", type: "Print & Digital Media", description: "Publishers of The Nation and Weekend Nation newspapers. A major source of Chichewa and English news, feature writing, and editorial content covering politics, economics, culture, and society in Malawi." },
+      { id: "radio_islam", name: "Radio Islam", type: "Broadcaster — Radio", description: "One of Malawi's most popular private radio stations, broadcasting in Chichewa and Yao. Programming includes news, religious content, community affairs, call-in shows, and cultural programs, providing extensive spoken-language data." },
+      { id: "twr", name: "Transworld Radio", type: "Broadcaster — Radio", description: "An international Christian broadcaster with a significant Malawian presence. Produces programming in Chichewa, Tumbuka, Yao, and Lomwe including educational content, health programming, storytelling, and agricultural extension shows." },
+      { id: "mbc", name: "Malawi Broadcasting Corporation", type: "Broadcaster — Radio & TV (State)", description: "Malawi's national public broadcaster operating MBC Radio 1 and MBC Radio 2. As the state broadcaster, MBC produces content in all major Malawian languages including news bulletins, parliamentary coverage, drama, and educational programming." },
+      { id: "yoneco_fm", name: "YONECO FM", type: "Broadcaster — Community Radio", description: "Youth Net and Counselling (YONECO) operates a community radio station focusing on youth empowerment, gender issues, and human rights. Broadcasts primarily in Chichewa and Yao from Zomba district." },
+      { id: "nyanthepa", name: "Nyanthepa Community Radio", type: "Broadcaster — Community Radio", description: "A community radio station serving Mzimba and surrounding areas. Broadcasts primarily in Tumbuka with programming on agriculture, health, education, and local governance." },
+      { id: "mij", name: "Malawi Institute of Journalism", type: "Educational Institution", description: "Malawi's premier journalism training institution. MIJ produces student and faculty media in multiple Malawian languages, including practice broadcasts, written news assignments, and multimedia projects." },
+      { id: "doi", name: "Malawi Department of Information", type: "Government Institution", description: "The government's official information arm, producing press releases, public service announcements, policy documents, and informational content in Chichewa and English for nationwide distribution." },
+      { id: "mie", name: "Malawi Institute of Education", type: "Educational Institution", description: "Responsible for curriculum development and educational materials. MIE produces textbooks, teaching guides, and supplementary reading materials in Chichewa, Tumbuka, Yao, and other languages used in primary education." },
+      { id: "montfort", name: "Montfort Media", type: "Religious & Community Media", description: "A Catholic media organization producing print, radio, and multimedia content in Chichewa and other local languages. Their output includes books, pamphlets, audio dramas, educational materials, and community development content." }
+    ];
+
+    const COLLECTIONS_FALLBACK = [
+      { id: "ri_mawu", name: "Mawu a Anthu", provider: "radio_islam", language: "chichewa", type: "radio", format: "audio/wav", hours: 245, items: null, description: "Community call-in show covering social issues politics and daily life in Chichewa.", yearStart: 2018, yearEnd: 2024, themes: ["society","politics","culture"] },
+      { id: "ri_news_chi", name: "Radio Islam Chichewa News", provider: "radio_islam", language: "chichewa", type: "radio", format: "audio/wav", hours: 180, items: null, description: "Daily Chichewa-language news bulletins covering national and international events.", yearStart: 2019, yearEnd: 2024, themes: ["news","politics"] },
+      { id: "ri_yao_prog", name: "Yao Language Programs", provider: "radio_islam", language: "yao", type: "radio", format: "audio/wav", hours: 95, items: null, description: "Cultural and religious programming broadcast in Yao.", yearStart: 2020, yearEnd: 2024, themes: ["culture","religion"] },
+      { id: "mbc_radio1_news", name: "MBC Radio 1 News Bulletins", provider: "mbc", language: "chichewa", type: "radio", format: "audio/wav", hours: 520, items: null, description: "National news in Chichewa from Malawi's public broadcaster including parliamentary coverage.", yearStart: 2015, yearEnd: 2024, themes: ["news","politics","governance"] },
+      { id: "mbc_tumbuka", name: "MBC Tumbuka Service", provider: "mbc", language: "tumbuka", type: "radio", format: "audio/wav", hours: 310, items: null, description: "Tumbuka-language programming including news drama and agricultural advice.", yearStart: 2016, yearEnd: 2024, themes: ["news","agriculture","culture"] },
+      { id: "mbc_drama", name: "MBC Radio Drama Archive", provider: "mbc", language: "chichewa", type: "radio", format: "audio/mp3", hours: 185, items: null, description: "Scripted radio dramas and serialized stories in Chichewa.", yearStart: 2010, yearEnd: 2023, themes: ["culture","entertainment"] },
+      { id: "twr_health", name: "Moyo Wathu Health Series", provider: "twr", language: "chichewa", type: "radio", format: "audio/wav", hours: 120, items: null, description: "Health education programming covering HIV/AIDS malaria nutrition and maternal health.", yearStart: 2017, yearEnd: 2024, themes: ["health","education"] },
+      { id: "twr_agri", name: "Ulimi Wabwino Agricultural Shows", provider: "twr", language: "tumbuka", type: "radio", format: "audio/wav", hours: 88, items: null, description: "Agricultural extension programming in Tumbuka covering farming techniques and markets.", yearStart: 2019, yearEnd: 2024, themes: ["agriculture","economics"] },
+      { id: "twr_lomwe", name: "TWR Lomwe Broadcasts", provider: "twr", language: "lomwe", type: "radio", format: "audio/wav", hours: 45, items: null, description: "Mixed programming in Lomwe including storytelling and community development.", yearStart: 2020, yearEnd: 2024, themes: ["culture","development"] },
+      { id: "yoneco_youth", name: "Achinyamata Aluso Youth Program", provider: "yoneco_fm", language: "chichewa", type: "radio", format: "audio/wav", hours: 75, items: null, description: "Youth empowerment and rights-based programming in Chichewa from Zomba.", yearStart: 2020, yearEnd: 2024, themes: ["youth","rights","society"] },
+      { id: "yoneco_gender", name: "Gender & Rights Podcasts", provider: "yoneco_fm", language: "chichewa", type: "radio", format: "audio/mp3", hours: 32, items: null, description: "Podcast episodes on gender equality GBV prevention and human rights.", yearStart: 2021, yearEnd: 2024, themes: ["gender","rights","society"] },
+      { id: "nyanthepa_agri", name: "Nyanthepa Ulimi Shows", provider: "nyanthepa", language: "tumbuka", type: "radio", format: "audio/wav", hours: 64, items: null, description: "Agricultural programming in Tumbuka for farmers in the Mzimba area.", yearStart: 2019, yearEnd: 2024, themes: ["agriculture"] },
+      { id: "nyanthepa_gov", name: "Local Governance Discussions", provider: "nyanthepa", language: "tumbuka", type: "radio", format: "audio/wav", hours: 40, items: null, description: "Community discussions on local governance and development issues in Tumbuka.", yearStart: 2020, yearEnd: 2024, themes: ["governance","development"] },
+      { id: "times_chi_news", name: "Daily Times Chichewa Articles", provider: "times_group", language: "chichewa", type: "news", format: "text/html", hours: null, items: 12500, description: "Chichewa-language news articles from The Daily Times covering politics business and society.", yearStart: 2016, yearEnd: 2024, themes: ["news","politics","economics"] },
+      { id: "times_eng_news", name: "Daily Times English Archive", provider: "times_group", language: "english", type: "news", format: "text/html", hours: null, items: 45000, description: "English-language articles useful as parallel corpus for translation model training.", yearStart: 2014, yearEnd: 2024, themes: ["news","politics","economics"] },
+      { id: "times_opinion", name: "Malawi News Opinion Columns", provider: "times_group", language: "chichewa", type: "news", format: "text/html", hours: null, items: 3200, description: "Opinion and editorial pieces in Chichewa reflecting contemporary discourse.", yearStart: 2018, yearEnd: 2024, themes: ["politics","society"] },
+      { id: "nation_chi", name: "The Nation Chichewa Section", provider: "nation_publications", language: "chichewa", type: "news", format: "text/html", hours: null, items: 9801, description: "Chichewa news reporting from The Nation covering national affairs.", yearStart: 2015, yearEnd: 2024, themes: ["news","politics"] },
+      { id: "nation_features", name: "Weekend Nation Features", provider: "nation_publications", language: "chichewa", type: "news", format: "text/html", hours: null, items: 2100, description: "Long-form feature stories and investigative journalism in Chichewa and English.", yearStart: 2017, yearEnd: 2024, themes: ["news","society","culture"] },
+      { id: "nso_ihs5", name: "IHS5 Survey Audio", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 1200, items: null, description: "Audio recordings from the Fifth Integrated Household Survey (IHS5) conducted in Chichewa across all 28 districts.", yearStart: 2019, yearEnd: 2020, themes: ["economics","development","health"] },
+      { id: "nso_ihs5_tum", name: "IHS5 Survey Audio (Tumbuka)", provider: "mnso", language: "tumbuka", type: "surveys", format: "audio/wav", hours: 340, items: null, description: "Tumbuka-language interviews from IHS5 in the Northern Region.", yearStart: 2019, yearEnd: 2020, themes: ["economics","development","health"] },
+      { id: "nso_dhs", name: "DHS Interview Recordings", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 680, items: null, description: "Demographic and Health Survey interview audio covering health fertility and nutrition topics.", yearStart: 2020, yearEnd: 2021, themes: ["health","demographics"] },
+      { id: "nso_census", name: "Census Enumerator Recordings", provider: "mnso", language: "chichewa", type: "surveys", format: "audio/wav", hours: 450, items: null, description: "Field recordings from census enumeration with diverse speaker demographics.", yearStart: 2018, yearEnd: 2018, themes: ["demographics","governance"] },
+      { id: "mie_textbooks", name: "Primary School Chichewa Textbooks", provider: "mie", language: "chichewa", type: "books", format: "text/pdf", hours: null, items: 48, description: "Standards 1-8 Chichewa textbooks used in primary education across Malawi.", yearStart: 2015, yearEnd: 2023, themes: ["education"] },
+      { id: "mie_tumbuka", name: "Tumbuka Reading Materials", provider: "mie", language: "tumbuka", type: "books", format: "text/pdf", hours: null, items: 22, description: "Supplementary reading materials and early-grade readers in Tumbuka.", yearStart: 2018, yearEnd: 2022, themes: ["education"] },
+      { id: "mie_yao", name: "Yao Language Teaching Guides", provider: "mie", language: "yao", type: "books", format: "text/pdf", hours: null, items: 15, description: "Teacher guides and student materials for Yao-medium instruction.", yearStart: 2019, yearEnd: 2023, themes: ["education"] },
+      { id: "mij_broadcasts", name: "MIJ Student Broadcasts", provider: "mij", language: "chichewa", type: "radio", format: "audio/mp3", hours: 28, items: null, description: "Student practice radio broadcasts in Chichewa covering news features and interviews.", yearStart: 2020, yearEnd: 2024, themes: ["education","news"] },
+      { id: "mij_articles", name: "MIJ Student News Writing", provider: "mij", language: "chichewa", type: "news", format: "text/html", hours: null, items: 1800, description: "Student-written news articles in Chichewa as part of journalism coursework.", yearStart: 2019, yearEnd: 2024, themes: ["education","news"] },
+      { id: "doi_releases", name: "Government Press Releases", provider: "doi", language: "chichewa", type: "news", format: "text/html", hours: null, items: 4200, description: "Official government communications and press releases in Chichewa.", yearStart: 2016, yearEnd: 2024, themes: ["governance","politics"] },
+      { id: "doi_psa", name: "Public Service Announcements", provider: "doi", language: "chichewa", type: "radio", format: "audio/mp3", hours: 15, items: null, description: "Radio PSAs on health civic education and public safety in Chichewa.", yearStart: 2018, yearEnd: 2024, themes: ["health","education","governance"] },
+      { id: "montfort_books", name: "Montfort Chichewa Publications", provider: "montfort", language: "chichewa", type: "books", format: "text/pdf", hours: null, items: 85, description: "Books pamphlets and booklets on faith community development and social issues in Chichewa.", yearStart: 2010, yearEnd: 2024, themes: ["religion","development","society"] },
+      { id: "montfort_drama", name: "Montfort Audio Dramas", provider: "montfort", language: "chichewa", type: "radio", format: "audio/mp3", hours: 55, items: null, description: "Audio drama productions on social themes including HIV/AIDS awareness education and family life.", yearStart: 2015, yearEnd: 2023, themes: ["health","culture","society"] },
+      { id: "montfort_sena", name: "Montfort Sena Publications", provider: "montfort", language: "sena", type: "books", format: "text/pdf", hours: null, items: 18, description: "Religious and educational materials published in Sena for the Lower Shire region.", yearStart: 2016, yearEnd: 2022, themes: ["religion","education"] }
+    ];
+
+    // Runtime state — pre-seeded with fallback so page always renders
+    let PROVIDERS   = PROVIDERS_FALLBACK.slice();
+    let COLLECTIONS = COLLECTIONS_FALLBACK.slice();
+
+    // ══════════════════════════════════════════════════════════════
+    // CSV LOADING  (PapaParse)
+    // ══════════════════════════════════════════════════════════════
+    function loadCSV(url) {
+      return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+          download:       true,
+          header:         true,
+          skipEmptyLines: true,
+          complete: r  => resolve(r.data),
+          error:    err => reject(err),
+        });
+      });
+    }
+
+    /**
+     * Normalise a collections CSV row.
+     * Expected columns: id, name, provider, language, type, format,
+     *                   hours, items, description, yearStart, yearEnd, themes
+     * themes can be pipe-separated OR comma-separated, e.g. "health|news" or "health,news"
+     */
+    function normaliseCollection(row) {
+      // Safe integer parser — returns null for blank, N/A, or any non-numeric value
+      function safeInt(val) {
+        if (!val || val.trim() === '' || val.trim().toLowerCase() === 'n/a') return null;
+        const n = parseInt(val, 10);
+        return isNaN(n) ? null : n;
+      }
+      // Safe float parser — same rules
+      function safeFloat(val) {
+        if (!val || val.trim() === '' || val.trim().toLowerCase() === 'n/a') return null;
+        const n = parseFloat(val);
+        return isNaN(n) ? null : n;
+      }
+      return {
+        id:          row.id          || '',
+        name:        row.name        || '',
+        provider:    (row.provider   || '').trim(),
+        language:    (row.language   || '').toLowerCase().trim(),
+        type:        (row.type       || '').toLowerCase().trim(),
+        format:      row.format      || '',
+        hours:       safeFloat(row.hours),
+        items:       safeInt(row.items),
+        description: row.description || '',
+        yearStart:   safeInt(row.year_start),
+        yearEnd:     safeInt(row.year_end),
+        themes:      row.themes
+                       ? row.themes.split(/[|,;]/).map(t => t.trim()).filter(Boolean)
+                       : [],
+      };
+    }
+
+    /**
+     * Normalise a providers CSV row.
+     * Expected columns: id, name, type, description
+     */
+    function normaliseProvider(row) {
+      return {
+        id:          (row.id          || '').trim(),
+        name:        (row.name        || '').trim(),
+        type:        (row.type        || '').trim(),
+        description: (row.description || '').trim(),
+      };
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // HERO STATS  (computed dynamically from loaded data)
+    // ══════════════════════════════════════════════════════════════
+    function updateHeroStats() {
+      document.getElementById('stat-providers').textContent   = PROVIDERS.length;
+      document.getElementById('stat-collections').textContent = COLLECTIONS.length;
+      document.getElementById('stat-types').textContent       = new Set(COLLECTIONS.map(c => c.type)).size;
+      document.getElementById('stat-languages').textContent   = new Set(COLLECTIONS.map(c => c.language)).size;
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // FILTER DROPDOWNS  (populated from live data)
+    // ══════════════════════════════════════════════════════════════
+    function populateFilters() {
+      function fill(selectId, values, labelFn) {
+        const sel = document.getElementById(selectId);
+        sel.innerHTML = '<option value="">All</option>';
+        [...new Set(values)].sort().forEach(v => {
+          const opt = document.createElement('option');
+          opt.value       = v;
+          opt.textContent = labelFn ? labelFn(v) : v;
+          sel.appendChild(opt);
+        });
+      }
+
+      fill('filter-language', COLLECTIONS.map(c => c.language),
+        v => v.charAt(0).toUpperCase() + v.slice(1));
+
+      fill('filter-type', COLLECTIONS.map(c => c.type),
+        v => TYPE_LABELS[v] || (v.charAt(0).toUpperCase() + v.slice(1)));
+
+      // Providers dropdown: value = name (matches c.provider in collections), label = name
+      const provSel = document.getElementById('filter-provider');
+      provSel.innerHTML = '<option value="">All</option>';
+      PROVIDERS.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value       = p.name;   // match against c.provider which stores the name
+        opt.textContent = p.name;
+        provSel.appendChild(opt);
+      });
+
+      // Themes: deduplicate case-insensitively, preserve original casing
+      const themeSel = document.getElementById('filter-theme');
+      themeSel.innerHTML = '<option value="">All</option>';
+      const seenThemes = new Map();
+      COLLECTIONS.flatMap(c => c.themes).forEach(t => {
+        const key = t.toLowerCase();
+        if (!seenThemes.has(key)) seenThemes.set(key, t);
+      });
+      [...seenThemes.values()].sort((a, b) => a.localeCompare(b)).forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        themeSel.appendChild(opt);
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // CARDS
+    // ══════════════════════════════════════════════════════════════
+    function getProvider(id) {
+      return PROVIDERS.find(p => p.id === id || p.name === id);
+    }
+
+    const PAGE_SIZE = 30;
+    let currentPage = 1;
+    let filteredCollections = [];
+
+    function renderCards(collections, page) {
+      const grid = document.getElementById('card-grid');
+      const pagination = document.getElementById('pagination');
+      filteredCollections = collections;
+      currentPage = page || 1;
+
+      if (collections.length === 0) {
+        grid.innerHTML =
+          '<p style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:3rem;">No collections match your filters.</p>';
+        document.getElementById('result-count').textContent = '0 collections';
+        pagination.innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(collections.length / PAGE_SIZE);
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageItems = collections.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = pageItems.map(c => {
+        const prov      = getProvider(c.provider);
+        const sizeLabel = c.hours ? `${c.hours} hrs audio` : `${(c.items || 0).toLocaleString()} items`;
+        const icon      = TYPE_ICONS[c.type] || '📁';
+        const typeLabel = TYPE_LABELS[c.type] || c.type;
+        return `
+          <div class="catalog-card" data-language="${c.language}" data-type="${c.type}" data-provider="${c.provider}">
+            <div class="card-header-bar">
+              <div class="card-icon ${c.type}">${icon}</div>
+              <div class="card-title-block">
+                <h3>${c.name}</h3>
+                <div class="provider-name">${prov?.name || c.provider}</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>${c.description}</p>
+              <div class="card-tags">
+                <span class="tag lang">${c.language}</span>
+                <span class="tag type">${typeLabel}</span>
+                <span class="tag">${c.format}</span>
+                ${c.themes.map(t => `<span class="tag theme">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="card-meta">
+              <span><strong>${sizeLabel}</strong></span>
+              <span>${c.yearStart}–${c.yearEnd}</span>
+            </div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('result-count').textContent =
+        `${start + 1}–${Math.min(start + PAGE_SIZE, collections.length)} of ${collections.length} collection${collections.length !== 1 ? 's' : ''}`;
+
+      // Render pagination controls
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      let pages = '';
+      for (let i = 1; i <= totalPages; i++) {
+        if (
+          i === 1 || i === totalPages ||
+          (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+          pages += `<button class="page-btn${i === currentPage ? ' active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          pages += `<span class="page-ellipsis">…</span>`;
+        }
+      }
+
+      pagination.innerHTML = `
+        <button class="page-btn page-prev" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>
+        ${pages}
+        <button class="page-btn page-next" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>`;
+    }
+
+    function goToPage(page) {
+      renderCards(filteredCollections, page);
+      document.querySelector('.filter-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function applyFilters() {
+      const lang  = document.getElementById('filter-language').value;
+      const type  = document.getElementById('filter-type').value;
+      const prov  = document.getElementById('filter-provider').value;
+      const theme = document.getElementById('filter-theme').value;
+      const q     = document.getElementById('filter-search').value.toLowerCase();
+
+      renderCards(COLLECTIONS.filter(c => {
+        if (lang  && c.language !== lang)         return false;
+        if (type  && c.type     !== type)         return false;
+        if (prov  && c.provider !== prov)         return false;
+        if (theme && !c.themes.map(t => t.toLowerCase()).includes(theme.toLowerCase())) return false;
+        if (q && !(
+          c.name.toLowerCase().includes(q)       ||
+          c.description.toLowerCase().includes(q)||
+          c.language.includes(q)
+        )) return false;
+        return true;
+      }), 1); // always reset to page 1 when filters change
+    }
+
+    function resetFilters() {
+      ['filter-language','filter-type','filter-provider','filter-theme'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('filter-search').value = '';
+      applyFilters();
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // PROVIDERS TAB — side nav (group titles) + grouped accordions
+    // ══════════════════════════════════════════════════════════════
+    function toggleProviderAccordion(id) {
+      const body    = document.getElementById('provider-body-' + id);
+      const chevron = document.getElementById('provider-chevron-' + id);
+      const isOpen  = body.style.display !== 'none';
+      body.style.display      = isOpen ? 'none' : 'block';
+      chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function renderProviders() {
+      const sidenav   = document.getElementById('providers-sidenav');
+      const container = document.getElementById('providers-list');
+
+      if (!PROVIDERS.length) {
+        container.innerHTML = '<p style="text-align:center;color:var(--gray-400);padding:3rem;">No providers loaded.</p>';
+        return;
+      }
+
+      // Group providers by type, preserving first-seen order
+      const groupOrder = [];
+      const groups = {};
+      PROVIDERS.forEach(p => {
+        if (!groups[p.type]) { groups[p.type] = []; groupOrder.push(p.type); }
+        groups[p.type].push(p);
+      });
+
+      // Build side nav — group titles only, linking to anchors
+      sidenav.innerHTML = groupOrder.map((groupType, i) => {
+          const slug = groupType.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+          return `<a onclick="scrollToGroup('group-${slug}', this)"${i === 0 ? ' class="active"' : ''}>${groupType}</a>`;
+        }).join('');
+
+      // Build grouped accordion content
+      container.innerHTML = groupOrder.map(groupType => {
+        const slug      = groupType.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        const providers = groups[groupType];
+
+        const providerCards = providers.map(p => {
+          const provCollections = COLLECTIONS.filter(c => c.id === p.id);
+          const isNSO           = p.id === 'mnso';
+          const safeId          = p.id.replace(/[^a-z0-9_-]/gi, '_');
+          const collectionCount = provCollections.length;
+
+          const tableRows = provCollections.map(c => {
+            const size = c.hours ? `${c.hours} hrs` : `${(c.items || 0).toLocaleString()} items`;
+            return `<tr>
+              <td class="col-name">${c.name}</td>
+              <td>${c.description}</td>
+              <td><span class="tag lang">${c.language}</span></td>
+              <td><span class="tag type">${TYPE_LABELS[c.type] || c.type}</span></td>
+              <td>${size}</td>
+              <td>${c.yearStart || '—'}–${c.yearEnd || '—'}</td>
+            </tr>`;
+          }).join('');
+
+          return `
+            <div class="provider-accordion">
+              <button class="provider-accordion-header" onclick="toggleProviderAccordion('${safeId}')">
+                <span class="provider-accordion-name">${p.name}</span>
+                <div class="provider-accordion-right">
+                  <span class="provider-accordion-count">${collectionCount} collection${collectionCount !== 1 ? 's' : ''}</span>
+                  <svg id="provider-chevron-${safeId}"
+                       style="width:18px;height:18px;flex-shrink:0;transition:transform 0.2s;transform:${isNSO ? 'rotate(180deg)' : 'rotate(0deg)'}"
+                       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </button>
+              <div id="provider-body-${safeId}" class="provider-accordion-body"
+                   style="display:${isNSO ? 'block' : 'none'}">
+                <p class="desc">${p.description}</p>
+                ${collectionCount
+                  ? `<table class="collection-table">
+                      <thead><tr>
+                        <th>Collection</th><th>Description</th><th>Language</th>
+                        <th>Type</th><th>Size</th><th>Period</th>
+                      </tr></thead>
+                      <tbody>${tableRows}</tbody>
+                    </table>`
+                  : '<p style="color:var(--gray-400);font-size:0.9rem;padding:0.5rem 0;">No collections registered yet.</p>'
+                }
+              </div>
+            </div>`;
+        }).join('');
+
+        return `
+          <div class="provider-group" id="group-${slug}">
+            <div class="provider-group-header">
+              <h3 class="provider-group-title">${groupType}</h3>
+              <span class="provider-group-count">${providers.length} provider${providers.length !== 1 ? 's' : ''}</span>
+            </div>
+            ${providerCards}
+          </div>`;
+      }).join('');
+    }
+
+    function scrollToGroup(id, el) {
+      // Highlight nav link
+      document.querySelectorAll('.providers-sidenav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      // Find the target group heading and scroll window to it
+      const target = document.getElementById(id);
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+
+    // Highlight sidenav link on scroll using window scroll position
+    function initProviderScrollSpy() {
+      function updateActiveLink() {
+        const groups = document.querySelectorAll('.provider-group');
+        const links  = document.querySelectorAll('.providers-sidenav a');
+        if (!groups.length || !links.length) return;
+
+        // Find the group whose top is closest to (but not below) the viewport top
+        let activeId = groups[0].id;
+        groups.forEach(g => {
+          const top = g.getBoundingClientRect().top;
+          if (top <= 120) activeId = g.id; // 120px = approx sticky nav height
+        });
+
+        links.forEach(a => {
+          const slug = activeId.replace('group-', '');
+          const linkSlug = a.getAttribute('onclick')?.match(/group-([^']+)/)?.[1] || '';
+          a.classList.toggle('active', linkSlug === slug);
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveLink, { passive: true });
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // TABS
+    // ══════════════════════════════════════════════════════════════
+    const TAB_ORDER = ['browse', 'providers', 'license', 'api', 'metadata', 'about'];
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+      document.getElementById('panel-' + tabId)?.classList.add('active');
+
+      const idx = TAB_ORDER.indexOf(tabId);
+      if (idx >= 0) {
+        document.querySelectorAll('.tab-btn')[idx]?.classList.add('active');
+        document.querySelectorAll('.nav-links a')[idx]?.classList.add('active');
+      }
+
+      // Scroll to the tabs bar so content is immediately visible
+      document.querySelector('.tabs-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleEndpoint(header) {
+      header.nextElementSibling.classList.toggle('open');
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // RENDER — called immediately with fallback data, then
+    //          optionally re-called if CSVs load successfully
+    // ══════════════════════════════════════════════════════════════
+    function renderAll() {
+      updateHeroStats();
+      populateFilters();
+      renderCards(COLLECTIONS);
+      renderProviders();
+    }
+
+    // Render immediately with fallback data — page always works
+    renderAll();
+    initProviderScrollSpy();
+
+    // Then try to upgrade with CSV data if available
+    // (only runs if PapaParse loaded and we're on a server)
+    if (typeof Papa !== 'undefined') {
+      Promise.allSettled([
+        loadCSV(CSV_PROVIDERS),
+        loadCSV(CSV_COLLECTIONS)
+      ]).then(([provResult, colResult]) => {
+        let upgraded = false;
+
+        if (provResult.status === 'fulfilled' && provResult.value && provResult.value.length > 0) {
+          PROVIDERS = provResult.value.map(normaliseProvider);
+          upgraded = true;
+          console.info(`[Catalog] Loaded ${PROVIDERS.length} providers from CSV`);
+        }
+
+        if (colResult.status === 'fulfilled' && colResult.value && colResult.value.length > 0) {
+          COLLECTIONS = colResult.value.map(normaliseCollection);
+          upgraded = true;
+          console.info(`[Catalog] Loaded ${COLLECTIONS.length} collections from CSV`);
+        }
+
+        if (upgraded) {
+          renderAll(); // re-render with whatever CSV data loaded
+          initProviderScrollSpy();
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

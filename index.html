@@ -128,8 +128,13 @@
 
     <!-- ===================== PROVIDERS TAB ===================== -->
     <div class="tab-panel" id="panel-providers">
-      <div id="providers-list">
-        <p style="text-align:center;color:var(--gray-400);padding:3rem;">Loading providers…</p>
+      <div class="providers-layout">
+        <nav class="providers-sidenav" id="providers-sidenav">
+          <!-- Group nav links injected by JS -->
+        </nav>
+        <div class="providers-content" id="providers-list">
+          <p style="text-align:center;color:var(--gray-400);padding:3rem;">Loading providers…</p>
+        </div>
       </div>
     </div>
 
@@ -1406,49 +1411,138 @@
     }
 
     // ══════════════════════════════════════════════════════════════
-    // PROVIDERS TAB
+    // PROVIDERS TAB — side nav (group titles) + grouped accordions
     // ══════════════════════════════════════════════════════════════
+    function toggleProviderAccordion(id) {
+      const body    = document.getElementById('provider-body-' + id);
+      const chevron = document.getElementById('provider-chevron-' + id);
+      const isOpen  = body.style.display !== 'none';
+      body.style.display      = isOpen ? 'none' : 'block';
+      chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
     function renderProviders() {
+      const sidenav   = document.getElementById('providers-sidenav');
       const container = document.getElementById('providers-list');
+
       if (!PROVIDERS.length) {
-        container.innerHTML =
-          '<p style="text-align:center;color:var(--gray-400);padding:3rem;">No providers loaded.</p>';
+        container.innerHTML = '<p style="text-align:center;color:var(--gray-400);padding:3rem;">No providers loaded.</p>';
         return;
       }
 
-      container.innerHTML = PROVIDERS.map(p => {
-        const provCollections = COLLECTIONS.filter(c =>
-          c.id === p.id
-        );
-        const tableRows = provCollections.map(c => {
-          const size = c.hours ? `${c.hours} hrs` : `${(c.items || 0).toLocaleString()} items`;
-          return `<tr>
-            <td class="col-name">${c.name}</td>
-            <td>${c.description}</td>
-            <td><span class="tag lang">${c.language}</span></td>
-            <td><span class="tag type">${TYPE_LABELS[c.type] || c.type}</span></td>
-            <td>${size}</td>
-            <td>${c.yearStart}–${c.yearEnd}</td>
-          </tr>`;
+      // Group providers by type, preserving first-seen order
+      const groupOrder = [];
+      const groups = {};
+      PROVIDERS.forEach(p => {
+        if (!groups[p.type]) { groups[p.type] = []; groupOrder.push(p.type); }
+        groups[p.type].push(p);
+      });
+
+      // Build side nav — group titles only, linking to anchors
+      sidenav.innerHTML = groupOrder.map((groupType, i) => {
+          const slug = groupType.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+          return `<a onclick="scrollToGroup('group-${slug}', this)"${i === 0 ? ' class="active"' : ''}>${groupType}</a>`;
+        }).join('');
+
+      // Build grouped accordion content
+      container.innerHTML = groupOrder.map(groupType => {
+        const slug      = groupType.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        const providers = groups[groupType];
+
+        const providerCards = providers.map(p => {
+          const provCollections = COLLECTIONS.filter(c => c.id === p.id);
+          const isNSO           = p.id === 'mnso';
+          const safeId          = p.id.replace(/[^a-z0-9_-]/gi, '_');
+          const collectionCount = provCollections.length;
+
+          const tableRows = provCollections.map(c => {
+            const size = c.hours ? `${c.hours} hrs` : `${(c.items || 0).toLocaleString()} items`;
+            return `<tr>
+              <td class="col-name">${c.name}</td>
+              <td>${c.description}</td>
+              <td><span class="tag lang">${c.language}</span></td>
+              <td><span class="tag type">${TYPE_LABELS[c.type] || c.type}</span></td>
+              <td>${size}</td>
+              <td>${c.yearStart || '—'}–${c.yearEnd || '—'}</td>
+            </tr>`;
+          }).join('');
+
+          return `
+            <div class="provider-accordion">
+              <button class="provider-accordion-header" onclick="toggleProviderAccordion('${safeId}')">
+                <span class="provider-accordion-name">${p.name}</span>
+                <div class="provider-accordion-right">
+                  <span class="provider-accordion-count">${collectionCount} collection${collectionCount !== 1 ? 's' : ''}</span>
+                  <svg id="provider-chevron-${safeId}"
+                       style="width:18px;height:18px;flex-shrink:0;transition:transform 0.2s;transform:${isNSO ? 'rotate(180deg)' : 'rotate(0deg)'}"
+                       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </button>
+              <div id="provider-body-${safeId}" class="provider-accordion-body"
+                   style="display:${isNSO ? 'block' : 'none'}">
+                <p class="desc">${p.description}</p>
+                ${collectionCount
+                  ? `<table class="collection-table">
+                      <thead><tr>
+                        <th>Collection</th><th>Description</th><th>Language</th>
+                        <th>Type</th><th>Size</th><th>Period</th>
+                      </tr></thead>
+                      <tbody>${tableRows}</tbody>
+                    </table>`
+                  : '<p style="color:var(--gray-400);font-size:0.9rem;padding:0.5rem 0;">No collections registered yet.</p>'
+                }
+              </div>
+            </div>`;
         }).join('');
 
         return `
-          <div class="provider-section">
-            <h3>${p.name}</h3>
-            <div class="provider-type">${p.type}</div>
-            <p class="desc">${p.description}</p>
-            ${provCollections.length
-              ? `<table class="collection-table">
-                  <thead><tr>
-                    <th>Collection</th><th>Description</th><th>Language</th>
-                    <th>Type</th><th>Size</th><th>Period</th>
-                  </tr></thead>
-                  <tbody>${tableRows}</tbody>
-                </table>`
-              : '<p style="color:var(--gray-400);font-size:0.9rem;">No collections registered yet.</p>'
-            }
+          <div class="provider-group" id="group-${slug}">
+            <div class="provider-group-header">
+              <h3 class="provider-group-title">${groupType}</h3>
+              <span class="provider-group-count">${providers.length} provider${providers.length !== 1 ? 's' : ''}</span>
+            </div>
+            ${providerCards}
           </div>`;
       }).join('');
+    }
+
+    function scrollToGroup(id, el) {
+      // Highlight nav link
+      document.querySelectorAll('.providers-sidenav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+      // Find the target group heading and scroll window to it
+      const target = document.getElementById(id);
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+
+    // Highlight sidenav link on scroll using window scroll position
+    function initProviderScrollSpy() {
+      function updateActiveLink() {
+        const groups = document.querySelectorAll('.provider-group');
+        const links  = document.querySelectorAll('.providers-sidenav a');
+        if (!groups.length || !links.length) return;
+
+        // Find the group whose top is closest to (but not below) the viewport top
+        let activeId = groups[0].id;
+        groups.forEach(g => {
+          const top = g.getBoundingClientRect().top;
+          if (top <= 120) activeId = g.id; // 120px = approx sticky nav height
+        });
+
+        links.forEach(a => {
+          const slug = activeId.replace('group-', '');
+          const linkSlug = a.getAttribute('onclick')?.match(/group-([^']+)/)?.[1] || '';
+          a.classList.toggle('active', linkSlug === slug);
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveLink, { passive: true });
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -1487,6 +1581,7 @@
 
     // Render immediately with fallback data — page always works
     renderAll();
+    initProviderScrollSpy();
 
     // Then try to upgrade with CSV data if available
     // (only runs if PapaParse loaded and we're on a server)
@@ -1511,6 +1606,7 @@
 
         if (upgraded) {
           renderAll(); // re-render with whatever CSV data loaded
+          initProviderScrollSpy();
         }
       });
     }

@@ -6,6 +6,10 @@ mij,News Bulletins,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .
 mij,Headlines Summaries,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"Short Chichewa headlines summaries broadcast multiple times daily, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
 mij,Evening News with Interviews,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"Flagship Chichewa evening news programme featuring in-depth interviews with newsmakers, public officials, and subject experts. Accompanied by full transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social, Governance"
 mij,Evening Recap,Malawi Institute of Journalism,Chichewa,Audio & Text,".mp3, .docx",,,"End-of-day Chichewa recap of the day's top stories, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
+mij,News Bulletins,Malawi Institute of Journalism,English,Audio & Text,".mp3, .docx",,1064,"Chichewa news bulletins covering national and international current affairs, including accompanying transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social"
+mij,Headlines Summaries,Malawi Institute of Journalism,English,Audio & Text,".mp3, .docx",,,"Short Chichewa headlines summaries broadcast multiple times daily, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
+mij,Evening News with Interviews,Malawi Institute of Journalism,English,Audio & Text,".mp3, .docx",,,"Flagship Chichewa evening news programme featuring in-depth interviews with newsmakers, public officials, and subject experts. Accompanied by full transcripts and English translations.",2026,2026,"News, Current Affairs, Health, Agriculture, Economy, Social, Governance"
+mij,Evening Recap,Malawi Institute of Journalism,English,Audio & Text,".mp3, .docx",,,"End-of-day Chichewa recap of the day's top stories, with accompanying transcripts and English translations.",2026,2026,"News, Current Affairs"
 kuwala,Radio Programs,Kuwala FM,Chichewa,Audio,.mp3,,,"Various Chichewa audio programs identified for the AI for Malawi project, covering health, agriculture, education, religion, and news.",2021,2025,"Health, Agriculture, Education, Religion, News"
 capital_fm,News Bulletins,Capital FM,Chichewa,Text,.docx,,2000,"General Chichewa news bulletins from Capital FM Malawi, a privately owned station broadcasting news, current affairs, and entertainment. Text files (.docx) covering agriculture, ICT, politics, and sports.",2022,2025,"Agriculture, ICT, Politics, Sports"
 capital_fm,Health Talk Program,Capital FM,Chichewa,Audio,.mp3,,,"Weekly health program on Capital FM featuring medical professionals, public health experts, and practitioners addressing listener questions on communicable and non-communicable diseases, nutrition, and wellness.",2025,2025,Health
@@ -43,6 +47,9 @@ nation_publications,Weekend Nation,Nation Publication Limited,Chichewa,Text,.pdf
 nation_publications,Fuko,Nation Publication Limited,Chichewa,Text,.pdf,,346,"A twice-monthly Chichewa-language newspaper published by Nation Publications Limited targeting rural communities across Malawi. Content focuses on agriculture, health, and general development information.",2017,2025,"Agriculture, Sports, Entertainment, Business, Marketing"
 montfort,Mkwaso Newspaper Articles,Montfort Media,Chichewa,Text,.pdf,,49,"National Chichewa newspaper published by Montfort Media with local coverage; 16 pages per issue covering hard news, features, entertainment, and sports. Approximately 49 issues collected.",2008,2025,"Politics, Health, Religion, Development, Agriculture, Economy, Community, Education"
 times_group,Malawi News,The Times Group,Chichewa,Text,".pdf, .doc",,,Weekly Chichewa-language newspaper covering various topics.,2013,2025,"Health, Economy, Religion, Social, Agriculture, Current Affairs"
+times_group,Malawi News,The Times Group,English,Text,".pdf, .doc",,,Weekly Chichewa-language newspaper covering various topics.,2013,2025,"Health, Economy, Religion, Social, Agriculture, Current Affairs"
+times_group,Radio Skimmer Recordings,The Times Group,English,Audio,".mp3, .wav",,,"A 24-hour recording of Times Radio broadcast content, capturing continuous programming over a full day. The dataset includes news segments, interviews, and discussions, and can be used for audio analysis, speech recognition, and media research.",2013,2025,"Health, Sports, Social,  Current Affairs "
+times_group,Radio Skimmer Recordings,The Times Group,Chichewa,Audio,".mp3, .wav",,,"A 24-hour recording of Times Radio broadcast content, capturing continuous programming over a full day. The dataset includes news segments, interviews, and discussions, and can be used for audio analysis, speech recognition, and media research.",2013,2025,"Health, Sports, Social,  Current Affairs "
 times_group,Ana Ife,The Times Group,Chichewa,Video,.mp4,,418,,2017,2026,
 times_group,Apaulendo,The Times Group,Chichewa,Video,.mp4,,226,,2021,2026,
 times_group,Danga Langa,The Times Group,Chichewa,Video,.mp4,,391,,2014,2026,
@@ -83,6 +90,46 @@ times_group,Times Sports Update (2),The Times Group,Chichewa,Video,.mp4,,261,,20
 times_group,Times Exclusive,The Times Group,Chichewa,Video,.mp4,,192,,2019,2026,
 times_group,Tilondoloze,The Times Group,Chichewa,Video,.mp4,,26,,2022,2026,
 times_group,ANA IFE,The Times Group,Chichewa,Video,".mp4, .mov",,,,2015,2025,"Health, Agriculture, Social, Economic, Current Affairs"
+times_group,Ana Ife,The Times Group,English,Video,.mp4,,418,,2017,2026,
+times_group,Apaulendo,The Times Group,English,Video,.mp4,,226,,2021,2026,
+times_group,Danga Langa,The Times Group,English,Video,.mp4,,391,,2014,2026,
+times_group,Dziko la Mkaka ndi Uchi,The Times Group,English,Video,.mp4,,257,,2019,2026,
+times_group,From the Terraces,The Times Group,English,Video,.mp4,,854,,2018,2026,
+times_group,Zakumudzi,The Times Group,English,Video,.mp4,,136,,2017,2026,
+times_group,Geni Nkujiya,The Times Group,English,Video,.mp4,,118,,2017,2026,
+times_group,Glam 265,The Times Group,English,Video,.mp4,,309,,2022,2026,
+times_group,Zimakhala Bwanji,The Times Group,English,Video,.mp4,,114,,2017,2026,
+times_group,Home Managers,The Times Group,English,Video,.mp4,,27,,2025,2026,
+times_group,Hot Current,The Times Group,English,Video,.mp4,,415,,2017,2026,
+times_group,Infotainment,The Times Group,English,Video,.mp4,,1495,,2017,2026,
+times_group,Islamic Life,The Times Group,English,Video,.mp4,,24,,2025,2026,
+times_group,It Can Be You,The Times Group,English,Video,.mp4,,82,,2023,2026,
+times_group,Kwagwanji,The Times Group,English,Video,.mp4,,122,,2023,2026,
+times_group,LA 40,The Times Group,English,Video,.mp4,,22,,2025,2026,
+times_group,Mapemphero,The Times Group,English,Video,.mp4,,259,,2017,2026,
+times_group,Mdyangu,The Times Group,English,Video,.mp4,,158,,2020,2026,
+times_group,Mfumukazi,The Times Group,English,Video,.mp4,,21,,2024,2026,
+times_group,Umoyo wa Amayi,The Times Group,English,Video,.mp4,,78,,2019,2026,
+times_group,Mind Power,The Times Group,English,Video,.mp4,,290,,2017,2026,
+times_group,Mitekete,The Times Group,English,Video,.mp4,,93,,2022,2026,
+times_group,Mtedzamtedza,The Times Group,English,Video,.mp4,,246,,2021,2026,
+times_group,My Game,The Times Group,English,Video,.mp4,,205,,2017,2026,
+times_group,On the Tee,The Times Group,English,Video,.mp4,,114,,2018,2026,
+times_group,Peer Chat,The Times Group,English,Video,.mp4,,163,,2020,2026,
+times_group,Times Sports Update,The Times Group,English,Video,.mp4,,269,,2021,2026,
+times_group,Times Investigation,The Times Group,English,Video,.mp4,,19,,2020,2026,
+times_group,Sports Arena,The Times Group,English,Video,.mp4,,775,,2017,2026,
+times_group,Spotlight,The Times Group,English,Video,.mp4,,190,,2016,2026,
+times_group,Survivor,The Times Group,English,Video,.mp4,,20,,2020,2026,
+times_group,Tchutchutchu,The Times Group,English,Video,.mp4,,289,,2017,2026,
+times_group,Thanzi,The Times Group,English,Video,.mp4,,154,,2015,2026,
+times_group,The Constitution,The Times Group,English,Video,.mp4,,286,,2017,2026,
+times_group,The Plan,The Times Group,English,Video,.mp4,,106,,2020,2026,
+times_group,Tikudziweni,The Times Group,English,Video,.mp4,,356,,2017,2026,
+times_group,Times Sports Update (2),The Times Group,English,Video,.mp4,,261,,2021,2026,
+times_group,Times Exclusive,The Times Group,English,Video,.mp4,,192,,2019,2026,
+times_group,Tilondoloze,The Times Group,English,Video,.mp4,,26,,2022,2026,
+times_group,ANA IFE,The Times Group,English,Video,".mp4, .mov",,,,2015,2025,"Health, Agriculture, Social, Economic, Current Affairs"
 yoneco_fm,Gender Based Violence,YONECO,Chichewa,Audio & Text,".mp3, .docx",,,"Chichewa audio and text content from programs and news bulletins featuring duty bearers, community members, and government officials discussing gender-based violence.",2017,2025,Gender Based Violence
 yoneco_fm,Health,YONECO,Chichewa,Audio & Text,".mp3, .docx",,,"Radio programs and news bulletins featuring health experts and practitioners covering communicable/non-communicable disease, nutrition, HIV, STIs, mental health, and cancer.",2017,2025,"Communicable/Non-communicable Disease, Nutrition, HIV, STIs, Mental Health, Cancer"
 yoneco_fm,Governance,YONECO,Chichewa,Audio & Text,".mp3, .docx",,,"Programs featuring political, economic and social commentators, citizens and academia discussing corruption, elections, human rights, and democracy.",2017,2025,"Corruption, Elections, Human Rights, Democracy"
@@ -132,5 +179,19 @@ nyanthepa,Health,Nyanthepa Community Radio,Chichewa,Audio,".mp3, .wav",,173,"Pro
 nyanthepa,Mbiri (History) programs,Nyanthepa Community Radio,Chichewa,Audio,.mp3,,16,"Covers topical issues that occured in the past, recounting of past events and occurences",2017,2026,"Education, archives"
 nyanthepa,Politics,Nyanthepa Community Radio,Chichewa,Audio,.mp3,,23,Covers national elections and politics in general,2017,2025,"Nationa elections,"
 nyanthepa,Education,Nyanthepa Community Radio,Chichewa,Audio,".mp3, .wav",,19,Various education-related issues such as early childhood development,2017,2026,"Education, Community participation"
+nyanthepa,News Bulletins,Nyanthepa Community Radio,Chisena,Audio,".mp3, .docx",,553,"Daily news bulletins produced by Nyanthepa Community Radio in Nsanje. It covers local, national, and regional news with a focus on community affairs, development, and current events in the Lower Shire Valley.",2017,2026,"News, Current Affairs, Community, Development"
+nyanthepa,Religion,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,101,Various religious programs that integrate social issues into humanity,2017,2026,"Community, Development, Livelihoods, Social"
+nyanthepa,Agriculture,Nyanthepa Community Radio,Chisena,Audio,.mp3,,118,"Various programs integrating food security, livelihoods and hod these get affected by climate change, disease outbreaks and lack of financial, social capacity",2017,2026,"Community, Drama, Gender, Health, Social"
+nyanthepa,Mayi Wangwiro,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,84,"A women-focused program that features women leaders, health workers, and community mothers discussing maternal health, child nutrition, parenting, and women's empowerment in the Lower Shire Valley.",2017,2026,"Women Empowerment, Maternal Health, Parenting, Nutrition, Gender"
+nyanthepa,Ankhoswe,Nyanthepa Community Radio,Chisena,Audio,.mp3,,21,"A social and family affairs programme whose name refers to traditional marriage mediators or counsellors in Chichewa culture. Annkhoswe addresses family life, conflict resolution, marriage, and social harmony, drawing on traditional community values and practices.",2017,2026,"Family, Social, Community, Culture, Traditions"
+nyanthepa,Climate change programs,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,53,"Programs related to climate change, how that influences peoples livelihoods, food security, econimic empowerment",2017,2026,"Health, Agriculture, Education, Community, Development, Gender Equality"
+nyanthepa,Youth programs,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,49,"Focus on voices of the youth in various aspects of life, how the youth contribute to national development, how they impacted by the ever-changing socio-econimoc landscape",2017,2026,"Youth participation in empowerment, Youth and human rights, Education, Development"
+nyanthepa,Economic Empowerment,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,12,"Focus on women and youth empowerment, building empowerment structures, integrating human rights into empowerment activities",2017,2026,"Family, Social, Community, Culture, Traditions"
+nyanthepa,Human Rights and Gender Based Violence,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,59,"Miscellaneous audio programmes produced by Nyanthepa Community Radio covering health, agriculture, education, and community development topics not captured in the named programme collections.",2017,2026,"Economic empowerment, Business, Social"
+nyanthepa,Sports,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,83,"Sports updates featuring community, district, national and international sporting activities such as football, netball and others",2017,2026,"Current sports affairs, results, fixtures, sports news"
+nyanthepa,Health,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,173,"Programs cover wide ranging health issues such as early childhood development, covid-19, cholera, tuberculosis. Also cover how to manage diseases at household and health service levels",2017,2026,"Prevention, Treatment, Management, Community Involvement,Health Resourcing"
+nyanthepa,Mbiri (History) programs,Nyanthepa Community Radio,Chisena,Audio,.mp3,,16,"Covers topical issues that occured in the past, recounting of past events and occurences",2017,2026,"Education, archives"
+nyanthepa,Politics,Nyanthepa Community Radio,Chisena,Audio,.mp3,,23,Covers national elections and politics in general,2017,2025,"Nationa elections,"
+nyanthepa,Education,Nyanthepa Community Radio,Chisena,Audio,".mp3, .wav",,19,Various education-related issues such as early childhood development,2017,2026,"Education, Community participation"
 nso,High Frequency Phone Survey,National Statistics Office,Chichewa,Audio,.wav,441,929,"A household phone survey conducted across Malawi, covering multi-topic and multi-sectoral wellbeing indicators. The survey monitors key dimensions of household welfare at high frequency to support crisis preparedness and real-time response to large-scale shocks. The sample is representative both nationally and across the urban/rural divide. This is Round 1 of the survey, which is conducted in multiple rounds.",2025,2025,"Employment, Food Security, Food Insecurity Experience Scale, Household Businesses, Health, Shocks and Coping, Economic Sentiments, Energy"
 nso,High Frequency Phone Survey,National Statistics Office,Chichewa,Audio,.wav,,1000,"A household phone survey conducted across Malawi, covering multi-topic and multi-sectoral wellbeing indicators. The survey monitors key dimensions of household welfare at high frequency to support crisis preparedness and real-time response to large-scale shocks. The sample is representative both nationally and across the urban/rural divide. This is Round 2 of the survey, which is conducted in multiple rounds.",2026,2026,"Employment, Food Security, Food Insecurity Experience Scale, Household Businesses, Health, Education, Shocks and Coping, Economic Sentiments, Energy, Mental Health"

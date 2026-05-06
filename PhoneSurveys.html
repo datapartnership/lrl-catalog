@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RF Phone Survey Malawi — Survey Instrument Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;600;700&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #001E60;
+  --navy-dark: #001545;
+  --purple: #2e2d70;
+  --orange: #F7951D;
+  --orange-dark: #DF6B00;
+  --teal: #56C3C4;
+  --teal-dark: #3DA3A8;
+  --gray-50: #f8f9fb;
+  --gray-100: #eef0f4;
+  --gray-200: #d8dce5;
+  --gray-400: #8e8e91;
+  --gray-600: #495057;
+  --gray-800: #1a1a2e;
+  --radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,30,96,0.06);
+  --shadow-md: 0 4px 12px rgba(0,30,96,0.08);
+  /* legacy aliases */
+  --bg: var(--gray-50);
+  --bg2: var(--gray-100);
+  --border: var(--gray-200);
+  --ink: var(--gray-800);
+  --ink2: var(--gray-600);
+  --ink3: var(--gray-400);
+  --teal-bg: #e6f7f7;
+  --orange-bg: #fff7ed;
+  --mono: 'Roboto Mono', monospace;
+  --serif: 'Asap Condensed', sans-serif;
+  --sans: 'Roboto', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--gray-50); color: var(--gray-800); font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 1.6; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Asap Condensed', sans-serif; line-height: 1.2; }
+
+/* Header */
+.header {
+  border-bottom: 2px solid var(--ink);
+  padding: 36px 48px 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.header-left h1 {
+  font-family: 'Asap Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.header-left p {
+  font-size: 13px;
+  color: var(--ink3);
+  max-width: 480px;
+}
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.pill-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pill {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--ink2);
+  background: var(--bg2);
+}
+.pill.hi { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
+/* Layout */
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 130px); }
+.sidebar {
+  border-right: 1px solid rgba(255,255,255,0.1);
+  padding: 32px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--navy);
+}
+.sb-group { padding: 0 24px 24px; margin-bottom: 4px; }
+.sb-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+  display: block;
+}
+.sb-link {
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: color 0.12s;
+}
+.sb-link:hover, .sb-link.active { color: #fff; font-weight: 400; }
+
+/* Main */
+.main { padding: 40px 56px 80px; }
+
+/* Section */
+.sec { margin-bottom: 56px; scroll-margin-top: 24px; }
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--teal);
+  margin-bottom: 20px;
+}
+.sec-id { font-family: 'Roboto Mono', monospace; font-size: 10px; color: var(--ink3); }
+.sec-title { font-family: 'Asap Condensed', sans-serif; font-size: 24px; font-weight: 700; color: var(--navy); }
+
+/* Module coverage table */
+.cov-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 4px; }
+.cov-table th {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.cov-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.cov-table tr:last-child td { border-bottom: none; }
+.cov-table td:first-child { font-weight: 500; }
+.cov-table td:nth-child(2) { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--ink3); }
+.cov-table td:nth-child(3) { font-family: 'Roboto Mono', monospace; font-size: 11px; }
+.cov-table td:nth-child(4) { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--ink3); }
+
+/* Respondent block */
+.resp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.resp-card { border: 1px solid var(--border); border-radius: 3px; }
+.resp-head {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.resp-body { padding: 12px 14px; font-size: 13px; color: var(--ink2); line-height: 1.8; }
+.resp-total { font-family: 'Roboto Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 6px; }
+
+/* Module cards */
+.mod-card { border: 1px solid var(--border); border-radius: 3px; margin-bottom: 12px; }
+.mod-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--bg2);
+  border-radius: 3px;
+}
+.mod-head:hover { background: var(--border); }
+.mod-num { font-family: 'Roboto Mono', monospace; font-size: 10px; color: var(--ink3); min-width: 28px; }
+.mod-name { font-weight: 500; font-size: 13.5px; flex: 1; }
+.mod-tags { display: flex; gap: 6px; align-items: center; }
+.tag {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  color: var(--ink3);
+}
+.chevron { font-size: 9px; color: var(--ink3); transition: transform 0.15s; }
+.chevron.open { transform: rotate(90deg); }
+.mod-body { padding: 0 16px 14px; display: none; border-top: 1px solid var(--border); }
+.mod-body.open { display: block; }
+
+/* Notes in module body */
+.mod-note {
+  font-size: 12.5px;
+  color: var(--ink2);
+  padding: 8px 12px;
+  border-left: 2px solid var(--teal);
+  margin: 12px 0 8px;
+  background: var(--teal-bg);
+}
+.mod-note strong { color: var(--navy); font-weight: 600; font-family: 'Asap Condensed', sans-serif; }
+
+/* Question list */
+.q-list { list-style: none; margin-top: 10px; }
+.q-item {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.q-item:last-child { border-bottom: none; }
+.q-item.not-spoken {
+  padding: 6px 12px;
+  background: var(--bg2);
+  border-radius: 3px;
+  border-bottom: none;
+  margin: 4px 0;
+  font-size: 12px;
+  color: var(--navy);
+  font-style: italic;
+}
+.q-n {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.q-t { color: var(--ink2); line-height: 1.55; }
+.q-instr {
+  font-size: 11.5px;
+  color: var(--ink3);
+  margin-top: 4px;
+  font-style: italic;
+}
+.q-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+.q-opt {
+  font-size: 11.5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 8px;
+  color: var(--ink2);
+}
+.oe-tag {
+  display: inline-block;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9px;
+  padding: 1px 6px;
+  background: var(--orange-bg);
+  border: 1px solid #fad09a;
+  color: var(--orange);
+  border-radius: 2px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Shock codes */
+.shock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.shock-group { padding: 14px 16px; border-right: 1px solid var(--border); }
+.shock-group:nth-child(even) { border-right: none; }
+.shock-group-label {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 8px;
+  display: block;
+}
+.shock-row { display: flex; gap: 10px; padding: 4px 0; border-bottom: 1px solid var(--bg2); font-size: 13px; }
+.shock-row:last-child { border-bottom: none; }
+.shock-code { font-family: 'Roboto Mono', monospace; font-size: 10px; color: var(--ink3); min-width: 28px; padding-top: 1px; }
+
+/* Version diff table */
+.diff-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.diff-table th {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.diff-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.diff-table tr:last-child td { border-bottom: none; }
+.diff-table td:first-child { font-family: 'Roboto Mono', monospace; font-size: 11px; }
+
+/* Open-ended note */
+.oe-box {
+  border: 1px solid #b0ccb0;
+  background: #f0f5f0;
+  border-radius: 3px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 20px;
+}
+.oe-box strong { color: #3a5c3a; font-weight: 500; display: block; margin-bottom: 4px; font-family: 'Roboto Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+@media (max-width: 780px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  .header, .main { padding: 24px 20px; }
+  .resp-grid, .shock-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+
+<header style="background-color:#001E60; background-image:linear-gradient(#001E60, #2e2d70); padding: 48px 56px 40px; width:100%;">
+  <div style="font-family:'Roboto Mono',monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal); margin-bottom:12px;">World Bank · Development Data Partnership · Malawi</div>
+  <h1 style="font-family:'Asap Condensed',sans-serif; font-size:38px; font-weight:700; color:#fff; line-height:1.15; margin-bottom:16px;">Malawi Integrated Household Survey — Survey Instrument Reference</h1>
+  <p style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,0.75); line-height:1.8;">This document accompanies the audio recording dataset. It describes what was asked in each interview, in what order, and how the questionnaire was structured — so researchers can understand the content of recordings without listening to them.</p>
+  <p style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,0.75); line-height:1.8; margin-top:10px;">The survey is a phone-based household panel conducted in Malawi, administered by trained enumerators using a tablet application. All interviews were conducted in Chichewa. The questionnaire shown here is the second official draft.</p>
+</header>
+<div style="border-bottom: 1px solid var(--gray-200);"></div>
+
+<div class="layout">
+
+<nav class="sidebar">
+  <div class="sb-group">
+    <span class="sb-label">Overview</span>
+    <a class="sb-link" href="#structure">Topics by round</a>
+  </div>
+  <div class="sb-group">
+    <span class="sb-label">Module questions</span>
+    <a class="sb-link" href="#employment">Employment</a>
+    <a class="sb-link" href="#fies">Food Insecurity Experience Scale</a>
+    <a class="sb-link" href="#education">Education</a>
+    <a class="sb-link" href="#shocks">Shocks and Coping</a>
+    <a class="sb-link" href="#crops">Crops</a>
+    <a class="sb-link" href="#livestock">Livestock</a>
+    <a class="sb-link" href="#mentalhealth">Mental Health</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- STRUCTURE -->
+<section class="sec" id="structure">
+  <div class="sec-head">
+    <h2 class="sec-title">What topics are covered, and in which recordings</h2>
+  </div>
+
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:24px; line-height:1.7;">Each household was interviewed across three rounds, each covering different topics. Not every module appears in every round — this determines what content to expect in a recording depending on which round it was collected in.</p>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 28px;">
+
+    <div style="border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+      <div style="background:var(--navy); color:#fff; padding:10px 16px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:2px;">Main respondent</div>
+        <div style="font-family:var(--serif); font-size:17px; font-weight:600;">Round 1</div>
+        <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px;">~21.5 min</div>
+      </div>
+      <div style="padding:12px 16px; font-size:12.5px; color:var(--ink2); line-height:1.9;">
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Interview information</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household location update</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household roster update</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Employment</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household businesses</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Food Insecurity Experience Scale</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Food Consumption Score</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Economic sentiments</div>
+        <div style="padding:3px 0;">Energy</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+      <div style="background:var(--navy); color:#fff; padding:10px 16px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:2px;">Main respondent</div>
+        <div style="font-family:var(--serif); font-size:17px; font-weight:600;">Round 2</div>
+        <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px;">~16.5 min</div>
+      </div>
+      <div style="padding:12px 16px; font-size:12.5px; color:var(--ink2); line-height:1.9;">
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Interview information</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household roster update</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Employment</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Crop</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Livestock</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Education</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border); color:var(--navy); font-weight:600;">Food Insecurity Experience Scale ✦</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border); color:var(--navy); font-weight:600;">Shocks and Coping ✦</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border); color:var(--navy); font-weight:600;">Mental Health ✦</div>
+        <div style="padding:3px 0; font-size:11px; color:var(--navy); font-style:italic; font-weight:500;">✦ also asked of second respondent</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+      <div style="background:var(--navy); color:#fff; padding:10px 16px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:2px;">Main respondent</div>
+        <div style="font-family:var(--serif); font-size:17px; font-weight:600;">Round 3</div>
+        <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.55); margin-top:2px;">~16 min</div>
+      </div>
+      <div style="padding:12px 16px; font-size:12.5px; color:var(--ink2); line-height:1.9;">
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Interview information</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household roster update</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Household businesses</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Energy</div>
+        <div style="padding:3px 0; border-bottom:1px solid var(--border);">Education</div>
+        <div style="padding:3px 0;">Health</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="background:var(--bg2); border:1px solid var(--border); border-radius:4px; padding:12px 16px; font-size:12.5px; color:var(--ink2); line-height:1.7;">
+    <strong style="font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); display:block; margin-bottom:4px;">Second respondent — Round 2 only · ~4.5 min</strong>
+    In Round 2, a second randomly selected household member was interviewed separately on three topics: Employment · Food Insecurity Experience Scale · Mental Health.
+  </div>
+
+  <div style="margin-top:14px; background:var(--orange-bg); border:1px solid #fad09a; border-radius:4px; padding:12px 16px; font-size:12.5px; color:var(--ink2); line-height:1.7;">
+    <strong style="font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:4px;">Open-ended responses — testing note</strong>
+    The Household Roster module was used to test open-ended questions. Two options were under consideration: Shocks and Coping in Round 2 with Household Businesses in Round 3; or Shocks and Coping repeated in both rounds.
+  </div>
+
+</section>
+
+<!-- EMPLOYMENT -->
+<section class="sec" id="employment">
+  <div class="sec-head">
+    <h2 class="sec-title">Employment</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:14px;">Present in Rounds 1 and 2. Asked of the main household respondent, and also the second respondent in Round 2. The module routes differently depending on whether the respondent was working at the last interview.</p>
+
+  <div class="mod-note">
+    <strong>Three routing cases</strong> The module routes differently depending on the respondent's work status at the previous interview. Case 0 — respondent was not interviewed last time; Case 1 — respondent was working at last interview; Case 2 — respondent was not working at last interview. Different questions follow depending on the case.
+  </div>
+
+  <ul class="q-list">
+    <li class="q-item not-spoken">Enumerator identifies which of three cases applies based on the previous interview record.</li>
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Last week, from Monday [DATE] up to Sunday [DATE], did you work for someone for pay, run or do household business, farming or other activity to generate income, even if only for one hour?</div></li>
+    <li class="q-item not-spoken">If yes → Q8 (Case 1) or Q9a (Cases 0 and 2). If no → Q2.</li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">Even though you did not work last week, do you have a job, business or family farm from which you were absent last week to which you expect to return?</div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">When do you expect to return to this work/job?<div class="q-options"><span class="q-opt">Within one week</span><span class="q-opt">Within one month</span><span class="q-opt">Within three months</span><span class="q-opt">In more than three months</span><span class="q-opt">Don't know</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">Why did you not work last week?<div class="q-instr">Do not read options — respondent answers freely.</div><div class="q-options"><span class="q-opt">Business closed due to coronavirus</span><span class="q-opt">Business closed for another reason</span><span class="q-opt">Laid off</span><span class="q-opt">Furloughed</span><span class="q-opt">Vacation</span><span class="q-opt">Ill / quarantined</span><span class="q-opt">Caring for ill relative</span><span class="q-opt">Seasonal worker</span><span class="q-opt">Retired</span><span class="q-opt">Movement restrictions</span><span class="q-opt">Lack of inputs</span><span class="q-opt">Farming rotation</span><span class="q-opt">Conflict / insurgency</span><span class="q-opt">ENDSARS protests</span><span class="q-opt">Student</span><span class="q-opt">Maternity leave</span><span class="q-opt">Other</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">During the last four weeks, did you do anything to find a paid job or start a business?</div></li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">What did you mainly do in the last four weeks to find a paid job or start a business?<div class="q-instr">Do not read options — respondent answers freely.</div><div class="q-options"><span class="q-opt">Apply to employers</span><span class="q-opt">Answer job ads</span><span class="q-opt">Register with employment centre</span><span class="q-opt">Take a test or interview</span><span class="q-opt">Seek help from relatives / friends</span><span class="q-opt">Check factories / work sites</span><span class="q-opt">Wait on street to be recruited</span><span class="q-opt">Seek financial help to start a business</span><span class="q-opt">Look for land / building / equipment</span><span class="q-opt">Apply for permit or licence</span><span class="q-opt">Other</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">Which of the following best describes what [NAME] is mainly doing at present?<div class="q-options"><span class="q-opt">Studying or training</span><span class="q-opt">Household responsibilities</span><span class="q-opt">Household farming / livestock / fishing / forest</span><span class="q-opt">Retired or pensioner</span><span class="q-opt">Long-term illness / injury / disability</span><span class="q-opt">Volunteering / community / charity work</span><span class="q-opt">Cultural or leisure activities</span><span class="q-opt">Old age</span></div></div></li>
+    <li class="q-item not-spoken">→ Next section</li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">When we spoke last time on [LAST INTERVIEW DATE], you said you worked as [PREVIOUS INTERVIEW WORK DESCRIPTION]. Are you still working as [PREVIOUS INTERVIEW WORK DESCRIPTION]?</div></li>
+    <li class="q-item not-spoken">If yes → Q10. If no → Q9a.</li>
+    <li class="q-item"><div class="q-n">Q9a</div><div class="q-t">Please provide a description of the primary activity/tasks you performed in your main work/job last week. The main work/job is the one where you work the highest number of hours.<div class="q-instr">Interviewer writes a short description of the primary activity.</div></div></li>
+    <li class="q-item"><div class="q-n">Q9b</div><div class="q-t">Which of the following best describes the sector of the business or organisation for which [NAME] worked last week?<div class="q-instr">Do not read options — respondent answers freely.</div><div class="q-options"><span class="q-opt">Agriculture / hunting / fishing</span><span class="q-opt">Mining / manufacturing</span><span class="q-opt">Electricity / gas / water supply</span><span class="q-opt">Construction</span><span class="q-opt">Buying and selling goods / repair</span><span class="q-opt">Hotels / restaurants</span><span class="q-opt">Transport / driving / post / travel agencies</span><span class="q-opt">Finance / legal / analysis / computer / real estate</span><span class="q-opt">Public administration</span><span class="q-opt">Personal services / education / health / culture / sport / domestic work / other</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q10</div><div class="q-t">In the work/job you did last week, did you work…?<div class="q-instr">Read options aloud.</div><div class="q-options"><span class="q-opt">In own household business</span><span class="q-opt">In a household business operated by a household member</span><span class="q-opt">In a household farm growing crops / raising livestock / fishing</span><span class="q-opt">As an employee for someone else</span><span class="q-opt">As an apprentice / trainee / intern</span><span class="q-opt">Helping a household member who works for someone else</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q11</div><div class="q-t">Thinking about all the family farming products, animals, or fish you worked on, are they intended…?<div class="q-instr">Read options aloud.</div><div class="q-options"><span class="q-opt">Only for sale</span><span class="q-opt">Mainly for sale</span><span class="q-opt">Mainly for household use</span><span class="q-opt">Only for household use</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q12</div><div class="q-t">How many hours did you work last week doing [PRIMARY ACTIVITY]?<div class="q-instr">Response in hours.</div></div></li>
+  </ul>
+</section>
+
+<!-- FIES -->
+<section class="sec" id="fies">
+  <div class="sec-head">
+    <h2 class="sec-title">Food Insecurity Experience Scale</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:16px;">Present in Round 2. Administered to a randomly selected individual aged 15 or older per household, and also to the second respondent. The enumerator selects which individual using the tablet — this selection is not spoken aloud. All questions expect a yes/no answer.</p>
+
+  <div class="mod-note">
+    <strong>Static text</strong> Two introductory sentences are read aloud verbatim before sub-sets of questions. These will appear in audio before questions 1 and 6.
+  </div>
+
+  <ul class="q-list">
+    <li class="q-item not-spoken">Tablet randomly selects a respondent aged 15 or older to participate in this module.</li>
+    <li class="q-item not-spoken">Tablet checks whether the selected individual is 15 or older and whether they are the randomly selected participant.</li>
+    <li class="q-item"><div class="q-n">spoken</div><div class="q-t">Is [NAME] answering for himself/herself?</div></li>
+    <li class="q-item"><div class="q-n">spoken — static text</div><div class="q-t"><em>"During the last 30 days, was there a time when, because of a lack of money or other resources, you experienced the following:"</em></div></li>
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Were worried you would not have enough food to eat?</div></li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">Were unable to eat healthy and nutritious food?</div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">Ate only a few kinds of foods?</div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">Had to skip a meal?</div></li>
+    <li class="q-item"><div class="q-n">spoken — static text</div><div class="q-t"><em>"Still thinking about the last 30 days, was there a time when, because of a lack of money or other resources, you experienced the following:"</em></div></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">Ate less than you thought you should?</div></li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">Ran out of food?</div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">Were hungry but did not eat?</div></li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">Went without eating for a whole day?</div></li>
+  </ul>
+</section>
+
+<!-- EDUCATION -->
+<section class="sec" id="education">
+  <div class="sec-head">
+    <h2 class="sec-title">Education</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:16px;">Present in Round 2. Asked about each household member aged 3–18 years. The questionnaire notes this was intended to be collected once every six months. School level classifications (Q5) were marked as requiring country-specific adaptation before deployment.</p>
+
+  <div class="mod-note">
+    <strong>Interviewer note</strong> After completing each visit, the enumerator records general observations about the interview for supervisors and analysis purposes.
+  </div>
+
+  <ul class="q-list">
+    <li class="q-item not-spoken">Tablet checks whether the individual is aged 3–18 — not spoken aloud.</li>
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Is [NAME] answering for himself/herself?</div></li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">Who is responding for [NAME]? <em style="color:var(--ink3)">[ID code recorded]</em></div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">Is [NAME] attending school in the [current] school year?</div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">What is the main reason [NAME] is not attending school during the [current] school year?</div></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">What level is [NAME] attending during the [current] school year? <em style="color:var(--ink3)">[Country-specific adaptation needed]</em></div></li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">During the last week that school was open for lessons, was [NAME] absent from school on any day?</div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">How many days was [NAME] absent from school during the last week? <em style="color:var(--ink3)">[response in days]</em></div></li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">What is the main reason [NAME] was absent from school?</div></li>
+  </ul>
+</section>
+
+<!-- SHOCKS -->
+<section class="sec" id="shocks">
+  <div class="sec-head">
+    <h2 class="sec-title">Shocks and Coping Strategies</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:14px;">Present in Round 2. Asked of the main household respondent. The module asks about adverse events the household has experienced since the last interview, what impact those events had, and how the household responded.</p>
+
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:12px;"><em>Interviewer preamble (spoken aloud):</em> "I would like to ask you about events that occurred since [LAST INTERVIEW DATE] and may have affected your household."</p>
+
+  <ul class="q-list">
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Since the last interview on [LAST INTERVIEW DATE], did your household experience any of the following events?<div class="q-instr">Record YES/NO for each event first, then proceed with the rest of the module.</div><div class="q-options"><span class="q-opt">Droughts</span><span class="q-opt">Floods</span><span class="q-opt">Cyclones / hurricanes / typhoons / tornadoes</span><span class="q-opt">Heatwaves</span><span class="q-opt">Wildfires</span><span class="q-opt">Insect infestations / pest and disease outbreaks</span><span class="q-opt">Human health crisis / epidemic / pandemic</span><span class="q-opt">Conflict / local unrest / violence</span><span class="q-opt">Substantial increase in commodity prices</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">Since the last interview on [LAST INTERVIEW DATE], did your household receive any warnings about the risk of [SHOCK]?</div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">When [SHOCK] occurred, did any of the following happen to your household?<div class="q-instr">Read options aloud. Select YES/NO for each.</div><div class="q-options"><span class="q-opt">Reduction / loss of income</span><span class="q-opt">Loss of crop before harvest</span><span class="q-opt">Loss of livestock</span><span class="q-opt">Disruptions to farming / household business activities</span><span class="q-opt">Injuries / casualties of household members</span><span class="q-opt">Destruction of or damage to household dwelling / buildings / facilities</span><span class="q-opt">Loss or destruction of other household assets including land</span><span class="q-opt">Forced displacement / relocation</span></div></div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">How did your household cope with the consequences of [SHOCK]?<div class="q-instr">Do not read options — respondent answers freely.</div></div> <span class="oe-tag">open-ended</span></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">In addition, did your household do any of the following to cope with the consequences of [SHOCK]?<div class="q-instr">Read options aloud. Select all that apply. Options already given in Q4 are excluded.</div></div></li>
+  </ul>
+</section>
+
+<!-- CROPS -->
+<section class="sec" id="crops">
+  <div class="sec-head">
+    <h2 class="sec-title">Crops</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:14px;">Present in Round 2. Asked of the main household respondent. Local non-standard units are permitted for area and quantity measurements. The main crop question requires country-specific adaptation.</p>
+
+  <ul class="q-list">
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Did you or anyone in the household cultivate any land, either owned or used by the household, in the last completed main agricultural season, from [START MONTH/YEAR] to [END MONTH/YEAR]?</div></li>
+    <li class="q-item not-spoken">Tablet checks whether the household previously cultivated land in the last in-person interview.</li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">What are the reasons your household did not cultivate crops in the last completed main agricultural season?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">Did your household encounter any challenges in the last completed main season?</div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">What were the challenges your household encountered?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">What is the total area of land cultivated by your household in the last completed main season?<div class="q-instr">Area and unit recorded — local units permitted.</div></div></li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">What is the main crop your household planted in the last completed main season?<div class="q-instr">Country-specific crop list to be inserted.</div></div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">How much land was planted with [the main crop] in total?<div class="q-instr">Area and unit — local units permitted.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether the household cultivated crops in the last main season.</li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">Compared to the previous year, did your household plant more, less, or about the same area with [the main crop]?</div></li>
+    <li class="q-item not-spoken">Tablet routes to Q9 if less, Q10 if more.</li>
+    <li class="q-item"><div class="q-n">Q9</div><div class="q-t">What was the main reason your household planted less area with [the main crop] than in the previous year?</div></li>
+    <li class="q-item"><div class="q-n">Q10</div><div class="q-t">What was the main reason your household planted more area with [the main crop] than in the previous year?</div></li>
+    <li class="q-item"><div class="q-n">Q11</div><div class="q-t">What quantity of [the main crop] did your household harvest?<div class="q-instr">Quantity and unit — local units permitted.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether the household cultivated crops in the last main season.</li>
+    <li class="q-item"><div class="q-n">Q12</div><div class="q-t">How was the quantity harvested compared to the previous year?</div></li>
+    <li class="q-item not-spoken">Tablet checks whether Q11 was greater than zero before proceeding to Q13.</li>
+    <li class="q-item"><div class="q-n">Q13</div><div class="q-t">Did your household sell any of the [main crop] harvested?</div></li>
+    <li class="q-item"><div class="q-n">Q14</div><div class="q-t">What was the total value of all [main crop] sold?<div class="q-instr">Response in local currency.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether the household cultivated crops in the last main season.</li>
+    <li class="q-item"><div class="q-n">Q15</div><div class="q-t">Compared to the previous year, were the revenues from selling [the main crop]…?<div class="q-instr">Read options aloud.</div></div></li>
+    <li class="q-item"><div class="q-n">Q16</div><div class="q-t">What is the main reason the revenues were [as described in Q15]?<div class="q-instr">Tablet filters options based on Q15 answer.</div></div></li>
+    <li class="q-item"><div class="q-n">Q17</div><div class="q-t">Did your household apply any of the following inputs on cultivated land?<div class="q-instr">Read options aloud. Yes/no for each.</div></div></li>
+    <li class="q-item"><div class="q-n">Q18</div><div class="q-t">Did your household do any of the following on your farm?<div class="q-instr">Read options aloud. Yes/no for each.</div></div></li>
+    <li class="q-item"><div class="q-n">Q19</div><div class="q-t">Did your household sell any harvested crops other than [the main crop]?</div></li>
+    <li class="q-item"><div class="q-n">Q20</div><div class="q-t">Compared to the previous year, were the revenues from crop sales in the last completed main season…?<div class="q-instr">Read options aloud.</div></div></li>
+  </ul>
+</section>
+
+<!-- LIVESTOCK -->
+<section class="sec" id="livestock">
+  <div class="sec-head">
+    <h2 class="sec-title">Livestock</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:14px;">Present in Round 2. Asked of the main household respondent. Questions cover three areas: what livestock the household owns, challenges with accessing inputs and services, and revenues from selling animals and animal products.</p>
+
+  <ul class="q-list">
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">In the past 12 months, has your household owned or kept any livestock?</div></li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">What type of livestock does your household own or keep?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">What challenges did your household face in your livestock activities?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether "reduced access to animal feed" was selected in Q3 before asking Q4.</li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">What was the main way your household coped with the reduced access to animal feed?<div class="q-instr">Interviewer probes; selects main coping strategy.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether "reduced access to breeding material" was selected in Q3 before asking Q5.</li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">What was the main way your household coped with reduced access to breeding material or stock replacement?<div class="q-instr">Interviewer probes; selects main coping strategy.</div></div></li>
+    <li class="q-item not-spoken">Tablet checks whether "reduced access to animal health services" was selected in Q3 before asking Q6.</li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">What was the main way your household coped with reduced access to animal health services?<div class="q-instr">Interviewer probes; selects main coping strategy.</div></div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">In the past 12 months, did your household want to sell any animals?</div></li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">Was your household able to sell the animal(s)?</div></li>
+    <li class="q-item"><div class="q-n">Q9</div><div class="q-t">Why was your household not able to sell?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item"><div class="q-n">Q10</div><div class="q-t">In the past 12 months, have the revenues from selling animals…?</div></li>
+    <li class="q-item"><div class="q-n">Q11</div><div class="q-t">Why have revenues from selling animals decreased?<div class="q-instr">Select all that apply.</div></div></li>
+    <li class="q-item"><div class="q-n">Q12</div><div class="q-t">What livestock products did your household produce in the last 12 months?<div class="q-instr">Yes/no for each option.</div></div></li>
+    <li class="q-item"><div class="q-n">Q13</div><div class="q-t">In the past 12 months, have revenues from [livestock product]…?</div></li>
+    <li class="q-item"><div class="q-n">Q14</div><div class="q-t">Why have revenues from [livestock product] decreased?<div class="q-instr">Select all that apply.</div></div></li>
+  </ul>
+</section>
+
+<!-- MENTAL HEALTH -->
+<section class="sec" id="mentalhealth">
+  <div class="sec-head">
+    <h2 class="sec-title">Mental Health (Patient Health Questionnaire)</h2>
+  </div>
+  <p style="font-size:13px; color:var(--ink2); margin-bottom:14px;">Present in Round 2. Administered to both the main respondent and the second respondent. Eight items from the PHQ-8 depression screening scale. All eight questions use the same four-option response scale.</p>
+
+  <div class="mod-note">
+    <strong>Response scale — read aloud before all items</strong> "In the next set of questions, please answer 'Not at all' or 'Several days' or 'More than half the days' or 'Nearly every day'. Over the last 2 weeks, how often have you been bothered by any of the following problems?"
+    <div class="q-options" style="margin-top:8px;"><span class="q-opt">Not at all</span><span class="q-opt">Several days</span><span class="q-opt">More than half the days</span><span class="q-opt">Nearly every day</span></div>
+  </div>
+
+  <ul class="q-list">
+    <li class="q-item"><div class="q-n">Q1</div><div class="q-t">Little interest or pleasure in doing things</div></li>
+    <li class="q-item"><div class="q-n">Q2</div><div class="q-t">Feeling down, depressed, or hopeless</div></li>
+    <li class="q-item"><div class="q-n">Q3</div><div class="q-t">Trouble falling or staying asleep, or sleeping too much</div></li>
+    <li class="q-item"><div class="q-n">Q4</div><div class="q-t">Feeling tired or having little energy</div></li>
+    <li class="q-item"><div class="q-n">Q5</div><div class="q-t">Poor appetite or overeating</div></li>
+    <li class="q-item"><div class="q-n">Q6</div><div class="q-t">Feeling bad about yourself — or that you are a failure or have let yourself or your family down</div></li>
+    <li class="q-item"><div class="q-n">Q7</div><div class="q-t">Trouble concentrating on things, such as reading the newspaper or watching television</div></li>
+    <li class="q-item"><div class="q-n">Q8</div><div class="q-t">Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual</div></li>
+  </ul>
+</section>
+
+
+</main>
+</div>
+
+<script>
+function toggleModule(header) {
+  const body = header.nextElementSibling;
+  const ch = header.querySelector('.chevron');
+  const open = body.classList.toggle('open');
+  if (ch) ch.classList.toggle('open', open);
+}
+
+// Sidebar highlight on scroll
+const secs = document.querySelectorAll('.sec');
+const links = document.querySelectorAll('.sb-link');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.25 });
+secs.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

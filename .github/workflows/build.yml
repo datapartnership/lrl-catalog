@@ -9,6 +9,7 @@ on:
       - 'collections.csv'
       - 'build.py'
       - 'index.html'
+      - 'phone-surveys.html'
       - 'main.css'
       - '*.pdf'
       - 'metadata-docs/**'
@@ -40,7 +41,7 @@ jobs:
 
           # Collect only the files needed for the site
           mkdir -p _site
-          cp index.html PhoneSurveys.html main.css _site/
+          cp index.html phone-surveys.html main.css _site/
           cp providers.csv collections.csv _site/
           cp *.pdf _site/ 2>/dev/null || true
           cp -r metadata-docs _site/

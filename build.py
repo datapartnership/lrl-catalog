@@ -40,6 +40,9 @@ def read_collections(path):
         for row in csv.DictReader(f):
             hours_raw = row["hours"].strip()
             items_raw = row["items"].strip()
+            hours = round(float(hours_raw), 2) if hours_raw else None
+            if hours is not None and hours.is_integer():
+                hours = int(hours)
             rows.append({
                 "id": row["id"].strip(),
                 "name": row["name"].strip(),
@@ -47,7 +50,7 @@ def read_collections(path):
                 "language": row["language"].strip(),
                 "type": row["type"].strip(),
                 "format": row["format"].strip(),
-                "hours": int(hours_raw) if hours_raw else None,
+                "hours": hours,
                 "items": int(items_raw) if items_raw else None,
                 "description": row["description"].strip(),
                 "yearStart": int(row["year_start"].strip()),

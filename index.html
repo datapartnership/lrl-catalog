@@ -1286,7 +1286,8 @@
     /**
      * Normalise a collections CSV row.
      * Expected columns: id, name, provider, language, type, format,
-     *                   hours, items, description, yearStart, yearEnd, themes
+     *                   hours, items, description, yearStart, yearEnd, themes,
+     *                   processing_status
      * themes can be pipe-separated OR comma-separated, e.g. "health|news" or "health,news"
      */
     function normaliseCollection(row) {
@@ -1314,6 +1315,7 @@
         description: row.description || '',
         yearStart:   safeInt(row.year_start),
         yearEnd:     safeInt(row.year_end),
+        processingStatus: (row.processing_status || '').trim(),
         themes:      row.themes
                        ? row.themes.split(/[|,;]/).map(t => t.trim()).filter(Boolean)
                        : [],
@@ -1400,6 +1402,16 @@
     const PAGE_SIZE = 30;
     let currentPage = 1;
     let filteredCollections = [];
+    const PROCESSING_STATUS_CLASSES = new Map([
+      ['Completed', 'completed'],
+      ['Not Started', 'not-started'],
+      ['In Progress', 'in-progress'],
+    ]);
+
+    function processingStatusTag(status) {
+      const statusClass = PROCESSING_STATUS_CLASSES.get(status);
+      return statusClass ? `<span class="tag status ${statusClass}">${status}</span>` : '';
+    }
 
     function renderCards(collections, page) {
       const grid = document.getElementById('card-grid');
@@ -1437,6 +1449,7 @@
             <div class="card-body">
               <p>${c.description}</p>
               <div class="card-tags">
+                ${processingStatusTag(c.processingStatus)}
                 <span class="tag lang">${c.language}</span>
                 <span class="tag type">${typeLabel}</span>
                 <span class="tag">${c.format}</span>
@@ -1563,6 +1576,7 @@
               <td>${c.description}</td>
               <td><span class="tag lang">${c.language}</span></td>
               <td><span class="tag type">${TYPE_LABELS[c.type] || c.type}</span></td>
+              <td>${processingStatusTag(c.processingStatus)}</td>
               <td>${size}</td>
               <td>${c.yearStart || '—'}–${c.yearEnd || '—'}</td>
             </tr>`;
@@ -1589,7 +1603,7 @@
                   ? `<table class="collection-table">
                       <thead><tr>
                         <th>Collection</th><th>Description</th><th>Language</th>
-                        <th>Type</th><th>Size</th><th>Period</th>
+                        <th>Type</th><th>Processing</th><th>Size</th><th>Period</th>
                       </tr></thead>
                       <tbody>${tableRows}</tbody>
                     </table>`

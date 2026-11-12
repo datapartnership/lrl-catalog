@@ -56,6 +56,7 @@ def read_collections(path):
                 "yearStart": int(row["year_start"].strip()),
                 "yearEnd": int(row["year_end"].strip()),
                 "themes": [t.strip() for t in row["themes"].strip().split(";") if t.strip()],
+                "processingStatus": row.get("processing_status", "").strip(),
             })
     return rows
 
